@@ -5,10 +5,10 @@ import { increment, decrement } from "../../../redux/counterSlice";
 
 export default function Home() {
     // react state
-    const [reactCount, setCount] = useState(0);
+    const [ reactCount, setCount ] = useState(0);
 
     // redux
-    const count = useSelector(state => state.counter.value);
+    const count = useSelector( state => state.counter.value );
     const dispatch = useDispatch();
     
     return (
@@ -31,7 +31,7 @@ export default function Home() {
                 </button>
             </div>        
             <div>
-                redux count
+                redux store
                 <button
                     aria-label="Increment value"
                     onClick={() => dispatch(increment())}
