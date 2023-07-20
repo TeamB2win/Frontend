@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavLink from "./navLink";
-
 // bootstrap 요소
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Stack from "react-bootstrap/Stack";
-import { Nav } from "react-bootstrap";
-
 // icons
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdOutlineCancel } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
-
 // css
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,6 +23,12 @@ export default function Menu() {
 
   // 컴포넌트 스타일
   const styles = {
+    div: {
+      "backgroundColor": "#1C1C1C", 
+      "minHeight": "100vh", 
+      "height": "auto",
+      "width": "100vw"
+    },
     topNav: {
       navbar: {
         "position": "sticky", 
@@ -79,7 +81,7 @@ export default function Menu() {
   }
 
   return (
-    <div style={{"backgroundColor": "#1C1C1C", "height":"100vh", "width": "100vw"}}>
+    <div style={styles.div}>
       {/* 상위 Navbar */}
       <Navbar expand="lg" style={styles.topNav.navbar}>
         <Container>
@@ -109,8 +111,8 @@ export default function Menu() {
       <div style={styles.sideNav.div}>
         <div style={styles.sideNav.content}>
           <Stack direction="vertical" gap={5}>
-            <NavLink link="/" name="공개수배자 조회" />
-            <NavLink link="/" name="사건/목격 제보" />
+            <NavLink link="/grid" name="공개수배자 조회" />
+            <NavLink link="/report" name="사건/목격 제보" />
             <NavLink link="/" name="이용 안내" />
           </Stack>
           <NavLink link="/" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
