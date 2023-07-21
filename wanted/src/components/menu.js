@@ -27,7 +27,7 @@ export default function Menu() {
       "backgroundColor": "#1C1C1C", 
       "minHeight": "100vh", 
       "height": "auto",
-      "width": "100vw"
+      "width": "100%"
     },
     topNav: {
       navbar: {
