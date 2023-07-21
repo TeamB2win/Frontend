@@ -113,7 +113,7 @@ export default function Menu() {
           <Stack direction="vertical" gap={5}>
             <NavLink link="/grid" name="공개수배자 조회" />
             <NavLink link="/report" name="사건/목격 제보" />
-            <NavLink link="/" name="이용 안내" />
+            <NavLink link="/docs" name="이용 안내" />
           </Stack>
           <NavLink link="/" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
         </div>

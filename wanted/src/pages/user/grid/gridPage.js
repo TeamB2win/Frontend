@@ -92,10 +92,16 @@ function GridWanted() {
 
 function CardList(props) {
   const styles = {
+    col: {
+      "margin": "0 auto",
+      "width": '15rem',
+      "border": "0",
+      "marginBottom": "0.5em",
+    },
     card: {
       "width": '15rem',
       "border": "0",
-      "marginBottom": "0.5em"
+      "margin": "1em auto ",
     },
     cardBody: {
       "padding": "0"
@@ -117,7 +123,7 @@ function CardList(props) {
   }
 
   return (
-    <Col>
+    <Col style={styles.col}>
       <Card style={styles.card}>
         <Card.Img variant="top" src={props.imgUrl} style={{
           "width": "240px",
