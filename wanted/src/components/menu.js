@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Children } from "react";
 import { Outlet } from "react-router-dom";
 import NavLink from "./navLink";
 // bootstrap 요소
@@ -13,7 +13,7 @@ import { CiSearch } from "react-icons/ci";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function Menu() {
+export default function Menu({ children }) {
   const [menuOpen, setOpen] = useState(false);
 
   // 메뉴 버튼을 누를 경우 호출
@@ -39,11 +39,16 @@ export default function Menu() {
         "margin": "0"
       },
       logo: {
+        "width": "9em",
         "color": "white",
         "width": "5em",
         "bordor": "0"
       },
       btn: {
+        "position": "absolute",
+        "left": "50%",
+        "top": "50%",
+        "transform": "translate(-50%, -50%)",
         "color": "white",
         "backgroundColor": "transparent",
         "border": "0",
@@ -98,7 +103,7 @@ export default function Menu() {
               }
             </button>
           </Navbar.Text>
-          <Stack direction="horizontal" gap={2}>
+          <Stack direction="horizontal" gap={2} style={{"maxWidth": "9em"}}>
             <input type="text" style={styles.topNav.search}/>
             <i style={{"color":"white"}}>
               <CiSearch size={30} />
@@ -111,15 +116,16 @@ export default function Menu() {
       <div style={styles.sideNav.div}>
         <div style={styles.sideNav.content}>
           <Stack direction="vertical" gap={5}>
-            <NavLink link="/grid" name="공개수배자 조회" />
-            <NavLink link="/report" name="사건/목격 제보" />
-            <NavLink link="/docs" name="이용 안내" />
+            <NavLink link="grid" name="공개수배자 조회" />
+            <NavLink link="report" name="사건/목격 제보" />
+            <NavLink link="docs" name="이용 안내" />
           </Stack>
-          <NavLink link="/" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
+          <NavLink link="/admin" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
         </div>
       </div>
       }
       <Outlet />
+      {children}
     </div>
   );
 }

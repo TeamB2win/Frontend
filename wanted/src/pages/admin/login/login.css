@@ -1,0 +1,4 @@
+.loginInput:focus {
+  border: 0;
+  outline: none !important;
+}
