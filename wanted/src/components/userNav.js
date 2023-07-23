@@ -1,4 +1,4 @@
-import React, { useState, Children } from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavLink from "./navLink";
 // bootstrap 요소
@@ -13,7 +13,7 @@ import { CiSearch } from "react-icons/ci";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function Menu({ children }) {
+export default function UserNav() {
   const [menuOpen, setOpen] = useState(false);
 
   // 메뉴 버튼을 누를 경우 호출
@@ -30,6 +30,9 @@ export default function Menu({ children }) {
       "width": "100%"
     },
     topNav: {
+      container: {
+        "maxWidth": "95%"
+      },
       navbar: {
         "position": "sticky", 
         "top": "0px", 
@@ -39,9 +42,7 @@ export default function Menu({ children }) {
         "margin": "0"
       },
       logo: {
-        "width": "9em",
         "color": "white",
-        "width": "5em",
         "bordor": "0"
       },
       btn: {
@@ -89,8 +90,8 @@ export default function Menu({ children }) {
     <div style={styles.div}>
       {/* 상위 Navbar */}
       <Navbar expand="lg" style={styles.topNav.navbar}>
-        <Container>
-          <Navbar.Brand href="/" style={styles.topNav.logo}><i>Passerby</i></Navbar.Brand>
+        <Container style={styles.topNav.container}>
+          <Navbar.Brand href="/" style={styles.topNav.logo}>Passerby</Navbar.Brand>
           <Navbar.Text>
             <button 
               type="button" 
@@ -103,7 +104,7 @@ export default function Menu({ children }) {
               }
             </button>
           </Navbar.Text>
-          <Stack direction="horizontal" gap={2} style={{"maxWidth": "9em"}}>
+          <Stack direction="horizontal" gap={2}>
             <input type="text" style={styles.topNav.search}/>
             <i style={{"color":"white"}}>
               <CiSearch size={30} />
@@ -120,12 +121,11 @@ export default function Menu({ children }) {
             <NavLink link="report" name="사건/목격 제보" />
             <NavLink link="docs" name="이용 안내" />
           </Stack>
-          <NavLink link="/admin" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
+          <NavLink link="login" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
         </div>
       </div>
       }
       <Outlet />
-      {children}
     </div>
   );
 }

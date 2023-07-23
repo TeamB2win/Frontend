@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 // bootstrap
 import { Stack, Image, Button } from "react-bootstrap";
-// 사용자 컴포넌트
-import Menu from "../../../components/menu";
 // css
 import './login.css';
+
 
 export default function Login() {
   function handleSubmit(event) {
@@ -72,33 +71,31 @@ export default function Login() {
 
   return (
     <div>
-      <Menu>
-        <div style={styles.div}>
-          <Stack direction="vertical" gap={2} style={styles.content}>
-            <div style={styles.title}>관리자 로그인</div>
-            <Stack direction="vertical" gap={2} style={{"margin": "3em"}}>
-              <Image src="/images/admin/user-interface.png" style={styles.loginLogo}/>
-              <div>administrator</div>
-            </Stack>
-            <form onSubmit={handleSubmit}>
-              <Stack direction="vertical" gap={4}>
-                <div style={styles.inputContainer}>
-                  <label style={styles.inputPrefix}>ID</label>
-                  <input className="loginInput" type="text" name="ID"
-                    style={styles.input} required/>
-                </div>
-                <div style={styles.inputContainer}>
-                  <label style={styles.inputPrefix}>PW</label>
-                  <input className="loginInput" type="password" name="PW" 
-                    style={styles.input} required/>
-                </div>
-                <Button style={styles.btn}
-                type="submit">로그인</Button>
-              </Stack>
-            </form>
+      <div style={styles.div}>
+        <Stack direction="vertical" gap={2} style={styles.content}>
+          <div style={styles.title}>관리자 로그인</div>
+          <Stack direction="vertical" gap={2} style={{ "margin": "3em" }}>
+            <Image src="/images/admin/user-interface.png" style={styles.loginLogo} />
+            <div>administrator</div>
           </Stack>
-        </div>      
-      </Menu>
+          <form onSubmit={handleSubmit}>
+            <Stack direction="vertical" gap={4}>
+              <div style={styles.inputContainer}>
+                <label style={styles.inputPrefix}>ID</label>
+                <input className="loginInput" type="text" name="ID"
+                  style={styles.input} required />
+              </div>
+              <div style={styles.inputContainer}>
+                <label style={styles.inputPrefix}>PW</label>
+                <input className="loginInput" type="password" name="PW"
+                  style={styles.input} required />
+              </div>
+              <Button style={styles.btn}
+                type="submit">로그인</Button>
+            </Stack>
+          </form>
+        </Stack>
+      </div>
     </div>
   )
 }
