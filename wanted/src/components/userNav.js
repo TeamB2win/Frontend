@@ -24,8 +24,8 @@ export default function UserNav() {
   // 컴포넌트 스타일
   const styles = {
     div: {
-      "backgroundColor": "#1C1C1C", 
-      "minHeight": "100vh", 
+      "backgroundColor": "#1C1C1C",
+      "minHeight": "100vh",
       "height": "auto",
       "width": "100%"
     },
@@ -34,10 +34,10 @@ export default function UserNav() {
         "maxWidth": "95%"
       },
       navbar: {
-        "position": "sticky", 
-        "top": "0px", 
-        "backgroundColor": "#1C1C1C", 
-        "borderBottom": "2px solid white", 
+        "position": "sticky",
+        "top": "0px",
+        "backgroundColor": "#1C1C1C",
+        "borderBottom": "2px solid white",
         "zIndex": "2",
         "margin": "0"
       },
@@ -66,12 +66,12 @@ export default function UserNav() {
       div: {
         "backgroundColor": "#C2C2C2",
         "position": "fixed",
-        "left":"0",
-        "top":"0px",
+        "left": "0",
+        "top": "0px",
         "width": "20em",
-        "height":"100%",
+        "height": "100%",
         "padding": "5em 0 1em 1.3em",
-        "zIndex":"1",
+        "zIndex": "1",
         "opacity": "0.95"
       },
       content: {
@@ -93,20 +93,20 @@ export default function UserNav() {
         <Container style={styles.topNav.container}>
           <Navbar.Brand href="/" style={styles.topNav.logo}>Passerby</Navbar.Brand>
           <Navbar.Text>
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={toggleHandling}
               style={styles.topNav.btn}
             >
-              {menuOpen?
-                <MdOutlineCancel size={30} />:
+              {menuOpen ?
+                <MdOutlineCancel size={30} /> :
                 <AiOutlineMenu size={30} />
               }
             </button>
           </Navbar.Text>
           <Stack direction="horizontal" gap={2}>
-            <input type="text" style={styles.topNav.search}/>
-            <i style={{"color":"white"}}>
+            <input type="text" style={styles.topNav.search} />
+            <i style={{ "color": "white" }}>
               <CiSearch size={30} />
             </i>
           </Stack>
@@ -114,16 +114,16 @@ export default function UserNav() {
       </Navbar>
       {/* 사이드 메뉴 오픈 시 */}
       {menuOpen &&
-      <div style={styles.sideNav.div}>
-        <div style={styles.sideNav.content}>
-          <Stack direction="vertical" gap={5}>
-            <NavLink link="grid" name="공개수배자 조회" />
-            <NavLink link="report" name="사건/목격 제보" />
-            <NavLink link="docs" name="이용 안내" />
-          </Stack>
-          <NavLink link="login" name="관리자 로그인" style={{"color": "#2D55C9"}}/>
+        <div style={styles.sideNav.div}>
+          <div style={styles.sideNav.content}>
+            <Stack direction="vertical" gap={5}>
+              <NavLink link="grid" name="공개수배자 조회" />
+              <NavLink link="report" name="사건/목격 제보" />
+              <NavLink link="docs" name="이용 안내" />
+            </Stack>
+            <NavLink link="login" name="관리자 로그인" style={{ "color": "#2D55C9" }} />
+          </div>
         </div>
-      </div>
       }
       <Outlet />
     </div>

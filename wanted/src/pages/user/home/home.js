@@ -1,51 +1,51 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "../../../redux/counterSlice";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Images from "../../../../src/images";
 
+const mainCarousel = () => {
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 10000000,
+        prevArrow: null,
+        nextArrow: null,
+    };
 
-export default function Home() {
-    // react state
-    const [ reactCount, setCount ] = useState(0);
-
-    // redux
-    const count = useSelector( state => state.counter.value );
-    const dispatch = useDispatch();
-    
     return (
-        <div style={{"paddingTop": "5em"}}>
-            Home
-            <div>
-                react count
-                <button
-                    aria-label="Increment value"
-                    onClick={() => setCount(reactCount + 1)}
-                >
-                    Increment
-                </button>
-                <span>{reactCount}</span>
-                <button
-                    aria-label="Decrement value"
-                    onClick={() => setCount(reactCount - 1)}
-                >
-                    Decrement
-                </button>
-            </div>        
-            <div>
-                redux store
-                <button
-                    aria-label="Increment value"
-                    onClick={() => dispatch(increment())}
-                >
-                    Increment
-                </button>
-                <span>{count}</span>
-                <button
-                    aria-label="Decrement value"
-                    onClick={() => dispatch(decrement())}
-                >
-                    Decrement
-                </button>
-            </div>        
-        </div>
-    )
+        <>
+            <div className="content">
+                <div className="slide-container">
+                    <Slider {...settings}>
+                        {Images.map((item) => (
+                            <div key={item.id}>
+                                <div className="slide-content">
+                                    <div className="img-container">
+                                        <img src={item.src} alt={item.alt} className="img" />
+                                    </div>
+                                    <div className="text-container">
+                                        <h1 className="title">{item.title}</h1>
+                                        <div className="tagI-container">
+                                            <h2 className="tagI">{item.tagI}</h2>
+                                            <p className="name">{item.name}</p>
+                                        </div>
+                                        <p className="inform">{item.inform}</p>
+                                        <h2 className="tagC">{item.tagC}</h2>
+                                        <p className="char">{item.char}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </Slider>
+                </div >
+            </div >
+        </>
+    );
 };
+
+export default mainCarousel;
