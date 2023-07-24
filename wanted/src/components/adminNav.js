@@ -33,7 +33,7 @@ export default function AdminNav() {
         "maxWidth": "95%"
       },
       navbar: {
-        "height": "5em",
+        "minHeight": "5em",
         "borderBottom": "2px solid black"
       },
       navItem: {

@@ -17,7 +17,7 @@ import { CiSearch } from "react-icons/ci";
 export default function Grid() {
   const styles = {
     div: {
-      "width": "80vw",
+      "width": "80%",
       "margin": "0 auto",
       "padding": "2em 0",
       "color": "white"
