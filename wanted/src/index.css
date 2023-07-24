@@ -14,8 +14,6 @@ body {
   /* 요소들을 가로로 나란히 배치합니다. */
 }
 
-
-
 .slick-arrow {
   display: none !important;
   /* 화살표 제거 우선 적용 */
