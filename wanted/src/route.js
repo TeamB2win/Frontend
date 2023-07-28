@@ -8,6 +8,10 @@ import Docs from "./pages/user/docs/docsPage";
 import Login from "./pages/user/login/login";
 import AdminNav from "./components/adminNav";
 import Dashboard from "./pages/admin/dashboard/dashboard";
+import Create from "./pages/admin/create/create";
+import Update from "./pages/admin/update/update";
+import Delete from "./pages/admin/delete/delete";
+import Edit from "./pages/admin/edit/edit";
 
 
 export default function Routers() {
@@ -22,6 +26,10 @@ export default function Routers() {
             </Route>
             <Route path="/admin" element={<AdminNav />}>
                 <Route index element={<Dashboard />} />
+                <Route path="create" element={<Create />} />
+                <Route path="update" element={<Update />} />
+                <Route path="delete" element={<Delete />} />
+                <Route path="edit" element={<Edit />} />
             </Route>
             <Route path="*" element={<NoPage />} />
         </Routes>

@@ -86,12 +86,12 @@ export default function Dashboard() {
                 <td>
                   <Row>
                     <Col style={styles.table.col}>
-                      <Link to="#" style={styles.table.btn}>
+                      <Link to="/admin/update" style={styles.table.btn}>
                         수정
                       </Link>
                     </Col>
                     <Col style={styles.table.col}>
-                      <Link to="#" style={styles.table.btn}>
+                      <Link to="/admin/delete" style={styles.table.btn}>
                         삭제
                       </Link>
                     </Col>
@@ -115,7 +115,7 @@ function ToolBar() {
         "margin": "0 auto"
       },
       col: {
-        "height": "fit-content", 
+        "height": "fit-content",
         "margin": "auto 0"
       },
       select: {
@@ -184,7 +184,7 @@ function ToolBar() {
           </Stack>
         </Col>
       </Row>
-      <Button style={styles.toolBar.btn}>
+      <Button href="admin/create" style={styles.toolBar.btn}>
         공개수배자 등록
       </Button>
     </Stack>
