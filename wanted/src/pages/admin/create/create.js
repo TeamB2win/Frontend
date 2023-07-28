@@ -23,21 +23,34 @@ function Create() {
             //     setUserInfo({ ...userInfo, [name]: reader.result });
             // };
             reader.onloadend = () => {
-                const image = new Image();
-                image.onload = () => {
-                  const isSquare = image.width === image.height;
-                  if (isSquare) {
-                    // Image has a square aspect ratio, do something
-                    console.log('정방형 이미지 입니다.');
-                    setUserInfo({ ...userInfo, [name]: reader.result })
-                  } else {
-                    // Image does not have a square aspect ratio, do something else
-                    const msg = 'Image must have a "square aspect ratio". Please choose another image.';
-                    window.alert(msg);
-                    handleDeletePhoto();
-                  }
+                const img = new Image();
+                const maxWidth = 1000;
+                const maxHeight = 1000;
+                const maxSize = 1024 * 1024
+                img.onload = () => {
+                    const isMaxsize = img.size > maxSize
+                    const isSquare = img.width === img.height;
+                    if(isMaxsize){
+                        const msg = '파일 용량을 1MB 이하로 제한해주세요.';
+                            window.alert(msg);
+                            handleDeletePhoto();
+                    }
+                    if (isSquare) {
+                        // Image has a square aspect ratio, do something
+                        console.log('정방형 이미지 입니다.');
+                        if (img.width > maxWidth || img.height > maxHeight) {
+                            window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
+                        } else{
+                            setUserInfo({ ...userInfo, [name]: reader.result })
+                        }
+                    } else {
+                        // Image does not have a square aspect ratio, do something else
+                        const msg = 'Image must have a "square aspect ratio". Please choose another image.';
+                        window.alert(msg);
+                        handleDeletePhoto();
+                    }
                 };
-                image.src = reader.result;
+                img.src = reader.result;
             };
             reader.readAsDataURL(file);
             console.log("이미지 등록")
