@@ -1,0 +1,21 @@
+.admin-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    margin: 2em;
+}
+
+.admin-interface {
+    width: 5em;
+    height: 5em;
+    display: block;
+    margin: auto;
+}
+
+.change-password {
+    margin: 0.5rem;
+}
+
+button {
+    margin-top: 2rem;
+}
