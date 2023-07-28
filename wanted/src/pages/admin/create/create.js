@@ -19,10 +19,28 @@ function Create() {
         if (type === 'file') {
             const file = event.target.files[0];
             const reader = new FileReader();
+            // reader.onloadend = () => {
+            //     setUserInfo({ ...userInfo, [name]: reader.result });
+            // };
             reader.onloadend = () => {
-                setUserInfo({ ...userInfo, [name]: reader.result });
+                const image = new Image();
+                image.onload = () => {
+                  const isSquare = image.width === image.height;
+                  if (isSquare) {
+                    // Image has a square aspect ratio, do something
+                    console.log('정방형 이미지 입니다.');
+                    setUserInfo({ ...userInfo, [name]: reader.result })
+                  } else {
+                    // Image does not have a square aspect ratio, do something else
+                    const msg = 'Image must have a "square aspect ratio". Please choose another image.';
+                    window.alert(msg);
+                    handleDeletePhoto();
+                  }
+                };
+                image.src = reader.result;
             };
             reader.readAsDataURL(file);
+            console.log("이미지 등록")
 
             event.target.style.display = 'none';
         } else {
