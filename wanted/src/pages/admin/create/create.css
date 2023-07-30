@@ -45,6 +45,7 @@ form {
     margin-bottom: 0.5rem;
 }
 
-.form-group input {
+.form-group input, .form-group select {
     min-width: 16rem;
+    min-height: 2rem;
 }
