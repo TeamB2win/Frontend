@@ -115,3 +115,12 @@ body {
   align-self: flex-start;
   margin-left: 24px;
 }
+
+.infoText {
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  text-align: left;
+  align-self: flex-start;
+  margin-left: 24px;
+}

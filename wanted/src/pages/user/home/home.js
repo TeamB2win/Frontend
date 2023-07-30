@@ -4,7 +4,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Images from "../../../../src/images";
 
+
 const mainCarousel = () => {
+    
+
     const settings = {
         dots: true,
         infinite: true,
