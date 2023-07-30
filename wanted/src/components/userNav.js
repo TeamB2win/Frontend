@@ -53,6 +53,7 @@ export default function UserNav() {
         "color": "white",
         "backgroundColor": "transparent",
         "border": "0",
+        "margin": 0
       },
       search: {
         "color": "white",
