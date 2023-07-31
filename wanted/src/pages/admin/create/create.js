@@ -51,7 +51,7 @@ function Create() {
                 //     // window.alert(msg);
                 //     // handleDeletePhoto();
                 // }
-                if (img.width > maxWidth || img.height > maxHeight) {
+                else if (img.width > maxWidth || img.height > maxHeight) {
                     window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
                     handleDeletePhoto();
                 } else {
