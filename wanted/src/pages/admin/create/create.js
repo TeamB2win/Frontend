@@ -25,43 +25,33 @@ function Create() {
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
+        const maxSize = 1024 * 1024;
+
+        if (file.size > maxSize) {
+            handleDeletePhoto();
+            window.alert("이미지 용량은 1MB를 초과할 수 없습니다.");
+            event.target.value = ""; // 파일 입력값 초기화
+            return;
+        }
+
         reader.onloadend = () => {
             const img = new Image();
             const maxWidth = 1000;
             const maxHeight = 1000;
-            const maxSize = 1024 * 1024
             img.onload = () => {
-                const isMaxsize = img.size > maxSize
-                // const isSquare = img.width === img.height;
-                if (isMaxsize) {
-                    const msg = '파일 용량을 1MB 이하로 제한해주세요.';
-                    window.alert(msg);
-                    handleDeletePhoto();
-                }
-                // if (isSquare) {
-                //     // Image has a square aspect ratio, do something
-                //     // console.log('정방형 이미지 입니다.');
-                //     if (img.width > maxWidth || img.height > maxHeight) {
-                //         window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
-                //     } else {
-                //         setImageFile(reader.result)
-                //     }
-                // } else {
-                //     // Image does not have a square aspect ratio, do something else
-                //     // const msg = 'Image must have a "square aspect ratio". Please choose another image.';
-                //     // window.alert(msg);
-                //     // handleDeletePhoto();
-                // }
                 if (img.width > maxWidth || img.height > maxHeight) {
+                    handleDeletePhoto();
                     window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
+                    event.target.value = "";
+                    return;
                 } else {
                     setImageFile({ file: file, image: reader.result })
+                    console.log("이미지 등록")
                 }
             };
             img.src = reader.result;
         };
         reader.readAsDataURL(file);
-        console.log("이미지 등록")
 
         event.target.style.display = 'none';
     }
@@ -72,6 +62,7 @@ function Create() {
     };
 
     const handleDeletePhoto = () => {
+        console.log('Delete')
         setImageFile({ file: null, image: null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
