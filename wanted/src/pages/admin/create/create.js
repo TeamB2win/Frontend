@@ -34,8 +34,8 @@ function Create() {
                 const isMaxsize = img.size > maxSize
                 // const isSquare = img.width === img.height;
                 if (isMaxsize) {
-                    window.alert('파일 용량을 1MB 이하로 제한해주세요.');
                     handleDeletePhoto();
+                    window.alert('파일 용량을 1MB 이하로 제한해주세요.');
                 }
                 // if (isSquare) {
                 //     // Image has a square aspect ratio, do something
@@ -52,8 +52,8 @@ function Create() {
                 //     // handleDeletePhoto();
                 // }
                 else if (img.width > maxWidth || img.height > maxHeight) {
-                    window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
                     handleDeletePhoto();
+                    window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
                 } else {
                     setImageFile({ file: file, image: reader.result })
                 }
