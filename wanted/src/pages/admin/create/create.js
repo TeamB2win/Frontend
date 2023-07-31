@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-
 import axios from "axios";
 import "./create.css";
 
@@ -18,9 +17,10 @@ function Create() {
     })
 
     const photoInputRef = useRef();
-    const additionalPhotoInputRef = useRef();
 
-    const [additionalPhoto, setAdditionalPhoto] = useState(null);
+    const [relationalLinks, setRelationalLinks] = useState([""]);
+
+    const [characteristics, setCharacteristics] = useState([""]);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -71,28 +71,42 @@ function Create() {
         setUserInfo({ ...userInfo, [name]: event.target.value });
     };
 
-    const handleAdditionalPhotoChange = (event) => {
-        const { name } = event.target;
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setAdditionalPhoto(reader.result);
-        };
-        reader.readAsDataURL(file);
-
-        event.target.style.display = 'none';
-    };
-
     const handleDeletePhoto = () => {
         setImageFile({ file: null, image: null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
     };
 
-    const handleDeleteAdditionalPhoto = () => {
-        setAdditionalPhoto(null);
-        additionalPhotoInputRef.current.value = '';
-        additionalPhotoInputRef.current.style.display = 'inline';
+    const handleAddRelationalLink = () => {
+        setRelationalLinks([...relationalLinks, ""]);
+    };
+
+    const handleRelationalLinkChange = (index, event) => {
+        const updatedLinks = [...relationalLinks];
+        updatedLinks[index] = event.target.value;
+        setRelationalLinks(updatedLinks);
+    };
+
+    const handleDeleteRelationalLink = (index) => {
+        const updatedLinks = [...relationalLinks];
+        updatedLinks.splice(index, 1);
+        setRelationalLinks(updatedLinks);
+    };
+
+    const handleAddCharacteristic = () => {
+        setCharacteristics([...characteristics, ""]);
+    };
+
+    const handleCharacteristicChange = (index, event) => {
+        const updatedCharacteristics = [...characteristics];
+        updatedCharacteristics[index] = event.target.value;
+        setCharacteristics(updatedCharacteristics);
+    };
+
+    const handleDeleteCharacteristic = (index) => {
+        const updatedCharacteristics = [...characteristics];
+        updatedCharacteristics.splice(index, 1);
+        setCharacteristics(updatedCharacteristics);
     };
 
     const handleSubmit = (event) => {
@@ -128,9 +142,9 @@ function Create() {
 
             if (response.status !== 201) {
                 alert(response.data);
-                return;                
+                return;
             }
-            
+
             // Wanted 데이터 테이블에 등록
             const image_path = response.data.imagePath
             axios.post(
@@ -143,7 +157,7 @@ function Create() {
                 console.log(response.data);
                 // TODO data hash 값 redux에 저장
 
-                
+
                 alert("등록이 완료되었습니다.");
                 // 차후 domain 주소로 변경
                 // window.location.replace('http://localhost:3000/admin');
@@ -170,7 +184,7 @@ function Create() {
     };
 
     return (
-        <div className="Update">
+        <div className="Create">
             <h1 className="header">공개수배자 정보 등록</h1>
             <div className='photo-containers'>
                 <div className="photo-container">
@@ -219,13 +233,6 @@ function Create() {
                         <option value={true}>남자</option>
                         <option value={false}>여자</option>
                     </select>
-                    {/* <input
-                        type="bool"
-                        name="sex"
-                        value={userInfo.sex}
-                        onChange={handleInputChange}
-                        required
-                    /> */}
                 </div>
                 <div className="form-group">
                     <label>나이</label>
@@ -244,13 +251,6 @@ function Create() {
                         <option value={true}>종합</option>
                         <option value={false}>긴급</option>
                     </select>
-                    {/* <input
-                        type="bool"
-                        name="wanted_type"
-                        value={userInfo.wanted_type}
-                        onChange={handleInputChange}
-                        required
-                    /> */}
                 </div>
                 {userInfo.wanted_type === 'true' &&
                     <div className="form-group">
@@ -314,23 +314,51 @@ function Create() {
                 </div>
                 <div className="form-group">
                     <label>연관 링크</label>
-                    <textarea
-                        style={{ minWidth: "16rem", minHeight: "40px" }}
-                        name="relational_link"
-                        value={userInfo.relational_link}
-                        onChange={handleInputChange}
-                    />
+                    <div className="input-button">
+                        <div>
+                            <input style={{ minWidth: "12.5rem" }}
+                                type="text"
+                                value={relationalLinks[0]}
+                                onChange={(event) => handleRelationalLinkChange(0, event)}
+                            />
+                            <button onClick={handleAddRelationalLink}>추가</button>
+                        </div>
+                        {relationalLinks.slice(1).map((link, index) => (
+                            <div key={index}>
+                                <input style={{ minWidth: "12.5rem" }}
+                                    type="text"
+                                    value={link}
+                                    onChange={(event) => handleRelationalLinkChange(index + 1, event)}
+                                />
+                                <button onClick={() => handleDeleteRelationalLink(index + 1)}>삭제</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>특이사항</label>
-                    <textarea
-                        style={{ minWidth: "16rem", minHeight: "80px" }}
-                        name="characteristic"
-                        value={userInfo.characteristic}
-                        onChange={handleInputChange}
-                    />
+                    <div className="input-button">
+                        <div>
+                            <input style={{ minWidth: "12.5rem" }}
+                                type="text"
+                                value={characteristics[0]}
+                                onChange={(event) => handleCharacteristicChange(0, event)}
+                            />
+                            <button onClick={handleAddCharacteristic}>추가</button>
+                        </div>
+                        {characteristics.slice(1).map((link, index) => (
+                            <div key={index}>
+                                <input style={{ minWidth: "12.5rem" }}
+                                    type="text"
+                                    value={link}
+                                    onChange={(event) => handleCharacteristicChange(index + 1, event)}
+                                />
+                                <button onClick={() => handleDeleteCharacteristic(index + 1)}>삭제</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <button type="submit" style={{ marginTop: '40px', marginBottom: "20px" }}>정보 등록</button>
+                <button type="submit" style={{ marginTop: "40px", marginBottom: "20px" }}>정보 등록</button>
             </form>
         </div >
     );
