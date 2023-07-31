@@ -1,38 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux"; // useDispatch와 useSelector를 import
+import { useSelector } from "react-redux"; // useDispatch와 useSelector를 import
 import Slider from "react-slick";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 //import Images from "../../../../src/images";
-import { fetchData } from "../../../../src/redux/dataSlice_2"; // dataSlice에서 fetchData 가져오기
-import axios from "axios";
 import "../../../../src/index.css"; // index.css 스타일을 import 합니다.
+import useDataFetch from "../../../hooks/useDataFetch";
+
 const Home = () => {
-    const dispatch = useDispatch();
     const { data, data_hash, status, error } = useSelector(
         (state) => state.data
     );
-    useEffect(() => {
-        // 데이터 가져오는 비동기 액션 호출
-        if (data_hash) {
-            const data = async () => {
-                const isHashOK = await axios.get(
-                    `http://63.35.31.27:8000/wanted/check/${data_hash}`
-                );
-                if (isHashOK.data.status === "OK") return;
-                return (async () => {
-                    await dispatch(fetchData()).unwrap();
-                })();
-            };
-            data();
-        } else {
-            const data = async () => {
-                await dispatch(fetchData()).unwrap();
-            };
-            data();
-        }
-    }, []);
+    useDataFetch(data_hash);
+
     // 데이터 로딩 중인 경우
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -57,16 +37,19 @@ const Home = () => {
         prevArrow: null,
         nextArrow: null,
     };
-    console.log(data[0].datasource[0].image)
     return (
-            <div className="content">
-                <div className="slide-container">
-                    <Slider {...settings}>
-                        {data.map((item,idx) => (
-                            <div key={item.id}>
+        <div className="content">
+            <div className="slide-container">
+                <Slider {...settings}>
+                    {data.map((item) => (
+                        <div key={item.id}>
                             <Row className="slide-content">
                                 <Col className="img-container">
-                                    <img src={data[idx].datasource[0].image} alt={"image_1"} className="img" />
+                                    <img
+                                        src="/logo.png"
+                                        alt={"image_1"}
+                                        className="img"
+                                    />
                                 </Col>
                                 <Col className="text-container">
                                     {/* 이미지 오른쪽에 텍스트를 추가합니다 */}
@@ -74,9 +57,7 @@ const Home = () => {
                                         {item.detail[0].criminal}
                                     </h1>
                                     <div className="tagI-container">
-                                        <h2 className="tagI">
-                                            {"수배정보"}
-                                        </h2>
+                                        <h2 className="tagI">{"수배정보"}</h2>
                                         <p className="name">
                                             {item.name}
                                             {"("}
@@ -125,11 +106,44 @@ const Home = () => {
                                     </p>
                                 </Col>
                             </Row>
-                            </div>
-                        ))}
-                    </Slider>
-                </div>
+                        </div>
+                    ))}
+                </Slider>
             </div>
+        </div>
     );
 };
 export default Home;
+
+// <button
+//                 onClick={() => {
+//                     const aaa = async () => {
+//                         const result = await axios({
+//                             method: "post",
+//                             url: "http://63.35.31.27:8000/admin",
+//                             headers: { "Content-Type": "application/json" },
+//                             data: {
+//                                 wantedId: 15,
+//                                 wantedType: true,
+//                                 sex: true,
+//                                 image: "string",
+//                                 name: "string",
+//                                 age: 0,
+//                                 height: 0,
+//                                 weight: "string",
+//                                 registeredAddress: "string",
+//                                 residence: "string",
+//                                 criminal: "string",
+//                                 relationalLink: "string",
+//                                 characteristic: "string",
+//                                 startedAt: "2023-07-31T09:00:16.859992",
+//                                 endedAt: "2023-07-31T09:00:16.860084",
+//                             },
+//                         });
+//                         console.log(result);
+//                     };
+//                     aaa();
+//                 }}
+//             >
+//                 테스트
+//             </button>
