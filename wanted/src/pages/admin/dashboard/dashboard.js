@@ -1,32 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Stack, Table } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
-import { Link } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 export default function Dashboard() {
-  const [numColumns, setNum] = useState(10);
 
-  const tableColomn = [
-    "수배번호", "이름", "유형", "죄명", "기간"
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get("http://63.35.31.27:8000/wanted");
+      return res.data;
+    }
+
+    fetchData().then(res => setData(res));
+  }, []);
+
+  const tableColumn = [
+    "ID", "이름", "유형", "죄명", "기간"
   ]
 
-  const datas = [
-    {
-      "수배번호": "ID-000001",
-      "이름": "황주연",
-      "유형": "긴급",
-      "죄명": "살인",
-      "기간": "2023-06-01 ~ 2023-12-31",
-    },
-    {
-      "수배번호": "ID-000002",
-      "이름": "성치영",
-      "유형": "종합",
-      "죄명": "살인",
-      "기간": "2023-07-01 ~ 2023-12-31",
-    },
+  const tableColumnEng = [
+    "id", "name", "wantedType", "detailC", "detailS"
   ]
+
+  const datas = data['data']
 
   const styles = {
     div: {
@@ -72,17 +71,31 @@ export default function Dashboard() {
           "textAlign": "center"
         }}>
           <tr>
-            {tableColomn.map(column => <th style={styles.table.th}>{column}</th>)}
+            {tableColumn && tableColumn.map(column => <th style={styles.table.th}>{column}</th>)}
             <th style={styles.table.th}>정보 변경</th>
           </tr>
         </thead>
         <tbody style={{
           "textAlign": "center"
         }}>
-          {datas.map(data => {
+          {datas && datas.map(data => {
             return (
               <tr>
-                {tableColomn.map(column => <td style={styles.table.td}>{data[column]}</td>)}
+                {tableColumnEng && tableColumnEng.map(column => {
+                  let valueToDisplay;
+                  if (data[column] === true) {
+                    valueToDisplay = '긴급';
+                  } else if (data[column] === false) {
+                    valueToDisplay = '종합';
+                  } else if (column === 'detailC') {
+                    valueToDisplay = data['detail'][0]['criminal'];
+                  } else if (column === 'detailS') {
+                    valueToDisplay = data['detail'][0]['startedAt'].slice(-19, -9) + " ~ " + data['detail'][0]['endedAt'].slice(-19, -9);
+                  } else {
+                    valueToDisplay = data[column];
+                  }
+                  return <td style={styles.table.td}>{valueToDisplay}</td>;
+                })}
                 <td>
                   <Row>
                     <Col style={styles.table.col}>
@@ -105,7 +118,6 @@ export default function Dashboard() {
     </div>
   )
 }
-
 
 function ToolBar() {
   const styles = {
@@ -184,7 +196,7 @@ function ToolBar() {
           </Stack>
         </Col>
       </Row>
-      <Button href="admin/create" style={styles.toolBar.btn}>
+      <Button href="/admin/create" style={styles.toolBar.btn}>
         공개수배자 등록
       </Button>
     </Stack>
