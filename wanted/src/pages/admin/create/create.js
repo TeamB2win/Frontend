@@ -349,6 +349,24 @@ function Create() {
                         ))}
                     </div>
                 </div>
+                <div className="form-group">
+                    <label>수배시작기간</label>
+                    <input
+                        type="date"
+                        name="startedAt"
+                        value={userInfo.startedAt}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>수배마감기간</label>
+                    <input
+                        type="date"
+                        name="endedAt"
+                        value={userInfo.endedAt}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <button type="submit" style={{ marginTop: "40px", marginBottom: "20px" }}>정보 등록</button>
             </form>
         </div >
