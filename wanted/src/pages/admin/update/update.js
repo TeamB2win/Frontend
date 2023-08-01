@@ -14,6 +14,10 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
+    const [relationalLinks, setRelationalLinks] = useState([""]);
+
+    const [characteristics, setCharacteristics] = useState([""]);
+
     const handleInputChange = (event) => {
         const { name, type } = event.target;
         if (type === 'file') {
@@ -52,6 +56,38 @@ function Update() {
         setAdditionalPhoto(null);
         additionalPhotoInputRef.current.value = '';
         additionalPhotoInputRef.current.style.display = 'inline';
+    };
+
+    const handleAddRelationalLink = () => {
+        setRelationalLinks([...relationalLinks, ""]);
+    };
+
+    const handleRelationalLinkChange = (index, event) => {
+        const updatedLinks = [...relationalLinks];
+        updatedLinks[index] = event.target.value;
+        setRelationalLinks(updatedLinks);
+    };
+
+    const handleDeleteRelationalLink = (index) => {
+        const updatedLinks = [...relationalLinks];
+        updatedLinks.splice(index, 1);
+        setRelationalLinks(updatedLinks);
+    };
+
+    const handleAddCharacteristic = () => {
+        setCharacteristics([...characteristics, ""]);
+    };
+
+    const handleCharacteristicChange = (index, event) => {
+        const updatedCharacteristics = [...characteristics];
+        updatedCharacteristics[index] = event.target.value;
+        setCharacteristics(updatedCharacteristics);
+    };
+
+    const handleDeleteCharacteristic = (index) => {
+        const updatedCharacteristics = [...characteristics];
+        updatedCharacteristics.splice(index, 1);
+        setCharacteristics(updatedCharacteristics);
     };
 
     const handleSubmit = (event) => {
@@ -226,20 +262,74 @@ function Update() {
                 </div>
                 <div className="form-group">
                     <label>연관 링크</label>
-                    <textarea
-                        style={{ minWidth: "16rem", minHeight: "40px" }}
-                        name="relational_link"
-                        value={userInfo.relational_link}
-                        onChange={handleInputChange}
-                    />
+                    <div className="input-button">
+                        <div>
+                            <input style={{ minWidth: "12.5rem" }}
+                                type="text"
+                                value={relationalLinks[0]}
+                                onChange={(event) => handleRelationalLinkChange(0, event)}
+                            />
+                            <button onClick={handleAddRelationalLink}>추가</button>
+                        </div>
+                        {relationalLinks.slice(1).map((link, index) => (
+                            <div key={index}>
+                                <input style={{ minWidth: "12.5rem" }}
+                                    type="text"
+                                    value={link}
+                                    onChange={(event) => handleRelationalLinkChange(index + 1, event)}
+                                />
+                                <button onClick={() => handleDeleteRelationalLink(index + 1)}>삭제</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>특이사항</label>
-                    <textarea
-                        style={{ minWidth: "16rem", minHeight: "80px" }}
-                        name="characteristic"
-                        value={userInfo.characteristic}
-                        onChange={handleInputChange}
+                    <div className="input-button">
+                        <div>
+                            <input style={{ minWidth: "12.5rem" }}
+                                type="text"
+                                value={characteristics[0]}
+                                onChange={(event) => handleCharacteristicChange(0, event)}
+                            />
+                            <button onClick={handleAddCharacteristic}>추가</button>
+                        </div>
+                        {characteristics.slice(1).map((link, index) => (
+                            <div key={index}>
+                                <input style={{ minWidth: "12.5rem" }}
+                                    type="text"
+                                    value={link}
+                                    onChange={(event) => handleCharacteristicChange(index + 1, event)}
+                                />
+                                <button onClick={() => handleDeleteCharacteristic(index + 1)}>삭제</button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label>수배시작기간</label>
+                    <input
+                        type="date"
+                        name="startedAt"
+                        value={userInfo.startedAt}
+                        onChange={(e) => {
+                            const dateValue = new Date(e.target.value); // 입력받은 연-월-일을 Date 객체로 변환
+                            const isoDate = dateValue.toISOString(); // Date 객체를 ISO 8601 형식의 문자열(datetime)로 변환
+                            handleInputChange(e, isoDate); // 변환된 문자열을 함께 핸들러에 전달
+                        }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>수배마감기간</label>
+                    <input
+                        type="date"
+                        name="endedAt"
+                        value={userInfo.endedAt}
+                        onChange={(e) => {
+                            const dateValue = new Date(e.target.value);
+                            const isoDate = dateValue.toISOString();
+                            handleInputChange(e, isoDate);
+                        }}
                     />
                 </div>
                 <button type="submit" style={{ marginTop: '40px', marginBottom: "20px" }}>정보 수정</button>

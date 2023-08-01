@@ -355,7 +355,11 @@ function Create() {
                         type="date"
                         name="startedAt"
                         value={userInfo.startedAt}
-                        onChange={handleInputChange}
+                        onChange={(e) => {
+                            const dateValue = new Date(e.target.value); // 입력받은 연-월-일을 Date 객체로 변환
+                            const isoDate = dateValue.toISOString(); // Date 객체를 ISO 8601 형식의 문자열(datetime)로 변환
+                            handleInputChange(e, isoDate); // 변환된 문자열을 함께 핸들러에 전달
+                        }}
                     />
                 </div>
                 <div className="form-group">
@@ -364,7 +368,11 @@ function Create() {
                         type="date"
                         name="endedAt"
                         value={userInfo.endedAt}
-                        onChange={handleInputChange}
+                        onChange={(e) => {
+                            const dateValue = new Date(e.target.value);
+                            const isoDate = dateValue.toISOString();
+                            handleInputChange(e, isoDate);
+                        }}
                     />
                 </div>
                 <button type="submit" style={{ marginTop: "40px", marginBottom: "20px" }}>정보 등록</button>
