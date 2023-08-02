@@ -75,13 +75,15 @@ function Create() {
     const handleRelationalLinkChange = (index, event) => {
         const updatedLinks = [...relationalLinks];
         updatedLinks[index] = event.target.value;
-        setRelationalLinks(updatedLinks);
+        const combinedLinks = updatedLinks.join('\n');
+        setRelationalLinks(combinedLinks);
     };
 
     const handleDeleteRelationalLink = (index) => {
         const updatedLinks = [...relationalLinks];
         updatedLinks.splice(index, 1);
-        setRelationalLinks(updatedLinks);
+        const combinedLinks = updatedLinks.join('\n');
+        setRelationalLinks(combinedLinks);
     };
 
     const handleAddCharacteristic = () => {
@@ -91,13 +93,15 @@ function Create() {
     const handleCharacteristicChange = (index, event) => {
         const updatedCharacteristics = [...characteristics];
         updatedCharacteristics[index] = event.target.value;
-        setCharacteristics(updatedCharacteristics);
+        const combinedCharacteristics = updatedCharacteristics.join('\n');
+        setCharacteristics(combinedCharacteristics);
     };
 
     const handleDeleteCharacteristic = (index) => {
         const updatedCharacteristics = [...characteristics];
         updatedCharacteristics.splice(index, 1);
-        setCharacteristics(updatedCharacteristics);
+        const combinedCharacteristics = updatedCharacteristics.join('\n');
+        setCharacteristics(combinedCharacteristics);
     };
 
     const handleSubmit = (event) => {
@@ -337,11 +341,11 @@ function Create() {
                             />
                             <button onClick={handleAddCharacteristic}>추가</button>
                         </div>
-                        {characteristics.slice(1).map((link, index) => (
+                        {characteristics.slice(1).map((characteristic, index) => (
                             <div key={index}>
                                 <input style={{ minWidth: "12.5rem" }}
                                     type="text"
-                                    value={link}
+                                    value={characteristic}
                                     onChange={(event) => handleCharacteristicChange(index + 1, event)}
                                 />
                                 <button onClick={() => handleDeleteCharacteristic(index + 1)}>삭제</button>
@@ -371,7 +375,7 @@ function Create() {
                         onChange={(e) => {
                             const dateValue = new Date(e.target.value);
                             const isoDate = dateValue.toISOString();
-                            handleInputChange(e, isoDate);
+                            handleInputChange(e, isoDate); // 변환된 문자열을 함께 핸들러에 전달
                         }}
                     />
                 </div>
