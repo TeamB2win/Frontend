@@ -3,10 +3,20 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./update.css";
 
+function isoDateStringToDate(isoDateString) {
+    // ISO 8601 형식의 문자열을 Date 객체로 변환
+    const dateValue = new Date(isoDateString);
+    return dateValue;
+}
+
 function Update() {
     const { id } = useParams(); // URL에서 id 파라미터 추출
 
     const [recordData, setRecordData] = useState(null);
+
+    const [relationalLinks, setRelationalLinks] = useState([]);
+
+    const [characteristics, setCharacteristics] = useState([]);
 
     const photoInputRef = useRef();
 
@@ -26,6 +36,19 @@ function Update() {
 
         fetchData();
     }, [id]);
+
+    // recordData가 변경될 때마다 호출되도록 useEffect를 사용
+    useEffect(() => {
+        // recordData가 존재하고, detail 배열과 relationalLink 속성이 존재할 때만 처리
+        if (recordData && recordData.detail[0].relationalLink) {
+            // 연관 링크와 특이사항 데이터를 문자열로부터 배열로 분리하여 상태에 저장
+            setRelationalLinks(recordData.detail[0].relationalLink.split(/\\n|\n/));
+        }
+        if (recordData && recordData.detail[0].characteristic) {
+            setCharacteristics(recordData.detail[0].characteristic.split(/\\n|\n/));
+        }
+
+    }, [recordData]);
 
     if (!recordData) {
         return <div>Loading...</div>;
@@ -64,6 +87,34 @@ function Update() {
         additionalPhotoInputRef.current.style.display = 'inline';
     };
 
+    const handleRelationalLinkChange = (index, event) => {
+        const newLinks = [...relationalLinks];
+        newLinks[index] = event.target.value;
+        setRelationalLinks(newLinks);
+    };
+
+    const handleAddRelationalLink = () => {
+        setRelationalLinks((prevLinks) => [...prevLinks, ""]);
+    };
+
+    const handleDeleteRelationalLink = (index) => {
+        setRelationalLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
+    };
+
+    const handleCharacteristicChange = (index, event) => {
+        const newCharacteristics = [...characteristics];
+        newCharacteristics[index] = event.target.value;
+        setCharacteristics(newCharacteristics);
+    };
+
+    const handleAddCharacteristic = () => {
+        setCharacteristics((prevCharacteristics) => [...prevCharacteristics, ""]);
+    };
+
+    const handleDeleteCharacteristic = (index) => {
+        setCharacteristics((prevCharacteristics) => prevCharacteristics.filter((_, i) => i !== index));
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
@@ -81,6 +132,11 @@ function Update() {
     const handleConfirmation = () => {
         const result = window.confirm("정보 수정을 완료하시겠습니까?");
         if (result) {
+            const mergedLinks = relationalLinks.join('\n');
+            setRelationalLinks(mergedLinks);
+
+            const mergedCharacteristics = characteristics.join('\n');
+            setCharacteristics(mergedCharacteristics);
             handleSubmit(); // 정보 수정 실행
         } else {
             // 사용자가 취소를 누른 경우 아무 작업 없음
@@ -165,7 +221,7 @@ function Update() {
                     <input
                         type="bool"
                         name="sex"
-                        value={recordData.sex}
+                        value={recordData.sex ? "여성" : "남성"}
                         onChange={handleInputChange}
                         required
                     />
@@ -185,7 +241,7 @@ function Update() {
                     <input
                         type="bool"
                         name="wanted_type"
-                        value={recordData.wantedType}
+                        value={recordData.wantedType ? "긴급" : "종합"}
                         onChange={handleInputChange}
                         required
                     />
@@ -238,6 +294,81 @@ function Update() {
                         onChange={handleInputChange}
                     />
                 </div>
+                <div className="form-group">
+                    <label>연관 링크</label>
+                    <div className="input-button">
+                        {/* 기존의 연관 링크 입력란들 */}
+                        {relationalLinks.map((link, index) => (
+                            <div key={index}>
+                                <input
+                                    style={{ minWidth: "12.5rem" }}
+                                    type="text"
+                                    value={link}
+                                    onChange={(event) => handleRelationalLinkChange(index, event)}
+                                />
+                                <button onClick={() => handleDeleteRelationalLink(index)}>
+                                    삭제
+                                </button>
+                            </div>
+                        ))}
+                        {/* 추가 입력란 */}
+                        <div>
+                            <input
+                                style={{ minWidth: "12.5rem" }}
+                                type="text"
+                                value={""}
+                                onChange={(event) => handleRelationalLinkChange(relationalLinks.length, event)}
+                            />
+                            <button onClick={() => handleDeleteRelationalLink(relationalLinks.length)}>삭제</button>
+                        </div>
+                        <button onClick={handleAddRelationalLink}>추가</button>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label>특이사항</label>
+                    <div className="input-button">
+                        {characteristics.map((characteristic, index) => (
+                            <div key={index}>
+                                <input
+                                    style={{ minWidth: "12.5rem" }}
+                                    type="text"
+                                    value={characteristic}
+                                    onChange={(event) => handleCharacteristicChange(index, event)}
+                                />
+                                <button onClick={() => handleDeleteCharacteristic(index)}>
+                                    삭제
+                                </button>
+                            </div>
+                        ))}
+                        <button onClick={handleAddCharacteristic}>추가</button>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label>수배시작기간</label>
+                    <input
+                        type="date"
+                        name="startedAt"
+                        value={recordData.detail[0].startedAt.slice(0, 10)}
+                        onChange={(e) => {
+                            const dateValue = new Date(e.target.value);
+                            const isoDate = dateValue.toISOString();
+                            handleInputChange(e, isoDate);
+                        }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>수배마감기간</label>
+                    <input
+                        type="date"
+                        name="endedAt"
+                        value={recordData.detail[0].endedAt.slice(0, 10)}
+                        onChange={(e) => {
+                            const dateValue = new Date(e.target.value);
+                            const isoDate = dateValue.toISOString();
+                            handleInputChange(e, isoDate);
+                        }}
+                    />
+                </div>
                 <button type="submit" style={{ marginTop: '40px', marginBottom: "20px" }}>정보 수정</button>
             </form>
         </div >
@@ -245,254 +376,3 @@ function Update() {
 }
 
 export default Update;
-
-// function Update() {
-//     const [recordData, setrecordData] = useState({
-//         name: '',
-//         email: '',
-//         age: '',
-//         photo: null,
-//     });
-
-//     const photoInputRef = useRef();
-//     const additionalPhotoInputRef = useRef();
-
-//     const [additionalPhoto, setAdditionalPhoto] = useState(null);
-
-//     const [relationalLinks, setRelationalLinks] = useState([""]);
-
-//     const [characteristics, setCharacteristics] = useState([""]);
-
-//     const handleInputChange = (event) => {
-//         const { name, type } = event.target;
-//         if (type === 'file') {
-//             const file = event.target.files[0];
-//             const reader = new FileReader();
-//             reader.onloadend = () => {
-//                 setrecordData({ ...recordData, [name]: reader.result });
-//             };
-//             reader.readAsDataURL(file);
-
-//             event.target.style.display = 'none';
-//         } else {
-//             setrecordData({ ...recordData, [name]: event.target.value });
-//         }
-//     };
-
-//     const handleAdditionalPhotoChange = (event) => {
-//         const { name } = event.target;
-//         const file = event.target.files[0];
-//         const reader = new FileReader();
-//         reader.onloadend = () => {
-//             setAdditionalPhoto(reader.result);
-//         };
-//         reader.readAsDataURL(file);
-
-//         event.target.style.display = 'none';
-//     };
-
-//     const handleDeletePhoto = () => {
-//         setrecordData({ ...recordData, photo: null });
-//         photoInputRef.current.value = '';
-//         photoInputRef.current.style.display = 'inline';
-//     };
-
-//     const handleDeleteAdditionalPhoto = () => {
-//         setAdditionalPhoto(null);
-//         additionalPhotoInputRef.current.value = '';
-//         additionalPhotoInputRef.current.style.display = 'inline';
-//     };
-
-//     const handleAddRelationalLink = () => {
-//         setRelationalLinks([...relationalLinks, ""]);
-//     };
-
-//     const handleRelationalLinkChange = (index, event) => {
-//         const updatedLinks = [...relationalLinks];
-//         updatedLinks[index] = event.target.value;
-//         setRelationalLinks(updatedLinks);
-//     };
-
-//     const handleDeleteRelationalLink = (index) => {
-//         const updatedLinks = [...relationalLinks];
-//         updatedLinks.splice(index, 1);
-//         setRelationalLinks(updatedLinks);
-//     };
-
-//     const handleAddCharacteristic = () => {
-//         setCharacteristics([...characteristics, ""]);
-//     };
-
-//     const handleCharacteristicChange = (index, event) => {
-//         const updatedCharacteristics = [...characteristics];
-//         updatedCharacteristics[index] = event.target.value;
-//         setCharacteristics(updatedCharacteristics);
-//     };
-
-//     const handleDeleteCharacteristic = (index) => {
-//         const updatedCharacteristics = [...characteristics];
-//         updatedCharacteristics.splice(index, 1);
-//         setCharacteristics(updatedCharacteristics);
-//     };
-
-//     const handleSubmit = (event) => {
-//         event.preventDefault();
-//         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
-//         if (!recordData.name || !recordData.age || !recordData.sex || !recordData.wanted_type || !recordData.criminal || !recordData.registerd_address || !recordData.residence) {
-//             alert("빈 칸을 모두 입력해주세요.");
-//             return;
-//         }
-//         handleConfirmation();
-//     };
-
-//     const handleConfirmation = () => {
-//         const result = window.confirm("정보 수정을 완료하시겠습니까?");
-//         if (result) {
-//             handleSubmit(); // 정보 수정 실행
-//         } else {
-//             // 사용자가 취소를 누른 경우 아무 작업 없음
-//         }
-//     };
-
-//     return (
-//         <div className="Update">
-//             <h1 className="header">공개수배자 정보 수정</h1>
-//             <div className='photo-containers'>
-//                 <div className="photo-container">
-//                     {recordData.photo ? (
-//                         <>
-//                             <img
-//                                 src={recordData.photo}
-//                                 alt="User"
-//                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-//                             />
-//                             <div className="delete-button">
-//                                 <button onClick={() => handleDeletePhoto()}>삭제</button>
-//                             </div>
-//                         </>
-//                     ) : (
-//                         <img
-//                             src={"/images/admin/default-image.png"}
-//                             alt="Default User"
-//                             style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-//                         />
-//                     )}
-//                     <input style={{ maxWidth: '214px' }}
-//                         type="file"
-//                         accept="image/*"
-//                         name="photo"
-//                         ref={photoInputRef}
-//                         onChange={handleInputChange}
-//                     />
-//                 </div>
-//                 <div className="photo-container">
-//                     {/* 비디오 파일 프리뷰 */}
-//                     {additionalPhoto && additionalPhoto.startsWith('data:video/') ? (
-//                         <>
-//                             <video
-//                                 controls
-//                                 src={additionalPhoto}
-//                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-//                             />
-//                             {/* 비디오 파일을 삭제할 수 있는 삭제 버튼 */}
-//                             <div className="delete-button">
-//                                 <button onClick={handleDeleteAdditionalPhoto}>삭제</button>
-//                             </div>
-//                         </>
-//                     ) : (
-//                         <img
-//                             src={"/images/admin/default-image.png"}
-//                             alt="Default User"
-//                             style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-//                         />
-//                     )}
-//                     {/* 비디오 파일을 선택할 수 있는 input 요소 */}
-//                     <input style={{ maxWidth: '214px' }}
-//                         type="file"
-//                         accept="video/*"
-//                         name="additionalPhoto"
-//                         ref={additionalPhotoInputRef} // additionalPhoto input 요소에 대한 ref를 할당합니다.
-//                         onChange={handleAdditionalPhotoChange}
-//                     />
-//                 </div>
-//             </div>
-//             <form onSubmit={handleSubmit}>
-//                 <div className="form-group">
-//                     <label>연관 링크</label>
-//                     <div className="input-button">
-//                         <div>
-//                             <input style={{ minWidth: "12.5rem" }}
-//                                 type="text"
-//                                 value={relationalLinks[0]}
-//                                 onChange={(event) => handleRelationalLinkChange(0, event)}
-//                             />
-//                             <button onClick={handleAddRelationalLink}>추가</button>
-//                         </div>
-//                         {relationalLinks.slice(1).map((link, index) => (
-//                             <div key={index}>
-//                                 <input style={{ minWidth: "12.5rem" }}
-//                                     type="text"
-//                                     value={link}
-//                                     onChange={(event) => handleRelationalLinkChange(index + 1, event)}
-//                                 />
-//                                 <button onClick={() => handleDeleteRelationalLink(index + 1)}>삭제</button>
-//                             </div>
-//                         ))}
-//                     </div>
-//                 </div>
-//                 <div className="form-group">
-//                     <label>특이사항</label>
-//                     <div className="input-button">
-//                         <div>
-//                             <input style={{ minWidth: "12.5rem" }}
-//                                 type="text"
-//                                 value={characteristics[0]}
-//                                 onChange={(event) => handleCharacteristicChange(0, event)}
-//                             />
-//                             <button onClick={handleAddCharacteristic}>추가</button>
-//                         </div>
-//                         {characteristics.slice(1).map((link, index) => (
-//                             <div key={index}>
-//                                 <input style={{ minWidth: "12.5rem" }}
-//                                     type="text"
-//                                     value={link}
-//                                     onChange={(event) => handleCharacteristicChange(index + 1, event)}
-//                                 />
-//                                 <button onClick={() => handleDeleteCharacteristic(index + 1)}>삭제</button>
-//                             </div>
-//                         ))}
-//                     </div>
-//                 </div>
-//                 <div className="form-group">
-//                     <label>수배시작기간</label>
-//                     <input
-//                         type="date"
-//                         name="startedAt"
-//                         value={recordData.startedAt}
-//                         onChange={(e) => {
-//                             const dateValue = new Date(e.target.value); // 입력받은 연-월-일을 Date 객체로 변환
-//                             const isoDate = dateValue.toISOString(); // Date 객체를 ISO 8601 형식의 문자열(datetime)로 변환
-//                             handleInputChange(e, isoDate); // 변환된 문자열을 함께 핸들러에 전달
-//                         }}
-//                     />
-//                 </div>
-//                 <div className="form-group">
-//                     <label>수배마감기간</label>
-//                     <input
-//                         type="date"
-//                         name="endedAt"
-//                         value={recordData.endedAt}
-//                         onChange={(e) => {
-//                             const dateValue = new Date(e.target.value);
-//                             const isoDate = dateValue.toISOString();
-//                             handleInputChange(e, isoDate);
-//                         }}
-//                     />
-//                 </div>
-//                 <button type="submit" style={{ marginTop: '40px', marginBottom: "20px" }}>정보 수정</button>
-//             </form>
-//         </div >
-//     );
-// }
-
-// export default Update;
