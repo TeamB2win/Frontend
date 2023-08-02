@@ -24,6 +24,9 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
+    const [imageFile, setImageFile] = useState(recordData.datasource[0].image)
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
