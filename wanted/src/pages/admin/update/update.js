@@ -24,8 +24,6 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
-    const [imageFile, setImageFile] = useState(recordData.datasource[0].image)
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,40 +64,6 @@ function Update() {
         }));
     };
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        const maxSize = 1024 * 1024;
-
-        if (file.size > maxSize) {
-            handleDeletePhoto();
-            window.alert("이미지 용량은 1MB를 초과할 수 없습니다.");
-            event.target.value = ""; // 파일 입력값 초기화
-            return;
-        }
-
-        reader.onloadend = () => {
-            const img = new Image();
-            const maxWidth = 1000;
-            const maxHeight = 1000;
-            img.onload = () => {
-                if (img.width > maxWidth || img.height > maxHeight) {
-                    handleDeletePhoto();
-                    window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
-                    event.target.value = "";
-                    return;
-                } else {
-                    setImageFile({ file: file, image: reader.result })
-                    console.log("이미지 등록")
-                }
-            };
-            img.src = reader.result;
-        };
-        reader.readAsDataURL(file);
-
-        event.target.style.display = 'none';
-    }
-
     const handleAdditionalPhotoChange = (event) => {
         const { name } = event.target;
         const file = event.target.files[0];
@@ -114,7 +78,6 @@ function Update() {
 
     const handleDeletePhoto = () => {
         console.log('Delete')
-        setImageFile({ file: null, image: null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
     };
@@ -186,33 +149,6 @@ function Update() {
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
                 <div className="photo-container">
-                    {/* 이미지 표시 */}
-                    {recordData.datasource[0].image ? (
-                        <div className="photo-container">
-                        <img
-                            src={recordData.datasource[0].image}
-                            alt="User"
-                            style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                        />
-                        <div className="delete-button">
-                            <button onClick={handleDeletePhoto}>삭제</button>
-                        </div>
-                        </div>
-                    ) : (
-                        // 사진이 없는 경우, 기본 이미지 표시
-                        <img
-                        src={"/images/admin/default-image.png"}
-                        alt="Default User"
-                        style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                        />
-                    )}
-                    <input
-                        style={{ maxWidth: '214px' }}
-                        type="file"
-                        accept="image/*"
-                        name="image"
-                        onChange={handleImageChange}
-                    />
                 </div>
                 <div className="photo-container">
                     {/* 비디오 파일 프리뷰 */}
