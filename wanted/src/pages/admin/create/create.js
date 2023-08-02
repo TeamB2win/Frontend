@@ -135,8 +135,9 @@ function Create() {
                 headers
             )
 
-            if (response.status !== 201) {
-                alert(response.data);
+            if (response.status !== 201){
+                window.alert('업로드 중 오류가 발생했습니다. 다시 등록해 주세요') //response.data
+                window.location.reload()
                 return;
             }
 
@@ -151,8 +152,6 @@ function Create() {
             ).then(function (response) {
                 console.log(response.data);
                 // TODO data hash 값 redux에 저장
-
-
                 alert("등록이 완료되었습니다.");
                 // 차후 domain 주소로 변경
                 // window.location.replace('http://localhost:3000/admin');
