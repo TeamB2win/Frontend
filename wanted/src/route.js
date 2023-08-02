@@ -27,7 +27,7 @@ export default function Routers() {
             <Route path="/admin" element={<AdminNav />}>
                 <Route index element={<Dashboard />} />
                 <Route path="create" element={<Create />} />
-                <Route path="update" element={<Update />} />
+                <Route path="update/:id" element={<Update />} />
                 <Route path="delete" element={<Delete />} />
                 <Route path="edit" element={<Edit />} />
             </Route>

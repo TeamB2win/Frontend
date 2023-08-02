@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Stack, Table } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Dashboard() {
+
+  const navigate = useNavigate();
+
+  // const clicked = (id) => {
+  //   navigate(`/admin/update/${id}`);
+  // };
+
+  const clicked = async (id) => {
+    try {
+      // 해당 레코드의 ID에 맞는 API를 호출하여 데이터를 받아옴
+      const response = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
+      const recordData = response.data;
+
+      // 데이터를 받아와서 해당 레코드의 ID와 함께 상세 페이지로 이동
+      navigate(`/admin/update/${id}`, { state: { recordData } });
+      console.log(recordData.data[0])
+    } catch (error) {
+      // API 호출에 실패했을 때 예외 처리
+      console.error("API 호출에 실패했습니다.", error);
+    }
+  };
 
   const [data, setData] = useState([]);
 
@@ -99,9 +120,9 @@ export default function Dashboard() {
                 <td>
                   <Row>
                     <Col style={styles.table.col}>
-                      <Link to="/admin/update" style={styles.table.btn}>
+                      <button onClick={() => clicked(data.id)} style={styles.table.btn}>
                         수정
-                      </Link>
+                      </button>
                     </Col>
                     <Col style={styles.table.col}>
                       <Link to="/admin/delete" style={styles.table.btn}>
