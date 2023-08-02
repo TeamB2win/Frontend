@@ -111,7 +111,7 @@ export default function Dashboard() {
                   } else if (column === 'detailC') {
                     valueToDisplay = data['detail'][0]['criminal'];
                   } else if (column === 'detailS') {
-                    valueToDisplay = data['detail'][0]['startedAt'].slice(-19, -9) + " ~ " + data['detail'][0]['endedAt'].slice(-19, -9);
+                    valueToDisplay = data['detail'][0]['startedAt'].slice(0, 10) + " ~ " + data['detail'][0]['endedAt'].slice(0, 10);
                   } else {
                     valueToDisplay = data[column];
                   }
