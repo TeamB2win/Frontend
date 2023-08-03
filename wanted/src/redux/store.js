@@ -13,10 +13,11 @@ import storage from "redux-persist/lib/storage/session";
 
 // slice import
 import counterSlice from './counterSlice';
-
+import dataSlice from './dataSlice_3'; // 새로 추가한 dataSlice
 
 const rootReducer = combineReducers({
   counter: counterSlice,
+  data: dataSlice // 추가한 dataSlice의 리듀서를 연결
 })
 
 const persistConfig = {
@@ -32,9 +33,7 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      
       // }).concat(logger),
     }),
 });

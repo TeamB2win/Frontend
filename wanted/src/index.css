@@ -1,13 +1,126 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.slide-content {
+  display: flex;
+  /* 이 부분을 추가하여 이미지와 텍스트를 가로로 나란히 배치합니다. */
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  justify-content: center;
+  /* 가로 중앙 정렬 */
+  flex-direction: row;
+  /* 요소들을 가로로 나란히 배치합니다. */
+}
+
+.slick-arrow {
+  display: none !important;
+  /* 화살표 제거 우선 적용 */
+}
+
+.img-container {
+  height: 100%;
+  width: 50%;
+  /* 이미지를 가로로 반만 차지하도록 설정 (필요에 따라 조절 가능) */
+}
+
+.img {
+  height: 86vh;
+  width: 48vw;
+}
+
+.text-container {
+  width: 50%;
+  /* 텍스트를 가로로 반만 차지하도록 설정 (필요에 따라 조절 가능) */
+  display: flex;
+  /* flexbox를 사용하여 내부 요소를 가로 방향으로 정렬 */
+  flex-direction: column;
+  /* 내부 요소들을 세로 방향으로 배치 */
+  align-items: center;
+}
+
+.title {
+  color: black;
+  font-size: 42px;
+  font-style: italic;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 12px;
+  background-color: #fd6f22;
+  display: inline-block;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.tagI-container {
+  display: flex;
+  /* tagI와 name을 가로로 배치 */
+  align-self: flex-start;
+}
+
+.tagI {
+  color: white;
+  background-color: #2d55c9;
+  padding: 6px;
+  font-size: 24px;
+  font-style: italic;
+  font-family: sans-serif;
+  text-align: center;
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+.tagC {
+  color: white;
+  background-color: #2d55c9;
+  padding: 6px;
+  font-size: 24px;
+  font-style: italic;
+  font-family: sans-serif;
+  text-align: center;
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+.name {
+  color: #fd6f22;
+  font-size: 24px;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  /* name을 인라인 블록으로 설정하여 옆으로 배치 */
+  margin-top: 22px;
+  margin-left: 10px;
+}
+
+.inform {
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  text-align: left;
+  align-self: flex-start;
+  margin-left: 24px;
+}
+
+.char {
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  text-align: left;
+  align-self: flex-start;
+  margin-left: 24px;
+}
+
+.infoText {
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  text-align: left;
+  align-self: flex-start;
+  margin-left: 24px;
 }

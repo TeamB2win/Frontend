@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useSelector, useDispatch } from "react-redux"; // useDispatch와 useSelector를 import
 // bootstrap 
 import {
   Col,
@@ -15,6 +15,8 @@ import { CiSearch } from "react-icons/ci";
 
 
 export default function Grid() {
+  const state = useSelector((state) => state.data); // dataSlice에서 상태 전체를 가져오기
+  
   const styles = {
     div: {
       "width": "80%",

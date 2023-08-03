@@ -24,14 +24,12 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
-    const [imageFile, setImageFile] = useState(recordData.datasource[0].image)
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
-                setRecordData(res.data.data[0]);
+                setRecordData(res.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -57,14 +55,21 @@ function Update() {
         return <div>Loading...</div>;
     }
 
-    const handleInputChange = (e) => {
-        // 사용자가 input 값을 변경할 때 호출되는 이벤트 핸들러
-        const { name, value } = e.target;
+    const handleInputChange = (e, key) => {
+        const { value } = e.target;
         setRecordData((prevData) => ({
-            ...prevData,
-            [name]: value, // name 속성을 사용하여 해당 필드를 업데이트
+          ...prevData,
+          data: prevData.data.map((item) => ({
+            ...item,
+            detail: [
+              {
+                ...item.detail[0],
+                [key]: value,
+              },
+            ],
+          })),
         }));
-    };
+      };
 
     const handleAdditionalPhotoChange = (event) => {
         const { name } = event.target;
@@ -255,7 +260,7 @@ function Update() {
                         type="text"
                         name="criminal"
                         value={recordData.detail[0].criminal}
-                        onChange={handleInputChange}
+                        onChange={(e) => handleInputChange(e, "criminal")}
                         required
                     />
                 </div>
