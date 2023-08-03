@@ -65,10 +65,21 @@ function Update() {
 
     const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
         const { name, value } = e.target;
-        setRecordData((prevData) => ({
-            ...prevData,
-            [name]: isoDate || value, // isoDate가 있으면 isoDate를, 없으면 value를 사용
-        }));
+        // setRecordData((prevData) => ({
+        //     ...prevData,
+        //     [name]: isoDate || value, // isoDate가 있으면 isoDate를, 없으면 value를 사용
+        // }));
+        if (name === "sex" | name === "wantedType") {
+            setRecordData((prevData) => ({
+                ...prevData,
+                [name]: value === "true", // "true"인 경우 true, 그렇지 않으면 false로 설정됨
+            }));
+        } else {
+            setRecordData((prevData) => ({
+                ...prevData,
+                [name]: isoDate || value,
+            }));
+        }
     };
 
     const handleAdditionalPhotoChange = (event) => {
@@ -221,15 +232,26 @@ function Update() {
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group-radio">
                     <label>성별</label>
-                    <input
-                        type="bool"
-                        name="sex"
-                        value={recordData.sex ? "여성" : "남성"}
-                        onChange={handleInputChange}
-                        required
-                    />
+                    <div>
+                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
+                            type="radio"
+                            name="sex"
+                            value="false"
+                            checked={!recordData.sex} // "false"인 경우에만 체크되도록 설정
+                            onChange={handleInputChange}
+                            required
+                        /> 남성
+                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
+                            type="radio"
+                            name="sex"
+                            value="true"
+                            checked={recordData.sex} // "true"인 경우에만 체크되도록 설정
+                            onChange={handleInputChange}
+                            required
+                        /> 여성
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>나이</label>
@@ -241,15 +263,26 @@ function Update() {
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group-radio">
                     <label>유형</label>
-                    <input
-                        type="bool"
-                        name="wanted_type"
-                        value={recordData.wantedType ? "긴급" : "종합"}
-                        onChange={handleInputChange}
-                        required
-                    />
+                    <div>
+                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
+                            type="radio"
+                            name="wantedType"
+                            value="true"
+                            checked={recordData.wantedType} // "true"인 경우에만 체크되도록 설정
+                            onChange={handleInputChange}
+                            required
+                        /> 긴급
+                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
+                            type="radio"
+                            name="wantedType"
+                            value="false"
+                            checked={!recordData.wantedType} // "false"인 경우에만 체크되도록 설정
+                            onChange={handleInputChange}
+                            required
+                        /> 종합
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>죄명</label>
@@ -265,7 +298,7 @@ function Update() {
                     <label>주민등록상 주소지</label>
                     <input
                         type="text"
-                        name="registerd_address"
+                        name="registeredAddress"
                         value={recordData.registeredAddress}
                         onChange={handleInputChange}
                         required
@@ -315,7 +348,7 @@ function Update() {
                                 </button>
                             </div>
                         ))}
-                        <button onClick={handleAddRelationalLink}>추가</button>
+                        <button style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddRelationalLink}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -334,7 +367,7 @@ function Update() {
                                 </button>
                             </div>
                         ))}
-                        <button onClick={handleAddCharacteristic}>추가</button>
+                        <button style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddCharacteristic}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -364,7 +397,7 @@ function Update() {
                     />
                 </div>
                 <button type="submit" style={{ marginTop: '40px', marginBottom: "20px" }}>정보 수정</button>
-            </form>
+            </form >
         </div >
     );
 }
