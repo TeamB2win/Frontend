@@ -24,12 +24,20 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
+    const columns = ["name", "sex", "wantedType", "age"];
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
-                setRecordData(res.data.data);
+                let data = {
+                    ...res.data.data[0].detail[0],
+                    'age': res.data.data[0].age,
+                    'name': res.data.data[0].name,
+                    'sex': res.data.data[0].sex,
+                    'wantedType': res.data.data[0].wantedType,
+                }
+                setRecordData(data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -41,12 +49,12 @@ function Update() {
     // recordData가 변경될 때마다 호출되도록 useEffect를 사용
     useEffect(() => {
         // recordData가 존재하고, detail 배열과 relationalLink 속성이 존재할 때만 처리
-        if (recordData && recordData.detail[0].relationalLink) {
+        if (recordData && recordData.relationalLink) {
             // 연관 링크와 특이사항 데이터를 문자열로부터 배열로 분리하여 상태에 저장
-            setRelationalLinks(recordData.detail[0].relationalLink.split(/\\n|\n/));
+            setRelationalLinks(recordData.relationalLink.split(/\\n|\n/));
         }
-        if (recordData && recordData.detail[0].characteristic) {
-            setCharacteristics(recordData.detail[0].characteristic.split(/\\n|\n/));
+        if (recordData && recordData.characteristic) {
+            setCharacteristics(recordData.characteristic.split(/\\n|\n/));
         }
 
     }, [recordData]);
@@ -55,21 +63,13 @@ function Update() {
         return <div>Loading...</div>;
     }
 
-    const handleInputChange = (e, key) => {
-        const { value } = e.target;
+    const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
+        const { name, value } = e.target;
         setRecordData((prevData) => ({
-          ...prevData,
-          data: prevData.data.map((item) => ({
-            ...item,
-            detail: [
-              {
-                ...item.detail[0],
-                [key]: value,
-              },
-            ],
-          })),
+            ...prevData,
+            [name]: isoDate || value, // isoDate가 있으면 isoDate를, 없으면 value를 사용
         }));
-      };
+    };
 
     const handleAdditionalPhotoChange = (event) => {
         const { name } = event.target;
@@ -126,7 +126,7 @@ function Update() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
-        if (!recordData.name || !recordData.age || !recordData.sex || !recordData.wanted_type || !recordData.criminal || !recordData.registerd_address || !recordData.residence) {
+        if (!recordData.name || !recordData.age || !recordData.sex || !recordData.wanted_type) {
             alert("빈 칸을 모두 입력해주세요.");
             return;
         }
@@ -183,7 +183,6 @@ function Update() {
                     />
                 </div>
                 <div className="photo-container">
-                    {/* 비디오 파일 프리뷰 */}
                     {additionalPhoto && additionalPhoto.startsWith('data:video/') ? (
                         <>
                             <video
@@ -191,7 +190,6 @@ function Update() {
                                 src={additionalPhoto}
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
-                            {/* 비디오 파일을 삭제할 수 있는 삭제 버튼 */}
                             <div className="delete-button">
                                 <button onClick={handleDeleteAdditionalPhoto}>삭제</button>
                             </div>
@@ -203,7 +201,6 @@ function Update() {
                             style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                         />
                     )}
-                    {/* 비디오 파일을 선택할 수 있는 input 요소 */}
                     <input style={{ maxWidth: '214px' }}
                         type="file"
                         accept="video/*"
@@ -259,8 +256,8 @@ function Update() {
                     <input
                         type="text"
                         name="criminal"
-                        value={recordData.detail[0].criminal}
-                        onChange={(e) => handleInputChange(e, "criminal")}
+                        value={recordData.criminal}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -269,7 +266,7 @@ function Update() {
                     <input
                         type="text"
                         name="registerd_address"
-                        value={recordData.detail[0].registeredAddress}
+                        value={recordData.registeredAddress}
                         onChange={handleInputChange}
                         required
                     />
@@ -279,7 +276,7 @@ function Update() {
                     <input
                         type="text"
                         name="residence"
-                        value={recordData.detail[0].residence}
+                        value={recordData.residence}
                         onChange={handleInputChange}
                         required
                     />
@@ -289,7 +286,7 @@ function Update() {
                     <input
                         type="number"
                         name="height"
-                        value={recordData.detail[0].height}
+                        value={recordData.height}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -298,7 +295,7 @@ function Update() {
                     <input
                         type="text"
                         name="weight"
-                        value={recordData.detail[0].weight}
+                        value={recordData.weight}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -345,7 +342,7 @@ function Update() {
                     <input
                         type="date"
                         name="startedAt"
-                        value={recordData.detail[0].startedAt.slice(0, 10)}
+                        value={recordData.startedAt.slice(0, 10)}
                         onChange={(e) => {
                             const dateValue = new Date(e.target.value);
                             const isoDate = dateValue.toISOString();
@@ -358,7 +355,7 @@ function Update() {
                     <input
                         type="date"
                         name="endedAt"
-                        value={recordData.detail[0].endedAt.slice(0, 10)}
+                        value={recordData.endedAt.slice(0, 10)}
                         onChange={(e) => {
                             const dateValue = new Date(e.target.value);
                             const isoDate = dateValue.toISOString();

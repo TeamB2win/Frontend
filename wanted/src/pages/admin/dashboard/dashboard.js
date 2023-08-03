@@ -79,7 +79,8 @@ export default function Dashboard() {
         "backgroundColor": "#1C1C1C",
         "whiteSpace": "nowrap",
         "wordBreak": "break-word",
-        "color": "#FFCD4A"
+        "color": "#FFCD4A",
+        "margin": "0"
       }
     },
   }
@@ -125,9 +126,9 @@ export default function Dashboard() {
                       </button>
                     </Col>
                     <Col style={styles.table.col}>
-                      <Link to="/admin/delete" style={styles.table.btn}>
+                      <button style={styles.table.btn}>
                         삭제
-                      </Link>
+                      </button>
                     </Col>
                   </Row>
                 </td>
