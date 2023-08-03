@@ -343,12 +343,12 @@ function Update() {
                                     value={link}
                                     onChange={(event) => handleRelationalLinkChange(index, event)}
                                 />
-                                <button onClick={() => handleDeleteRelationalLink(index)}>
+                                <button type="button" onClick={() => handleDeleteRelationalLink(index)}>
                                     삭제
                                 </button>
                             </div>
                         ))}
-                        <button style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddRelationalLink}>추가</button>
+                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddRelationalLink}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -362,12 +362,12 @@ function Update() {
                                     value={characteristic}
                                     onChange={(event) => handleCharacteristicChange(index, event)}
                                 />
-                                <button onClick={() => handleDeleteCharacteristic(index)}>
+                                <button type="button" onClick={() => handleDeleteCharacteristic(index)}>
                                     삭제
                                 </button>
                             </div>
                         ))}
-                        <button style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddCharacteristic}>추가</button>
+                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddCharacteristic}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
