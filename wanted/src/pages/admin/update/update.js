@@ -262,7 +262,7 @@ function Update() {
                                 <input 
                                     type="checkbox" 
                                     name="inference" 
-                                    checked={isCheckboxChecked}
+                                    disabled={isButtonDisabled}
                                 />  영상 생성
                             </div>
                         </>
