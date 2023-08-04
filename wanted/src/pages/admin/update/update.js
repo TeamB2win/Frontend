@@ -24,7 +24,7 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
-    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const columns = ["name", "sex", "wantedType", "age"];
     
