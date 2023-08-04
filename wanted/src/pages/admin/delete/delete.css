@@ -10,24 +10,6 @@
     margin-top: 5rem;
 }
 
-.photo-containers {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    margin-right: 2rem;
-}
-
-.photo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-    margin-left: 2rem;
-}
 
 label {
     min-width: 10rem;

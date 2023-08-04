@@ -1,28 +1,16 @@
 .Update {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 145h;
+    width: 80%;
+    margin: 0 auto;
 }
 
-.photo-containers {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    margin-right: 2rem;
+.header {
+    width: fit-content;
+    margin: 0 auto;
 }
 
-.photo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-    margin-left: 2rem;
+.photo-container img {
+    max-width: 100%; /* 이미지가 부모 요소의 너비에 맞게 조절 */
+    max-height: 100%; /* 이미지가 부모 요소의 높이에 맞게 조절 */
 }
 
 label {
