@@ -1,17 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; // useDispatch와 useSelector를 import
+import { useSelector } from "react-redux"; // useDispatch와 useSelector를 import
 import { Col, Container, Row, Stack, Card, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { CiSearch } from "react-icons/ci"; // icons
 import useDataFetch from "../../../hooks/useDataFetch";
 
 
 // 화면페이지
 //Grid가 부모, ToolBar가 자식
 export default function Grid() {
-    const dispatch = useDispatch();
-
-    const { data, data_hash, cashedData } = useSelector((state) => state.data); // dataSlice에서 상태 전체를 가져오기
+    const { data, data_hash } = useSelector((state) => state.data); // dataSlice에서 상태 전체를 가져오기
     useDataFetch(data_hash); // 리덕스로 받아온 데이터
 
     const [filteredData, setFilteredData] = useState(data);
@@ -52,7 +49,8 @@ export default function Grid() {
             )
         }
     }, [filter])
-
+      
+      
     const styles = {
         div: {
             width: "80%",
@@ -81,92 +79,111 @@ function ToolBar({uniqueData, filter, setFilter}) {
     ];
 
     const styles = {
-        toolBar: {
-            div: {
-                width: "100%",
-                height: "5em",
-            },
-            select: {
-                backgroundColor: "transparent",
-                borderRadius: "0",
-                color: "white",
-            },
-            option: {
-                backgroundColor: "#1C1C1C",
-                color: "white",
-            },
-            input: {
-                border: "2px solid",
-                borderColor: "transparent transparent #FD6F22 transparent",
-                backgroundColor: "transparent",
-                color: "#FD6F22",
-                height: "2em",
-                width: "100%",
-            },
+        toolBarContainer: {
+          display: 'flex',
+          justifyContent: 'space-between', // 중앙 정렬
+          width: '100%',
+          marginBottom: '1em', // 아래에 여백 추가
         },
-    };
+        toolBar: {
+          flex: 1,
+          padding: "2em",
+          //maxWidth: '50%', // 최대 너비를 50%로 설정
+        },
+        select: {
+          backgroundColor: 'transparent',
+          borderRadius: '0',
+          color: 'white',
+          width: '100%', // 너비를 100%로 설정
+          height: '3em',
+          margin: "0 auto"
+        },
+        option: {
+          backgroundColor: '#1C1C1C',
+          color: 'white',
+        },
+        input: {
+          border: '2px solid',
+          borderColor: 'transparent transparent #FD6F22 transparent',
+          backgroundColor: 'transparent',
+          color: '#FD6F22',
+          height: '2em',
+          width: '100%',
+        },
+      };
+      
+      
+    // const styles = {
+    //     toolBar: {
+    //         div: {
+    //             width: "100%",
+    //             height: "5em",
+    //         },
+    //         select: {
+    //             backgroundColor: "transparent",
+    //             borderRadius: "0",
+    //             color: "white",
+    //         },
+    //         option: {
+    //             backgroundColor: "#1C1C1C",
+    //             color: "white",
+    //         },
+    //         input: {
+    //             border: "2px solid",
+    //             borderColor: "transparent transparent #FD6F22 transparent",
+    //             backgroundColor: "transparent",
+    //             color: "#FD6F22",
+    //             height: "2em",
+    //             width: "100%",
+    //         },
+    //     },
+    // };
 
 
     return (
         <Container>
-            <div style={styles.toolBar.div}>
-                <Stack
-                    direction="horizontal"
-                    gap={5}
-                    style={{ height: "100%" }}
-                >
+            <Row style={styles.toolBarContainer}>
                     {labels.map(({ ariaLabel, label }, idx) => (
-                        <Fragment key={idx}>
-                            <div className="p-2">
-                                <Form.Select
-                                    aria-label={`select ${label}`}
-                                    style={styles.toolBar.select}
-                                    onChange={(e) => {
-                                        setFilter({
-                                            ...filter,
-                                            [label]: e.target.value,
-                                        });
-                                        setResetSelected(false);
-                                    }}
-                                >
-                                    <option
-                                        selected={resetSelected}
-                                        style={styles.toolBar.option}
-                                        value={""}
+                        <Col style={{"minWidth": "15em"}}>
+                            <Fragment key={idx}>
+                                <div style={styles.toolBar}>
+                                    <Form.Select
+                                        aria-label={`select ${label}`}
+                                        style={styles.toolBar.select}
+                                        onChange={(e) => {
+                                            setFilter({
+                                                ...filter,
+                                                [label]: e.target.value,
+                                            });
+                                            setResetSelected(false);
+                                        }}
                                     >
-                                        {ariaLabel}
-                                    </option>
-                                    {(ariaLabel === "유형"
-                                        ? CRIMINAL_TYPES
-                                        : uniqueData
-                                    ).map((el) => (
-                                        <>
-                                            <option
-                                                value={el}
-                                                style={styles.toolBar.option}
-                                            >
-                                                {el}
-                                            </option>
-                                        </>
-                                    ))}
-                                </Form.Select>
-                            </div>
-                        </Fragment>
+                                        <option
+                                            selected={resetSelected}
+                                            style={styles.toolBar.option}
+                                            value={""}
+                                        >
+                                            {ariaLabel}
+                                        </option>
+                                        {(ariaLabel === "유형"
+                                            ? CRIMINAL_TYPES
+                                            : uniqueData
+                                        ).map((el) => (
+                                            <>
+                                                <option
+                                                    value={el}
+                                                    style={styles.toolBar.option}
+                                                >
+                                                    {el}
+                                                </option>
+                                            </>
+                                        ))}
+                                    </Form.Select>
+                                </div>
+                            </Fragment>
+                        </Col>
                     ))}
-
-                    <Stack
-                        direction="horizontal"
-                        gap={3}
-                        className="p-2"
-                        style={{ flexGrow: "1" }}
-                    >
-                        <input type="text" style={styles.toolBar.input} />
-                        <i style={{ color: "#FD6F22" }}>
-                            <CiSearch size={30} />
-                        </i>
-                    </Stack>
-                </Stack>
-            </div>
+            </Row>
         </Container>
     );
 }
@@ -184,6 +201,8 @@ function GridWanted({ data }) {
 }
 
 function CardList(props) {
+    const [videoError, setVideoError] = useState(false);
+
     const { id, name, age, sex, detail } = props;
     const [{ criminal }] = detail;
     const styles = {
@@ -220,7 +239,15 @@ function CardList(props) {
     return (
         <Col key={id} style={styles.col}>
             <Card style={styles.card}>
-                <video muted src="/images/test/video.mp4" loop controls autoPlay></video>
+                {videoError ?
+                <img src="/logo.png" alt={"image_1"} /> :
+                <video controls autoPlay loop onError={() => {setVideoError(true)}}>
+                    {/* 여기에 비디오 파일 경로를 지정합니다. */}
+                    <source src="images/test/video.mp4" type="video/mp4" />
+                    {/* 기본적으로 보여줄 이미지 */}
+                    {/* <img src="/logo.png" alt={"image_1"} /> */}
+                </video>
+                }
                 <Card.Body style={styles.cardBody}>
                     <Card.Title style={styles.cardTitle}>{criminal}</Card.Title>
                     <Card.Title style={styles.cardSubTitle}>
