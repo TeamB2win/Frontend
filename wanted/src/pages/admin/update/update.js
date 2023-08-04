@@ -24,6 +24,8 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
     const columns = ["name", "sex", "wantedType", "age"];
     
     const [imageFile, setImageFile] = useState({
@@ -113,6 +115,8 @@ function Update() {
         reader.readAsDataURL(file);
 
         event.target.style.display = 'none';
+
+        setIsCheckboxChecked(true);
     }
 
     const handleAdditionalPhotoChange = (event) => {
@@ -129,10 +133,10 @@ function Update() {
 
     const handleDeletePhoto = (image) => {
         console.log('Delete');
-        handleDeleteAdditionalPhoto();
         setImageFile({ file: null, image: image || null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
+        setIsCheckboxChecked(false);
     };
 
     const handleDeleteAdditionalPhoto = () => {
@@ -255,7 +259,11 @@ function Update() {
                                 style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
                             <div>
-                                <input type="checkbox" name="inference" />  영상 생성
+                                <input 
+                                    type="checkbox" 
+                                    name="inference" 
+                                    checked={isCheckboxChecked}
+                                />  영상 생성
                             </div>
                         </>
                     ) : (
