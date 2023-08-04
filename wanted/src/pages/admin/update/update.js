@@ -195,6 +195,9 @@ function Update() {
             // 사용자가 취소를 누른 경우 아무 작업 없음
         }
     };
+    const handleInferenceVideo = () => {
+        //TODO: inference 요청보내기
+    }
 
     return (
         <div className="Update">
@@ -217,9 +220,9 @@ function Update() {
                     recordData.image ? (
                         <>
                             <img
-                                src={imageFile.image}
+                                src={recordData.image}
                                 alt="User"
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
                         </>
                     ) : (
@@ -227,7 +230,7 @@ function Update() {
                             <img
                                 src={"/images/admin/default-image.png"}
                                 alt="Default User"
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
                             />
                         </>
                     ))}
@@ -248,7 +251,7 @@ function Update() {
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
                             <div className="delete-button">
-                                <button onClick={handleDeleteAdditionalPhoto}>삭제</button>
+                                <button onClick={handleInferenceVideo}>재생성요청</button>
                             </div>
                         </>
                     ) : (
@@ -258,13 +261,9 @@ function Update() {
                             style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                         />
                     )}
-                    <input style={{ maxWidth: '214px' }}
-                        type="file"
-                        accept="video/*"
-                        name="additionalPhoto"
-                        ref={additionalPhotoInputRef} // additionalPhoto input 요소에 대한 ref를 할당합니다.
-                        onChange={handleAdditionalPhotoChange}
-                    />
+                    <div className="delete-button">
+                        <button onClick={handleInferenceVideo}>생성요청</button>
+                    </div>
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
