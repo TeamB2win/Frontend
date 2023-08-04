@@ -32,7 +32,7 @@ const Home = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 10000000,
+        autoplaySpeed: 7000,
         prevArrow: null,
         nextArrow: null,
     };
