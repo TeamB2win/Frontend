@@ -129,6 +129,7 @@ function Update() {
 
     const handleDeletePhoto = (image) => {
         console.log('Delete');
+        handleDeleteAdditionalPhoto();
         setImageFile({ file: null, image: image || null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
