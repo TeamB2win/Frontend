@@ -41,6 +41,8 @@ function Update() {
                     'name': res.data.data[0].name,
                     'sex': res.data.data[0].sex,
                     'wantedType': res.data.data[0].wantedType,
+                    'imagePath': res.data.data[0].datasource[0].image,
+                    'videoPath': res.data.data[0].datasource[0].video,
                 }
                 setRecordData(data);
             } catch (error) {
