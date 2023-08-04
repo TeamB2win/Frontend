@@ -24,7 +24,7 @@ function Update() {
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const columns = ["name", "sex", "wantedType", "age"];
     
