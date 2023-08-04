@@ -9,6 +9,13 @@ function isoDateStringToDate(isoDateString) {
     return dateValue;
 }
 
+function isEmpty( node ) {
+    if ( typeof node === 'undefined' || node === null || node === "" )
+        return true;
+    else
+        return false;
+}
+
 function Update() {
     const { id } = useParams(); // URL에서 id 파라미터 추출
 
@@ -26,6 +33,8 @@ function Update() {
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
+    const [videoInferenceButton, setVideoInferenceButton] = useState(false);
+
     const columns = ["name", "sex", "wantedType", "age"];
     
     const [imageFile, setImageFile] = useState({
@@ -36,7 +45,7 @@ function Update() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
+                const res = await axios.get(`http://localhost:8000/wanted/${id}`);
                 let data = {
                     ...res.data.data[0].datasource[0],
                     ...res.data.data[0].detail[0],
@@ -46,6 +55,7 @@ function Update() {
                     'wantedType': res.data.data[0].wantedType,
                     'imagePath': res.data.data[0].datasource[0].image,
                     'videoPath': res.data.data[0].datasource[0].video,
+                    'wantedId' : res.data.data[0].wantedId
                 }
                 setRecordData(data);
             } catch (error) {
@@ -71,6 +81,12 @@ function Update() {
 
     if (!recordData) {
         return <div>Loading...</div>;
+    }
+
+    const handleVideoInferenceButton = (event) => {
+        const { checked } = event.target;
+        setVideoInferenceButton(!checked);
+        console.log(videoInferenceButton);
     }
 
     const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
@@ -185,7 +201,8 @@ function Update() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
-        if (!recordData.name || !recordData.age || !recordData.sex || !recordData.wanted_type) {
+        console.log(recordData.name, recordData.age, recordData.sex, recordData.wanted_type)
+        if ( isEmpty(recordData.name) || isEmpty(recordData.age) || isEmpty(recordData.sex) || isEmpty(recordData.wantedType)) {
             alert("빈 칸을 모두 입력해주세요.");
             return;
         }
@@ -199,15 +216,153 @@ function Update() {
     const handleConfirmation = () => {
         const result = window.confirm("정보 수정을 완료하시겠습니까?");
         if (result) {
-            const mergedLinks = relationalLinks.join('\n');
-            setRelationalLinks(mergedLinks);
-
-            const mergedCharacteristics = characteristics.join('\n');
-            setCharacteristics(mergedCharacteristics);
-            handleSubmit(); // 정보 수정 실행
+            handleUpdateDataRequest();
+            if (imageFile.image) {
+                handleImageChangeRequest();
+            }
+            else if (videoInferenceButton) {
+                handleReInferenceVideoRequest();
+            };
+            
         } else {
             // 사용자가 취소를 누른 경우 아무 작업 없음
         }
+    };
+
+    const handleImageChangeRequest = async () => {
+        const formData = new FormData();
+        formData.append(
+            "file",
+            imageFile.file
+        )
+
+        const headers = {
+            "Content-Type": "multipart/form-data"
+        }
+        const params = {
+            "id" : id
+        }
+
+        await axios.put(
+            "http://localhost:8000/admin/image",
+            formData,
+            {
+                headers : headers,
+                params : params
+            }
+        ).then(function (response) {
+            console.log(response.data);
+            // TODO data hash 값 redux에 저장
+            alert("이미지 반영이 완료되었습니다.");
+        }).catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.headers);
+                console.log(error.response.data);
+                alert("에러가 발생하였습니다.", error.response.data)
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                alert("잘못된 이미지 수정 요청입니다. 잠시 후 다시 시도해주세요");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+                alert("잘못된 이미지 수정 요청입니다. 잠시 후 다시 시도해주세요", error.message);
+            }
+            console.log(error.config);
+        });
+
+    };
+    const handleReInferenceVideoRequest = async () => {
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        await axios.put(
+            "http://localhost:8000/admin/data",
+            { "id" : id },
+            { headers : headers }
+        ).then(function (response) {
+            console.log(response.data);
+            // TODO data hash 값 redux에 저장
+            alert("데이터 수정 요청이 완료되었습니다.");
+        }).catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.headers);
+                console.log(error.response.data);
+                alert("에러가 발생하였습니다.", error.response.data)
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                alert("잘못된 데이터 수정 요청입니다. 잠시 후 다시 시도해주세요");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+                alert("잘못된 데이터 수정 요청입니다. 잠시 후 다시 시도해주세요", error.message);
+            }
+            console.log(error.config);
+        });
+    }
+
+    const handleUpdateDataRequest = async () => {
+        const wantedIdAsInteger = parseInt(recordData.wantedId, 10);
+        const wantedTypeAsBool = JSON.parse(recordData.wantedType);
+        const sexAsBool = JSON.parse(recordData.sex);
+        const startedAtAsDatetime = new Date(recordData.startedAt);
+        const endedAtAsDatetime = new Date(recordData.endedAt);
+        const finalData = {
+            "id": id,
+            "name": recordData.name,
+            "sex": sexAsBool,
+            "age": recordData.age,
+            "wantedType": wantedTypeAsBool,
+            "wantedId": wantedIdAsInteger,
+            "criminal": recordData.criminal,
+            "registeredAddress": recordData.registeredAddress,
+            "residence": recordData.residence,
+            "height": recordData.height,
+            "weight": recordData.weight,
+            "relationalLink": relationalLinks.join('\\n'),
+            "characteristic": characteristics.join('\\n'),
+            "startedAt": startedAtAsDatetime,
+            "endedAt": endedAtAsDatetime,
+        }
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        await axios.put(
+            "http://localhost:8000/admin/data",
+            finalData,
+            { headers : headers }
+        ).then(function (response) {
+            console.log(response.data);
+            // TODO data hash 값 redux에 저장
+            alert("데이터 수정 요청이 완료되었습니다.");
+        }).catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.headers);
+                console.log(error.response.data);
+                alert("에러가 발생하였습니다.", error.response.data)
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                alert("잘못된 데이터 수정 요청입니다. 잠시 후 다시 시도해주세요");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+                alert("잘못된 데이터 수정 요청입니다. 잠시 후 다시 시도해주세요", error.message);
+            }
+            console.log(error.config);
+        });
     };
 
     return (
@@ -267,7 +422,8 @@ function Update() {
                             <div>
                                 <input 
                                     type="checkbox" 
-                                    name="inference" 
+                                    name="inference"
+                                    onClick={handleVideoInferenceButton}
                                     disabled={isButtonDisabled}
                                 />  영상 생성요청 (사진 선택 시, 자동 요청)
                             </div>
@@ -287,6 +443,15 @@ function Update() {
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>수배번호</label>
+                    <input
+                        type="number"
+                        name="wantedId"
+                        value={recordData.wantedId}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <div className="form-group">
                     <label>이름</label>
                     <input
