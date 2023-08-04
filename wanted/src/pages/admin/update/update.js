@@ -253,8 +253,8 @@ function Update() {
                                 src={recordData.video}
                                 style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
-                            <div className="delete-button">
-                                <button onClick={handleInferenceVideo}>재생성요청</button>
+                            <div>
+                                <input type="checkbox" name="inference" />  영상 생성
                             </div>
                         </>
                     ) : (
@@ -264,8 +264,8 @@ function Update() {
                                 alt="Default User"
                                 style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
-                            <div className="delete-button">
-                                <button onClick={handleInferenceVideo}>생성요청</button>
+                            <div>
+                                <input type="checkbox" name="inference" disabled checked />  영상 생성
                             </div>
                         </>
                     )}
