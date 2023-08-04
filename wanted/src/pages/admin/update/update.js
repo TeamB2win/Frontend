@@ -263,7 +263,7 @@ function Update() {
                                     type="checkbox" 
                                     name="inference" 
                                     disabled={isButtonDisabled}
-                                />  영상 생성
+                                />  영상 생성요청 (사진 선택 시, 자동 요청)
                             </div>
                         </>
                     ) : (
