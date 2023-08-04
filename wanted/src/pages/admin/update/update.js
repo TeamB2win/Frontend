@@ -20,22 +20,25 @@ function Update() {
 
     const photoInputRef = useRef();
 
-    const [imageFile, setImageFile] = useState({
-        file: null,
-        image: null
-    })
-
     const additionalPhotoInputRef = useRef();
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
     const columns = ["name", "sex", "wantedType", "age"];
+    
+    const [imageFile, setImageFile] = useState({
+        file: null,
+        image: null
+    })
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
                 let data = {
+                    ...res.data.data[0].datasource[0],
                     ...res.data.data[0].detail[0],
                     'age': res.data.data[0].age,
                     'name': res.data.data[0].name,
@@ -121,6 +124,8 @@ function Update() {
         reader.readAsDataURL(file);
 
         event.target.style.display = 'none';
+
+        setIsButtonDisabled(true);
     }
 
     const handleAdditionalPhotoChange = (event) => {
@@ -135,11 +140,12 @@ function Update() {
         event.target.style.display = 'none';
     };
 
-    const handleDeletePhoto = () => {
-        console.log('Delete')
-        setImageFile({ file: null, image: null });
+    const handleDeletePhoto = (image) => {
+        console.log('Delete');
+        setImageFile({ file: null, image: image || null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
+        setIsButtonDisabled(false);
     };
 
     const handleDeleteAdditionalPhoto = () => {
@@ -208,59 +214,76 @@ function Update() {
         <div className="Update">
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
-                <div className="photo-container">
-                    {imageFile.image ? (
+            <div className="photo-container">
+                    { imageFile.image ? (
                         <>
                             <img
                                 src={imageFile.image}
                                 alt="User"
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                
                             />
                             <div className="delete-button">
-                                <button onClick={() => handleDeletePhoto()}>삭제</button>
+                                <button onClick={() => handleDeletePhoto()} >삭제</button>
                             </div>
                         </>
                     ) : (
-                        <img
-                            src={"/images/admin/default-image.png"}
-                            alt="Default User"
-                            style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                        />
-                    )}
+                    recordData.image ? (
+                        <>
+                            <img
+                                src={recordData.image}
+                                alt="User"
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <img
+                                src={"/images/admin/default-image.png"}
+                                alt="Default User"
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
+                            />
+                        </>
+                    ))}
                     <input style={{ maxWidth: '214px' }}
-                        type="file"
-                        accept="image/*"
-                        name="image"
-                        ref={photoInputRef}
-                        onChange={handleImageChange}
+                            type="file"
+                            accept="image/*"
+                            name="image"
+                            ref={photoInputRef}
+                            onChange={handleImageChange}
                     />
                 </div>
                 <div className="photo-container">
-                    {additionalPhoto && additionalPhoto.startsWith('data:video/') ? (
+                    {recordData.video && recordData.video.startsWith('/workspace/data/video/') ? (
                         <>
                             <video
                                 controls
-                                src={additionalPhoto}
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                loop
+                                autoPlay
+                                muted
+                                src={recordData.video}
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
-                            <div className="delete-button">
-                                <button onClick={handleDeleteAdditionalPhoto}>삭제</button>
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    name="inference" 
+                                    disabled={isButtonDisabled}
+                                />  영상 생성요청 (사진 선택 시, 자동 요청)
                             </div>
                         </>
                     ) : (
-                        <img
-                            src={"/images/admin/default-image.png"}
-                            alt="Default User"
-                            style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                        />
+                        <>
+                            <img
+                                src={"/images/admin/default-image.png"}
+                                alt="Default User"
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                            />
+                            <div>
+                                <input type="checkbox" name="inference" disabled checked />  영상 생성
+                            </div>
+                        </>
                     )}
-                    <input style={{ maxWidth: '214px' }}
-                        type="file"
-                        accept="video/*"
-                        name="additionalPhoto"
-                        ref={additionalPhotoInputRef} // additionalPhoto input 요소에 대한 ref를 할당합니다.
-                        onChange={handleAdditionalPhotoChange}
-                    />
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
