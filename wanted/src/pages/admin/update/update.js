@@ -116,7 +116,7 @@ function Update() {
 
         event.target.style.display = 'none';
 
-        setIsCheckboxChecked(true);
+        setIsButtonDisabled(true);
     }
 
     const handleAdditionalPhotoChange = (event) => {
@@ -136,7 +136,7 @@ function Update() {
         setImageFile({ file: null, image: image || null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
-        setIsCheckboxChecked(false);
+        setIsButtonDisabled(false);
     };
 
     const handleDeleteAdditionalPhoto = () => {
