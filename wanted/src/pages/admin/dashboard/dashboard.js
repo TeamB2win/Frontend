@@ -85,6 +85,31 @@ export default function Dashboard() {
     },
   }
 
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("해당 데이터를 삭제하시겠습니까?");
+    if (confirmDelete) {
+      deleteRecord(id);
+    }
+  };
+
+  const deleteRecord = async (id) => {
+    try {
+      const dataToDelete = {
+        request: {
+          id: id
+        }
+      };
+
+      await axios.delete(`http://63.35.31.27:8000/admin`, {
+        data: dataToDelete
+      });
+
+      window.location.reload();
+    } catch (error) {
+      console.error("API 호출에 실패했습니다.", error);
+    }
+  };
+
   return (
     <div style={styles.div}>
       <ToolBar />
@@ -126,7 +151,7 @@ export default function Dashboard() {
                       </button>
                     </Col>
                     <Col style={styles.table.col}>
-                      <button style={styles.table.btn}>
+                      <button onClick={() => handleDelete(data.id)} style={styles.table.btn}>
                         삭제
                       </button>
                     </Col>
