@@ -7,10 +7,10 @@ function Create() {
         wanted_id: '',
         wanted_type: '',
         name: '',
-        email: '',
         age: '',
         image: null,
     });
+
     const [imageFile, setImageFile] = useState({
         file: null,
         image: null
@@ -18,9 +18,9 @@ function Create() {
 
     const photoInputRef = useRef();
 
-    const [relationalLinks, setRelationalLinks] = useState([""]);
+    const [relationalLinks, setRelationalLinks] = useState([]);
 
-    const [characteristics, setCharacteristics] = useState([""]);
+    const [characteristics, setCharacteristics] = useState([]);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -68,40 +68,32 @@ function Create() {
         photoInputRef.current.style.display = 'inline';
     };
 
-    const handleAddRelationalLink = () => {
-        setRelationalLinks([...relationalLinks, ""]);
+    const handleRelationalLinkChange = (index, event) => {
+        const newLinks = [...relationalLinks];
+        newLinks[index] = event.target.value;
+        setRelationalLinks(newLinks);
     };
 
-    const handleRelationalLinkChange = (index, event) => {
-        const updatedLinks = [...relationalLinks];
-        updatedLinks[index] = event.target.value;
-        const combinedLinks = updatedLinks.join('\n');
-        setRelationalLinks(combinedLinks);
+    const handleAddRelationalLink = () => {
+        setRelationalLinks((prevLinks) => [...prevLinks, ""]);
     };
 
     const handleDeleteRelationalLink = (index) => {
-        const updatedLinks = [...relationalLinks];
-        updatedLinks.splice(index, 1);
-        const combinedLinks = updatedLinks.join('\n');
-        setRelationalLinks(combinedLinks);
-    };
-
-    const handleAddCharacteristic = () => {
-        setCharacteristics([...characteristics, ""]);
+        setRelationalLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
     };
 
     const handleCharacteristicChange = (index, event) => {
-        const updatedCharacteristics = [...characteristics];
-        updatedCharacteristics[index] = event.target.value;
-        const combinedCharacteristics = updatedCharacteristics.join('\n');
-        setCharacteristics(combinedCharacteristics);
+        const newCharacteristics = [...characteristics];
+        newCharacteristics[index] = event.target.value;
+        setCharacteristics(newCharacteristics);
+    };
+
+    const handleAddCharacteristic = () => {
+        setCharacteristics((prevCharacteristics) => [...prevCharacteristics, ""]);
     };
 
     const handleDeleteCharacteristic = (index) => {
-        const updatedCharacteristics = [...characteristics];
-        updatedCharacteristics.splice(index, 1);
-        const combinedCharacteristics = updatedCharacteristics.join('\n');
-        setCharacteristics(combinedCharacteristics);
+        setCharacteristics((prevCharacteristics) => prevCharacteristics.filter((_, i) => i !== index));
     };
 
     const handleSubmit = (event) => {
@@ -120,60 +112,56 @@ function Create() {
 
     const handleConfirmation = async () => {
         const result = window.confirm("정보 등록을 완료하시겠습니까?");
+
         if (result) {
-            // uploading the image file
             const formData = new FormData();
-            formData.append(
-                "file",
-                imageFile.file
-            )
+            const wantedIdAsInteger = parseInt(userInfo.wanted_id, 10);
+            const wantedTypeAsBool = JSON.parse(userInfo.wanted_type);
+            const sexAsBool = JSON.parse(userInfo.sex);
+            const startedAtAsDatetime = new Date(userInfo.startedAt);
+            const endedAtAsDatetime = new Date(userInfo.endedAt);
 
-            const headers = { "Content-Type": `${imageFile.file.type}; charset=UTF-8` }
-            const response = await axios.post(
-                "http://localhost:8000/admin/uploadimage",
-                formData,
-                headers
-            )
+            formData.append("file", imageFile.file);
 
-            if (response.status !== 201){
-                window.alert('업로드 중 오류가 발생했습니다. 다시 등록해 주세요') //response.data
-                window.location.reload()
-                return;
+            const finalData = {
+                "name": userInfo.name,
+                "sex": sexAsBool,
+                "age": userInfo.age,
+                "wantedType": wantedTypeAsBool,
+                "wantedId": wantedIdAsInteger,
+                "criminal": userInfo.criminal,
+                "registeredAddress": userInfo.registered_address,
+                "residence": userInfo.residence,
+                "height": userInfo.height,
+                "weight": userInfo.weight,
+                "relationalLink": relationalLinks.join("\\n"),
+                "characteristic": characteristics.join("\\n"),
+                "startedAt": startedAtAsDatetime,
+                "endedAt": endedAtAsDatetime,
             }
 
-            // Wanted 데이터 테이블에 등록
-            const image_path = response.data.imagePath
-            axios.post(
-                "http://localhost:8000/admin",
-                {
-                    ...userInfo,
-                    image: image_path
-                },
-            ).then(function (response) {
-                console.log(response.data);
-                // TODO data hash 값 redux에 저장
+            try {
+                // 이미지 업로드 및 회원 정보 등록을 동시에 수행
+                axios.post(
+                    "http://63.35.31.27:8000/admin",
+                    formData,
+                    { headers: { "Content-Type": "multipart/form-data" }, params: finalData }
+                );
+
                 alert("등록이 완료되었습니다.");
-                // 차후 domain 주소로 변경
-                // window.location.replace('http://localhost:3000/admin');
-            }).catch(function (error) {
+            } catch (error) {
                 if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
                     console.log(error.response.headers);
                     console.log(error.response.data);
-                    alert("에러가 발생하였습니다.", error.response.data)
+                    alert("에러가 발생하였습니다.", error.response.data);
                 } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
                     alert("잘못된 요청입니다. 잠시 후 다시 시도해주세요");
                 } else {
-                    // Something happened in setting up the request that triggered an Error
                     console.log('Error', error.message);
                     alert("잘못된 요청입니다. 잠시 후 다시 시도해주세요", error.message);
                 }
                 console.log(error.config);
-            });
+            }
         }
     };
 
@@ -224,8 +212,8 @@ function Create() {
                     <label>성별</label>
                     <select name='sex' onChange={handleInputChange}>
                         <option>성별</option>
-                        <option value={true}>남자</option>
-                        <option value={false}>여자</option>
+                        <option value={true}>여자</option>
+                        <option value={false}>남자</option>
                     </select>
                 </div>
                 <div className="form-group">
@@ -242,19 +230,18 @@ function Create() {
                     <label>유형</label>
                     <select name='wanted_type' onChange={handleInputChange}>
                         <option>유형</option>
-                        <option value={true}>종합</option>
-                        <option value={false}>긴급</option>
+                        <option value={true}>긴급</option>
+                        <option value={false}>종합</option>
                     </select>
                 </div>
-                {userInfo.wanted_type === 'true' &&
+                {userInfo.wanted_type === 'false' &&
                     <div className="form-group">
                         <label>공개수배번호</label>
                         <input
-                            type="bool"
+                            type="number"
                             name="wanted_id"
                             value={userInfo.wanted_id}
                             onChange={handleInputChange}
-                            required
                         />
                     </div>
                 }
@@ -273,7 +260,7 @@ function Create() {
                     <input
                         type="text"
                         name="registered_address"
-                        value={userInfo.registerd_address}
+                        value={userInfo.registered_address}
                         onChange={handleInputChange}
                         required
                     />
@@ -309,47 +296,39 @@ function Create() {
                 <div className="form-group">
                     <label>연관 링크</label>
                     <div className="input-button">
-                        <div>
-                            <input style={{ minWidth: "12.5rem" }}
-                                type="text"
-                                value={relationalLinks[0]}
-                                onChange={(event) => handleRelationalLinkChange(0, event)}
-                            />
-                            <button onClick={handleAddRelationalLink}>추가</button>
-                        </div>
-                        {relationalLinks.slice(1).map((link, index) => (
+                        {relationalLinks.map((link, index) => (
                             <div key={index}>
-                                <input style={{ minWidth: "12.5rem" }}
+                                <input
+                                    style={{ minWidth: "12.5rem" }}
                                     type="text"
                                     value={link}
-                                    onChange={(event) => handleRelationalLinkChange(index + 1, event)}
+                                    onChange={(event) => handleRelationalLinkChange(index, event)}
                                 />
-                                <button onClick={() => handleDeleteRelationalLink(index + 1)}>삭제</button>
+                                <button type="button" onClick={() => handleDeleteRelationalLink(index)}>
+                                    삭제
+                                </button>
                             </div>
                         ))}
+                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddRelationalLink}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
                     <label>특이사항</label>
                     <div className="input-button">
-                        <div>
-                            <input style={{ minWidth: "12.5rem" }}
-                                type="text"
-                                value={characteristics[0]}
-                                onChange={(event) => handleCharacteristicChange(0, event)}
-                            />
-                            <button onClick={handleAddCharacteristic}>추가</button>
-                        </div>
-                        {characteristics.slice(1).map((characteristic, index) => (
+                        {characteristics.map((characteristic, index) => (
                             <div key={index}>
-                                <input style={{ minWidth: "12.5rem" }}
+                                <input
+                                    style={{ minWidth: "12.5rem" }}
                                     type="text"
                                     value={characteristic}
-                                    onChange={(event) => handleCharacteristicChange(index + 1, event)}
+                                    onChange={(event) => handleCharacteristicChange(index, event)}
                                 />
-                                <button onClick={() => handleDeleteCharacteristic(index + 1)}>삭제</button>
+                                <button type="button" onClick={() => handleDeleteCharacteristic(index)}>
+                                    삭제
+                                </button>
                             </div>
                         ))}
+                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddCharacteristic}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
