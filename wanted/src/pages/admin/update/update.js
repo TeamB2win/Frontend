@@ -128,7 +128,8 @@ function Update() {
     };
 
     const handleDeletePhoto = () => {
-        setRecordData({ ...recordData, photo: null });
+        console.log('Delete')
+        setImageFile({ file: null, image: null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
     };
@@ -212,19 +213,21 @@ function Update() {
                             </div>
                         </>
                     ) : (
-                        <img
-                            src={"/images/admin/default-image.png"}
-                            alt="Default User"
-                            style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                        />
+                        <>
+                            <img
+                                src={"/images/admin/default-image.png"}
+                                alt="Default User"
+                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                            />
+                            <input style={{ maxWidth: '214px' }}
+                            type="file"
+                            accept="image/*"
+                            name="image"
+                            ref={photoInputRef}
+                            onChange={handleImageChange}
+                            />
+                        </>
                     )}
-                    <input style={{ maxWidth: '214px' }}
-                        type="file"
-                        accept="image/*"
-                        name="photo"
-                        ref={photoInputRef}
-                        onChange={handleImageChange}
-                    />
                 </div>
                 <div className="photo-container">
                     {additionalPhoto && additionalPhoto.startsWith('data:video/') ? (
