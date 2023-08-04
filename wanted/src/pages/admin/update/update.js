@@ -20,22 +20,23 @@ function Update() {
 
     const photoInputRef = useRef();
 
-    const [imageFile, setImageFile] = useState({
-        file: null,
-        image: null
-    })
-
     const additionalPhotoInputRef = useRef();
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
 
     const columns = ["name", "sex", "wantedType", "age"];
+    
+    const [imageFile, setImageFile] = useState({
+        file: null,
+        image: null
+    })
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
                 let data = {
+                    ...res.data.data[0].datasource[0],
                     ...res.data.data[0].detail[0],
                     'age': res.data.data[0].age,
                     'name': res.data.data[0].name,
@@ -70,21 +71,14 @@ function Update() {
 
     const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
         const { name, value } = e.target;
-        // setRecordData((prevData) => ({
-        //     ...prevData,
-        //     [name]: isoDate || value, // isoDate가 있으면 isoDate를, 없으면 value를 사용
-        // }));
-        if (name === "sex" | name === "wantedType") {
-            setRecordData((prevData) => ({
-                ...prevData,
-                [name]: value === "true", // "true"인 경우 true, 그렇지 않으면 false로 설정됨
-            }));
-        } else {
-            setRecordData((prevData) => ({
-                ...prevData,
-                [name]: isoDate || value,
-            }));
-        }
+        const inputValue = value
+        if(name === 'wantedType') {
+            inputValue = value === 'true' ? true : false;
+        } 
+        setRecordData((prevData) => ({
+            ...prevData,
+            [name]: isoDate || inputValue, // isoDate가 있으면 isoDate를, 없으면 value를 사용
+        }));
     };
 
     const handleImageChange = (event) => {
@@ -134,8 +128,7 @@ function Update() {
     };
 
     const handleDeletePhoto = () => {
-        console.log('Delete')
-        setImageFile({ file: null, image: null });
+        setRecordData({ ...recordData, photo: null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
     };
@@ -207,10 +200,10 @@ function Update() {
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
                 <div className="photo-container">
-                    {imageFile.image ? (
+                    {recordData.image ? (
                         <>
                             <img
-                                src={imageFile.image}
+                                src={recordData.image}
                                 alt="User"
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
@@ -228,7 +221,7 @@ function Update() {
                     <input style={{ maxWidth: '214px' }}
                         type="file"
                         accept="image/*"
-                        name="image"
+                        name="photo"
                         ref={photoInputRef}
                         onChange={handleImageChange}
                     />
@@ -272,26 +265,15 @@ function Update() {
                         required
                     />
                 </div>
-                <div className="form-group-radio">
+                <div className="form-group">
                     <label>성별</label>
-                    <div>
-                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
-                            type="radio"
-                            name="sex"
-                            value="false"
-                            checked={!recordData.sex} // "false"인 경우에만 체크되도록 설정
-                            onChange={handleInputChange}
-                            required
-                        /> 남성
-                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
-                            type="radio"
-                            name="sex"
-                            value="true"
-                            checked={recordData.sex} // "true"인 경우에만 체크되도록 설정
-                            onChange={handleInputChange}
-                            required
-                        /> 여성
-                    </div>
+                    <input
+                        type="bool"
+                        name="sex"
+                        value={recordData.sex ? "여성" : "남성"}
+                        onChange={handleInputChange}
+                        required
+                    />
                 </div>
                 <div className="form-group">
                     <label>나이</label>
@@ -303,26 +285,22 @@ function Update() {
                         required
                     />
                 </div>
-                <div className="form-group-radio">
+                <div className="form-group">
                     <label>유형</label>
-                    <div>
-                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
-                            type="radio"
-                            name="wantedType"
-                            value="true"
-                            checked={recordData.wantedType} // "true"인 경우에만 체크되도록 설정
-                            onChange={handleInputChange}
-                            required
-                        /> 긴급
-                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
-                            type="radio"
-                            name="wantedType"
-                            value="false"
-                            checked={!recordData.wantedType} // "false"인 경우에만 체크되도록 설정
-                            onChange={handleInputChange}
-                            required
-                        /> 종합
-                    </div>
+                    {/* <select name='wanted_type' type="bool" value={recordData.wantedType ? "긴급" : "종합"} onChange={handleInputChange} required>
+                        <option>유형</option>
+                        <option value={true}>종합</option>
+                        <option value={false}>긴급</option>
+                    </select> */}
+                    <select
+                        name='wanted_type'
+                        value={recordData.wantedType? "true" : "false"}
+                        onChange={handleInputChange}
+                        required
+                    >
+                        <option value={"true"}>긴급</option>
+                        <option value={"false"}>종합</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>죄명</label>
@@ -338,7 +316,7 @@ function Update() {
                     <label>주민등록상 주소지</label>
                     <input
                         type="text"
-                        name="registeredAddress"
+                        name="registerd_address"
                         value={recordData.registeredAddress}
                         onChange={handleInputChange}
                         required
@@ -388,7 +366,7 @@ function Update() {
                                 </button>
                             </div>
                         ))}
-                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddRelationalLink}>추가</button>
+                        <button type="button" onClick={handleAddRelationalLink}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -407,7 +385,7 @@ function Update() {
                                 </button>
                             </div>
                         ))}
-                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddCharacteristic}>추가</button>
+                        <button type="button" onClick={handleAddCharacteristic}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -437,7 +415,7 @@ function Update() {
                     />
                 </div>
                 <button type="submit" style={{ marginTop: '40px', marginBottom: "20px" }}>정보 수정</button>
-            </form >
+            </form>
         </div >
     );
 }
