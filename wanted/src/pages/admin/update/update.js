@@ -9,6 +9,11 @@ function isoDateStringToDate(isoDateString) {
     return dateValue;
 }
 
+function convertImagePathToUrl(imagePath) {
+    // 이미지 경로를 URL로 변환하여 리턴하는 함수
+    return `http://63.35.31.27:8000/wanted/public/${imagePath}`;
+}
+
 function Update() {
     const { id } = useParams(); // URL에서 id 파라미터 추출
 
@@ -41,6 +46,9 @@ function Update() {
                     'name': res.data.data[0].name,
                     'sex': res.data.data[0].sex,
                     'wantedType': res.data.data[0].wantedType,
+                    'image': convertImagePathToUrl(res.data.data[0].datasource[0].image),
+                    'video': res.data.data[0].datasource[0].video,
+
                 }
                 setRecordData(data);
             } catch (error) {
@@ -207,10 +215,10 @@ function Update() {
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
                 <div className="photo-container">
-                    {imageFile.image ? (
+                    {recordData.image ? (
                         <>
                             <img
-                                src={imageFile.image}
+                                src={recordData.image}
                                 alt="User"
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
