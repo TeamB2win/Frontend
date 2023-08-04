@@ -51,12 +51,10 @@ useEffect(() => {
               } else if (filter.type === "종합") {
                   a = el.wantedType === false
               }
-
               let b = true
               if (el.detail[0].criminal !== filter.criminal && filter.criminal !== "") {
                   b = false
               } 
-
               return a && b
           })
       )

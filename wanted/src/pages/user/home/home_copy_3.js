@@ -3,8 +3,6 @@ import Slider from "react-slick";
 import { Button, Col, Row } from "react-bootstrap";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-//import Images from "../../../../src/images";
-import "../../../../src/index.css"; // index.css 스타일을 import 합니다.
 import useDataFetch from "../../../hooks/useDataFetch";
 import { useState } from 'react';
 
@@ -49,7 +47,6 @@ const Home = () => {
     );
 };
 
-
 const SlidingCard = ({ item }) => {
     const [videoError, setVideoError] = useState(false);
 
@@ -61,10 +58,7 @@ const SlidingCard = ({ item }) => {
                         <img src="/logo.png" alt={"image_1"} className="img" />
                     ) : (
                         <video controls autoPlay loop className="img" onError={() => {setVideoError(true)}}>
-                            {/* 여기에 비디오 파일 경로를 지정합니다. */}
                             <source src="images/test/video.mp4" type="video/mp4" />
-                            {/* 기본적으로 보여줄 이미지 */}
-                            {/* <img src="/logo.png" alt={"image_1"} /> */}
                         </video>
                     )}
                 </Col>
@@ -103,24 +97,16 @@ const SlidingCard = ({ item }) => {
                         </p>
                     )}
                     <h2 className="tagC">{"특이사항"}</h2>
-                    <p className="infoText">
-                        {"1. "}
-                        {item.detail[0].characteristic}
-                    </p>
-                    <p className="infoText">
-                        {"2. "}
-                        {"범죄자얼굴특징정보없음"}
-                    </p>
-                    <p className="infoText">
-                        {"3. "}
-                        {"도피생활정보없음"}
-                    </p>
-                    <p className="infoText">
-                        {"4. "}
-                        {
-                            "결정적 제보를 하신 분께는 신고 보상금(3000만원 지급)"
-                        }
-                    </p>
+                    {item.detail[0].characteristic !== null && (
+                        <>
+                            {item.detail[0].characteristic.split(/\n|\\n/).map((el, idx) => (
+                                <p className="infoText" key={idx}>
+                                    {`${idx + 1}. ${el}`}
+                                </p>
+                            ))}
+                        </>
+                    )}
+
                 </Col>
             </Row>
         </div>
