@@ -251,22 +251,24 @@ function Update() {
                                 autoPlay
                                 muted
                                 src={recordData.video}
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
                             <div className="delete-button">
                                 <button onClick={handleInferenceVideo}>재생성요청</button>
                             </div>
                         </>
                     ) : (
-                        <img
-                            src={"/images/admin/default-image.png"}
-                            alt="Default User"
-                            style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                        />
+                        <>
+                            <img
+                                src={"/images/admin/default-image.png"}
+                                alt="Default User"
+                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                            />
+                            <div className="delete-button">
+                                <button onClick={handleInferenceVideo}>생성요청</button>
+                            </div>
+                        </>
                     )}
-                    <div className="delete-button">
-                        <button onClick={handleInferenceVideo}>생성요청</button>
-                    </div>
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
