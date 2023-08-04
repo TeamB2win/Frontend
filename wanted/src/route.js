@@ -10,7 +10,7 @@ import Login from "./pages/user/login/login";
 import AdminNav from "./components/adminNav";
 import Dashboard from "./pages/admin/dashboard/dashboard";
 import Create from "./pages/admin/create/create";
-import Update from "./pages/admin/update/update";
+import Update from "./pages/admin/update/update_2";
 import Delete from "./pages/admin/delete/delete";
 import Edit from "./pages/admin/edit/edit";
 

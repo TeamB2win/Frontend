@@ -15,43 +15,38 @@ const initialState = {
     data: [],
     data_hash: null,
     status: "idle",
-    error: null,
-    cashedData: [],
+    error: null
 };
 
 export const dataSlice = createSlice({
     name: "data",
     initialState,
     reducers: {
-        // 다른 필요한 리듀서 작성 가능
+        
         filteredData(state, action) {
-            console.log(state.data)
-            console.log(action.payload)
             state.data = state.cashedData;
-            if (action.payload.aria === "지역") action.payload.aria = "";
-            if (action.payload.criminal === "죄명")
-                action.payload.criminal = "";
+            if (action.payload.criminal === "죄명") action.payload.criminal = "";
             if (action.payload.type === "유형") action.payload.type = "";
-
-            if (
-                action.payload.aria === "" &&
-                action.payload.criminal === "" &&
-                action.payload.type === ""
-            ) {
+            if (action.payload.criminal === "" && action.payload.type === "") {
                 state.data = state.cashedData;
             } else {
+                console.log(state.data)
                 state.data = state.data.filter(
-                    (el) =>
-                        (action.payload.type === "긴급"
-                            ? el.wantedType === true
-                            : el.wantedType === false) &&
-                        (action.payload.criminal === ""
-                            ? el.detail[0].criminal
-                            : el.detail[0].criminal === action.payload.criminal)
-                    // (action.payload.registeredAddress === ""
-                    //     ? el.registeredAddress
-                    //     : el.registeredAddress === action.payload.aria)
-                );
+                    (el) => {
+                        let a = true
+                        if (action.payload.type === "긴급") {
+                            a = el.wantedType === true
+                        } else if (action.payload.type === "종합") {
+                            a = el.wantedType === false
+                        }
+
+                        let b = true
+                        if (el.detail[0].criminal !== action.payload.criminal && action.payload.criminal !== "") {
+                            b = false
+                        } 
+
+                        return a && b
+                });
                 console.log(state.data);
             }
         },
@@ -69,7 +64,7 @@ export const dataSlice = createSlice({
                 state.status = "succeeded";
                 state.data = action.payload.data;
                 state.cashedData = action.payload.data;
-                state.data_hash = action.payload.dataHash; // 새로운 데이터를 가져올 때마다 hash 값을 업데이트
+                state.data_hash = action.payload.dataHash; 
             })
             .addCase(fetchData.rejected, (state, action) => {
                 state.status = "failed";
