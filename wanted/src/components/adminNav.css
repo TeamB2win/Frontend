@@ -1,3 +1,60 @@
+.adminContainer {
+  background-color: #C2C2C2;
+  min-height: 100vh;
+  height: auto;
+  width: 100%;
+}
+
+.adminContainer .adminNavbar {
+  min-height: 5em;
+  border-bottom: 2px solid black;
+}
+
+.adminContainer .adminNavbar .adminNavContainer {
+  max-width: 95%;
+}
+
+.adminNavContainer .adminNavItem {
+  width: 6.5em;
+  font-size: 1.5em;
+  font-weight: 600;
+  background-color: #1C1C1C;
+  color: #FFCD4A;
+  text-align: center;
+  cursor: pointer;
+}
+
+.logoutModalContainer {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) !important; 
+  width: 20em;
+  border-radius: 0;
+  border: 2px solid #1C1C1C;
+  background-color: #9E9E9E;
+}
+
+.logoutModalContainer .logoutModalBody {
+  min-height: 4em;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 800;
+}
+
+.logoutModalContainer .logoutModalBtnContainer {
+  width: fit-content;
+  margin: 1em auto;
+}
+
+.logoutModalBtnContainer .logoutModalBtn {
+  border-radius: 0;
+  border: none;
+  width: 5em;
+  background-color: #1C1C1C;
+  color: #FFCD4A;
+}
+
 .modal-content {
   background-color: transparent;
 }
