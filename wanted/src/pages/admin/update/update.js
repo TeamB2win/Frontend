@@ -201,34 +201,43 @@ function Update() {
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
                 <div className="photo-container">
-                    {recordData.image ? (
+                    { imageFile.image ? (
                         <>
                             <img
-                                src={recordData.image}
+                                src={imageFile.image}
                                 alt="User"
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
+                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                
                             />
                             <div className="delete-button">
-                                <button onClick={() => handleDeletePhoto()}>삭제</button>
+                                <button onClick={() => handleDeletePhoto()} >삭제</button>
                             </div>
                         </>
-                         ) : (
+                    ) : (
+                    recordData.image ? (
+                        <>
+                            <img
+                                src={imageFile.image}
+                                alt="User"
+                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                            />
+                        </>
+                    ) : (
                         <>
                             <img
                                 src={"/images/admin/default-image.png"}
                                 alt="Default User"
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
                             />
-                            <input
-                                style={{ maxWidth: '214px' }}
-                                type="file"
-                                accept="image/*"
-                                name="image"
-                                ref={photoInputRef}
-                                onChange={handleImageChange}
-                            />
                         </>
-                    )}
+                    ))}
+                    <input style={{ maxWidth: '214px' }}
+                            type="file"
+                            accept="image/*"
+                            name="image"
+                            ref={photoInputRef}
+                            onChange={handleImageChange}
+                    />
                 </div>
                 <div className="photo-container">
                     {recordData.video && recordData.video.startsWith('data:video/') ? (
