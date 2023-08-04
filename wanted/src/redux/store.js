@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage/session";
 
 // slice import
 import counterSlice from './counterSlice';
-import dataSlice from './dataSlice_3'; // 새로 추가한 dataSlice
+import dataSlice from './dataSlice'; // 새로 추가한 dataSlice
 
 const rootReducer = combineReducers({
   counter: counterSlice,
