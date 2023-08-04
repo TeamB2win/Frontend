@@ -243,10 +243,13 @@ function Update() {
                     />
                 </div>
                 <div className="photo-container">
-                    {recordData.video && recordData.video.startsWith('data:video/') ? (
+                    {recordData.video && recordData.video.startsWith('/workspace/data/video/') ? (
                         <>
                             <video
                                 controls
+                                loop
+                                autoPlay
+                                muted
                                 src={recordData.video}
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
