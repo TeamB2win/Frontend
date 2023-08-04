@@ -127,9 +127,9 @@ function Update() {
         event.target.style.display = 'none';
     };
 
-    const handleDeletePhoto = () => {
-        console.log('Delete')
-        setImageFile({ file: null, image: null });
+    const handleDeletePhoto = (image) => {
+        console.log('Delete');
+        setImageFile({ file: null, image: image || null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
     };
@@ -206,35 +206,36 @@ function Update() {
                             <img
                                 src={recordData.image}
                                 alt="User"
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
                             />
                             <div className="delete-button">
                                 <button onClick={() => handleDeletePhoto()}>삭제</button>
                             </div>
                         </>
-                    ) : (
+                         ) : (
                         <>
                             <img
                                 src={"/images/admin/default-image.png"}
                                 alt="Default User"
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
                             />
-                            <input style={{ maxWidth: '214px' }}
-                            type="file"
-                            accept="image/*"
-                            name="image"
-                            ref={photoInputRef}
-                            onChange={handleImageChange}
+                            <input
+                                style={{ maxWidth: '214px' }}
+                                type="file"
+                                accept="image/*"
+                                name="image"
+                                ref={photoInputRef}
+                                onChange={handleImageChange}
                             />
                         </>
                     )}
                 </div>
                 <div className="photo-container">
-                    {additionalPhoto && additionalPhoto.startsWith('data:video/') ? (
+                    {recordData.video && recordData.video.startsWith('data:video/') ? (
                         <>
                             <video
                                 controls
-                                src={additionalPhoto}
+                                src={recordData.video}
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
                             <div className="delete-button">
