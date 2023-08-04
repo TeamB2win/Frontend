@@ -20,6 +20,11 @@ function Update() {
 
     const photoInputRef = useRef();
 
+    const [imageFile, setImageFile] = useState({
+        file: null,
+        image: null
+    })
+
     const additionalPhotoInputRef = useRef();
 
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
@@ -82,6 +87,40 @@ function Update() {
         }
     };
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        const maxSize = 1024 * 1024;
+
+        if (file.size > maxSize) {
+            handleDeletePhoto();
+            window.alert("이미지 용량은 1MB를 초과할 수 없습니다.");
+            event.target.value = ""; // 파일 입력값 초기화
+            return;
+        }
+
+        reader.onloadend = () => {
+            const img = new Image();
+            const maxWidth = 1000;
+            const maxHeight = 1000;
+            img.onload = () => {
+                if (img.width > maxWidth || img.height > maxHeight) {
+                    handleDeletePhoto();
+                    window.alert("이미지 크기를 1000px 이하로 제한해주세요.");
+                    event.target.value = "";
+                    return;
+                } else {
+                    setImageFile({ file: file, image: reader.result })
+                    console.log("이미지 등록")
+                }
+            };
+            img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+
+        event.target.style.display = 'none';
+    }
+
     const handleAdditionalPhotoChange = (event) => {
         const { name } = event.target;
         const file = event.target.files[0];
@@ -95,7 +134,8 @@ function Update() {
     };
 
     const handleDeletePhoto = () => {
-        setRecordData({ ...recordData, photo: null });
+        console.log('Delete')
+        setImageFile({ file: null, image: null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
     };
@@ -167,10 +207,10 @@ function Update() {
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
                 <div className="photo-container">
-                    {recordData.photo ? (
+                    {imageFile.image ? (
                         <>
                             <img
-                                src={recordData.photo}
+                                src={imageFile.image}
                                 alt="User"
                                 style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
                             />
@@ -188,9 +228,9 @@ function Update() {
                     <input style={{ maxWidth: '214px' }}
                         type="file"
                         accept="image/*"
-                        name="photo"
+                        name="image"
                         ref={photoInputRef}
-                        onChange={handleInputChange}
+                        onChange={handleImageChange}
                     />
                 </div>
                 <div className="photo-container">
