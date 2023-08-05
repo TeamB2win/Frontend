@@ -176,8 +176,8 @@ function CardList({ item }) {
             width: "15rem",
             border: "0",
             margin: "0.3em 0.3em",
-            backgroundColor: wantedType? "red": "yellow",
-            borderRadius: "10px"
+            // backgroundColor: wantedType? "red": "yellow",
+            // borderRadius: "10px"
         },
         card: {
             width: "15rem",
