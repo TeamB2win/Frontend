@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Button, Container, Navbar, Modal, Stack } from "react-bootstrap";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 // css
 import "./adminNav.css";
 
 
 export default function AdminNav() {
+  const navigate = useNavigate();
+
   const [isLogout, setLogout] = useState(false);
 
   function openLoginModal() {
@@ -19,7 +21,7 @@ export default function AdminNav() {
   // 로그아웃 하기 위한 로직
   // 현재 로그인 세션 삭제 및 백엔드에 세션 삭제 요청
   function logout() {
-
+    navigate(`/login`)
   }
 
   return (
