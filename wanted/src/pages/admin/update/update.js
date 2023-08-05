@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import "./update.css";
 
@@ -18,29 +18,19 @@ function isEmpty( node ) {
 
 function Update() {
     const { id } = useParams(); // URL에서 id 파라미터 추출
-
     const [recordData, setRecordData] = useState(null);
-
     const [relationalLinks, setRelationalLinks] = useState([]);
-
     const [characteristics, setCharacteristics] = useState([]);
-
-    const photoInputRef = useRef();
-
-    const additionalPhotoInputRef = useRef();
-
     const [additionalPhoto, setAdditionalPhoto] = useState(null);
-
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
     const [videoInferenceButton, setVideoInferenceButton] = useState(false);
-
-    const columns = ["name", "sex", "wantedType", "age"];
-    
     const [imageFile, setImageFile] = useState({
         file: null,
         image: null
     })
+
+    const photoInputRef = useRef();
+    const additionalPhotoInputRef = useRef();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,7 +54,7 @@ function Update() {
         };
 
         fetchData();
-    }, [id]);
+    }, []);
 
     // recordData가 변경될 때마다 호출되도록 useEffect를 사용
     useEffect(() => {
@@ -79,9 +69,6 @@ function Update() {
 
     }, [recordData]);
 
-    if (!recordData) {
-        return <div>Loading...</div>;
-    }
 
     const handleVideoInferenceButton = (event) => {
         const { checked } = event.target;
@@ -91,10 +78,6 @@ function Update() {
 
     const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
         const { name, value } = e.target;
-        // setRecordData((prevData) => ({
-        //     ...prevData,
-        //     [name]: isoDate || value, // isoDate가 있으면 isoDate를, 없으면 value를 사용
-        // }));
         if (name === "sex" | name === "wantedType") {
             setRecordData((prevData) => ({
                 ...prevData,
@@ -235,13 +218,8 @@ function Update() {
             "file",
             imageFile.file
         )
-
-        const headers = {
-            "Content-Type": "multipart/form-data"
-        }
-        const params = {
-            "id" : id
-        }
+        const headers = { "Content-Type": "multipart/form-data" }
+        const params = { "id" : id }
 
         await axios.put(
             "http://63.35.31.27:8000/admin/image",
@@ -275,10 +253,9 @@ function Update() {
         });
 
     };
+
     const handleReInferenceVideoRequest = async () => {
-        const headers = {
-            "Content-Type": "application/json"
-        }
+        const headers = { "Content-Type": "application/json" }
 
         await axios.put(
             "http://63.35.31.27:8000/admin/video",
@@ -332,9 +309,7 @@ function Update() {
             "startedAt": startedAtAsDatetime,
             "endedAt": endedAtAsDatetime,
         }
-        const headers = {
-            "Content-Type": "application/json"
-        }
+        const headers = { "Content-Type": "application/json" }
 
         await axios.put(
             "http://63.35.31.27:8000/admin/data",
@@ -364,6 +339,10 @@ function Update() {
             console.log(error.config);
         });
     };
+
+    if (!recordData) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="Update">

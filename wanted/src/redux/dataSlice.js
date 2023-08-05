@@ -23,33 +23,6 @@ export const dataSlice = createSlice({
     name: "data",
     initialState,
     reducers: {
-        
-        filteredData(state, action) {
-            state.data = state.cashedData;
-            if (action.payload.criminal === "죄명") action.payload.criminal = "";
-            if (action.payload.type === "유형") action.payload.type = "";
-            if (action.payload.criminal === "" && action.payload.type === "") {
-                state.data = state.cashedData;
-            } else {
-                state.data = state.data.filter(
-                    (el) => {
-                        let a = true
-                        if (action.payload.type === "긴급") {
-                            a = el.wantedType === true
-                        } else if (action.payload.type === "종합") {
-                            a = el.wantedType === false
-                        }
-
-                        let b = true
-                        if (el.detail[0].criminal !== action.payload.criminal && action.payload.criminal !== "") {
-                            b = false
-                        } 
-
-                        return a && b
-                });
-                console.log(state.data);
-            }
-        },
         removeHash(state) {
             state.data_hash = "";
         },
