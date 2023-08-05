@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchData } from "../redux/dataSlice";
 import axios from "axios";
+import { useEffect } from "react";
 
 export default function useDataFetch(data_hash) {
     const dispatch = useDispatch();
@@ -13,17 +13,17 @@ export default function useDataFetch(data_hash) {
                 const isHashOK = await axios.get(
                     `http://63.35.31.27:8000/wanted/check/${data_hash}`
                 );
+                console.log(data_hash);
+                console.log(isHashOK.data.status);
                 if (isHashOK.data.status === "OK") return;
-                return (async () => {
-                    await dispatch(fetchData()).unwrap();
-                })();
+            
+                dispatch(fetchData()).unwrap();
             };
+    
             data();
         } else {
-            (async () => {
-                await dispatch(fetchData()).unwrap();
-            })();
+            dispatch(fetchData()).unwrap();
         }
-    }, []);
+    }, [])
 }
 
