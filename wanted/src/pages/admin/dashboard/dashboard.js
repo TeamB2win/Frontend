@@ -25,43 +25,43 @@ export default function Dashboard() {
   };
 
   const [filteredData, setFilteredData] = useState(data);
-    const [filter, setFilter] = useState({
-        type: "",
-        criminal: "",
-    });
+  const [filter, setFilter] = useState({
+    type: "",
+    criminal: "",
+  });
 
   const uniqueData = data.reduce((acc, val) => {
     var criminal = val.detail[0].criminal;
 
     if (!acc.includes(criminal)) {
-        acc.push(criminal);
+      acc.push(criminal);
     }
     return acc;
-}, []);
+  }, []);
 
-useEffect(() => {
-  if (filter.criminal === "" && filter.type === "") {
+  useEffect(() => {
+    if (filter.criminal === "" && filter.type === "") {
       setFilteredData(data);
-  } else {
+    } else {
       setFilteredData(
-          data.filter((el) => {
-              let a = true
-              if (filter.type === "긴급") {
-                  a = el.wantedType === true
-              } else if (filter.type === "종합") {
-                  a = el.wantedType === false
-              }
-              let b = true
-              if (el.detail[0].criminal !== filter.criminal && filter.criminal !== "") {
-                  b = false
-              } 
-              return a && b
-          })
+        data.filter((el) => {
+          let a = true
+          if (filter.type === "긴급") {
+            a = el.wantedType === true
+          } else if (filter.type === "종합") {
+            a = el.wantedType === false
+          }
+          let b = true
+          if (el.detail[0].criminal !== filter.criminal && filter.criminal !== "") {
+            b = false
+          }
+          return a && b
+        })
       )
-  }
-}, [filter])
+    }
+  }, [filter])
 
-  const tableColumn = [ "ID", "이름", "유형", "죄명", "기간" ]
+  const tableColumn = ["ID", "이름", "유형", "죄명", "기간"]
   const styles = {
     div: {
       "width": "80%",
@@ -99,6 +99,31 @@ useEffect(() => {
     },
   }
 
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("해당 데이터를 삭제하시겠습니까?");
+    if (confirmDelete) {
+      deleteRecord(id);
+    }
+  };
+
+  const deleteRecord = async (id) => {
+    try {
+      const dataToDelete = {
+        request: {
+          id: id
+        }
+      };
+
+      await axios.delete(`http://63.35.31.27:8000/admin`, {
+        data: dataToDelete
+      });
+
+      window.location.reload();
+    } catch (error) {
+      console.error("API 호출에 실패했습니다.", error);
+    }
+  };
+
   return (
     <div style={styles.div}>
       <ToolBar uniqueData={uniqueData} filter={filter} setFilter={setFilter} />
@@ -107,10 +132,10 @@ useEffect(() => {
           "textAlign": "center"
         }}>
           <tr>
-            {tableColumn 
-              && tableColumn.map((column, idx) => 
+            {tableColumn
+              && tableColumn.map((column, idx) =>
                 <th key={idx} style={styles.table.th}>{column}</th>
-            )}
+              )}
             <th style={styles.table.th}>정보 변경</th>
           </tr>
         </thead>
@@ -118,29 +143,29 @@ useEffect(() => {
         <tbody style={{
           "textAlign": "center"
         }}>
-            {filteredData && filteredData.map((el, idx) => (
-              <tr key={idx}>
-                <td style={styles.table.td}>{el.id}</td>
-                <td style={styles.table.td}>{el.name}</td>
-                <td style={styles.table.td}>{el.wantedType ? "긴급" : "종합"}</td>
-                <td style={styles.table.td}>{el.detail[0].criminal}</td>
-                <td style={styles.table.td}>{`${el.detail[0].startedAt.slice(0, 10)} ~ ${el.detail[0].endedAt.slice(0, 10)}`}</td>
-                <td>
-                  <Row>
-                    <Col style={styles.table.col}>
-                      <button onClick={() => clicked(el.id)} style={styles.table.btn}>
-                        수정
-                      </button>
-                    </Col>
-                    <Col style={styles.table.col}>
-                      <button style={styles.table.btn}>
-                        삭제
-                      </button>
-                    </Col>
-                  </Row>
-                </td>
-              </tr>
-            ))}
+          {filteredData && filteredData.map((el, idx) => (
+            <tr key={idx}>
+              <td style={styles.table.td}>{el.id}</td>
+              <td style={styles.table.td}>{el.name}</td>
+              <td style={styles.table.td}>{el.wantedType ? "긴급" : "종합"}</td>
+              <td style={styles.table.td}>{el.detail[0].criminal}</td>
+              <td style={styles.table.td}>{`${el.detail[0].startedAt.slice(0, 10)} ~ ${el.detail[0].endedAt.slice(0, 10)}`}</td>
+              <td>
+                <Row>
+                  <Col style={styles.table.col}>
+                    <button onClick={() => clicked(el.id)} style={styles.table.btn}>
+                      수정
+                    </button>
+                  </Col>
+                  <Col style={styles.table.col}>
+                    <button onClick={() => handleDelete(data.id)} style={styles.table.btn}>
+                      삭제
+                    </button>
+                  </Col>
+                </Row>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
@@ -153,7 +178,7 @@ function ToolBar({ uniqueData, filter, setFilter }) {
   const labels = [
     { ariaLabel: "유형", label: "type" },
     { ariaLabel: "죄명", label: "criminal" },
-];
+  ];
 
   const styles = {
     toolBar: {
@@ -214,18 +239,18 @@ function ToolBar({ uniqueData, filter, setFilter }) {
               <option selected={resetSelected} style={styles.toolBar.option} value={""} >
                 {ariaLabel}
               </option>
-              {(ariaLabel === "유형" 
-                ? CRIMINAL_TYPES 
+              {(ariaLabel === "유형"
+                ? CRIMINAL_TYPES
                 : uniqueData
               ).map((el) => (
                 <>
                   <option
-                      value={el}
-                      style={styles.toolBar.option}
+                    value={el}
+                    style={styles.toolBar.option}
                   >
-                      {el}
+                    {el}
                   </option>
-              </>
+                </>
               ))}
             </Form.Select>
           </Col>
