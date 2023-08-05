@@ -2,28 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Stack, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import useDataFetch from "../../../hooks/useDataFetch";
 
 export default function Dashboard() {
-  const { data, data_hash, cashedData } = useSelector((state) => state.data);
+  const { data, data_hash, status } = useSelector((state) => state.data);
   useDataFetch(data_hash)
+
   const navigate = useNavigate();
   const clicked = async (id) => {
-    try {
-      // 해당 레코드의 ID에 맞는 API를 호출하여 데이터를 받아옴
-      const response = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
-      const recordData = response.data;
-
-      // 데이터를 받아와서 해당 레코드의 ID와 함께 상세 페이지로 이동
-      navigate(`/admin/update/${id}`, { state: { recordData } });
-      console.log(recordData.data[0])
-    } catch (error) {
-      // API 호출에 실패했을 때 예외 처리
-      console.error("API 호출에 실패했습니다.", error);
-    }
+    navigate(`/admin/update/${id}`);
   };
-
+  
   const [filteredData, setFilteredData] = useState(data);
   const [filter, setFilter] = useState({
     type: "",
@@ -38,6 +28,7 @@ export default function Dashboard() {
     }
     return acc;
   }, []);
+
 
   useEffect(() => {
     if (filter.criminal === "" && filter.type === "") {
@@ -61,6 +52,10 @@ export default function Dashboard() {
     }
   }, [filter])
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data])
+  
   const tableColumn = ["ID", "이름", "유형", "죄명", "기간"]
   const styles = {
     div: {
@@ -81,8 +76,12 @@ export default function Dashboard() {
         "verticalAlign": "middle",
         "borderRight": "1px solid #1C1C1C"
       },
+      row: {
+        "maxWidth": "100%", 
+        "margin": "0"
+      },
       col: {
-        "margin": "2px 0",
+        "margin": "2px",
         "padding": "0"
       },
       btn: {
@@ -109,14 +108,12 @@ export default function Dashboard() {
   const deleteRecord = async (id) => {
     try {
       const dataToDelete = {
-        request: {
-          id: id
-        }
+        "id": id
       };
-
-      await axios.delete(`http://63.35.31.27:8000/admin`, {
-        data: dataToDelete
-      });
+      console.log(dataToDelete);
+      await axios.delete(`http://63.35.31.27:8000/admin`,
+        {data: dataToDelete}
+      );
 
       window.location.reload();
     } catch (error) {
@@ -139,33 +136,35 @@ export default function Dashboard() {
             <th style={styles.table.th}>정보 변경</th>
           </tr>
         </thead>
-
-        <tbody style={{
-          "textAlign": "center"
-        }}>
-          {filteredData && filteredData.map((el, idx) => (
-            <tr key={idx}>
-              <td style={styles.table.td}>{el.id}</td>
-              <td style={styles.table.td}>{el.name}</td>
-              <td style={styles.table.td}>{el.wantedType ? "긴급" : "종합"}</td>
-              <td style={styles.table.td}>{el.detail[0].criminal}</td>
-              <td style={styles.table.td}>{`${el.detail[0].startedAt.slice(0, 10)} ~ ${el.detail[0].endedAt.slice(0, 10)}`}</td>
-              <td>
-                <Row>
-                  <Col style={styles.table.col}>
-                    <button onClick={() => clicked(el.id)} style={styles.table.btn}>
-                      수정
-                    </button>
-                  </Col>
-                  <Col style={styles.table.col}>
-                    <button onClick={() => handleDelete(data.id)} style={styles.table.btn}>
-                      삭제
-                    </button>
-                  </Col>
-                </Row>
-              </td>
-            </tr>
-          ))}
+        <tbody style={{"textAlign": "center"}}>
+          {status == "loading" ?
+            <div>Loading...</div> :
+            <>
+              {filteredData && filteredData.map((el, idx) => (
+                <tr key={idx}>
+                  <td style={styles.table.td}>{el.id}</td>
+                  <td style={styles.table.td}>{el.name}</td>
+                  <td style={styles.table.td}>{el.wantedType ? "긴급" : "종합"}</td>
+                  <td style={styles.table.td}>{el.detail[0].criminal}</td>
+                  <td style={styles.table.td}>{`${el.detail[0].startedAt.slice(0, 10)} ~ ${el.detail[0].endedAt.slice(0, 10)}`}</td>
+                  <td>
+                    <Row style={styles.table.row}>
+                      <Col style={styles.table.col}>
+                        <button onClick={() => clicked(el.id)} style={styles.table.btn}>
+                          수정
+                        </button>
+                      </Col>
+                      <Col style={styles.table.col}>
+                        <button onClick={() => handleDelete(el.id)} style={styles.table.btn}>
+                          삭제
+                        </button>
+                      </Col>
+                    </Row>
+                  </td>
+                </tr>
+              ))}
+            </>
+          }
         </tbody>
       </Table>
     </div>
