@@ -62,8 +62,17 @@ export const dataSlice = createSlice({
             })
             .addCase(fetchData.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.data = action.payload.data;
-                state.data_hash = action.payload.dataHash; 
+                state.data_hash = action.payload.dataHash;
+                
+                // 데이터 정렬 로직 추가
+                state.data = action.payload.data.sort((a, b) => {
+                    // wantedType을 기준으로 내림차순 정렬
+                    if (a.wantedType && !b.wantedType) return -1;
+                    if (!a.wantedType && b.wantedType) return 1;
+                    
+                    // wantedType이 같은 경우 id를 오름차순으로 정렬
+                    return a.id - b.id;
+                });
             })
             .addCase(fetchData.rejected, (state, action) => {
                 state.status = "failed";

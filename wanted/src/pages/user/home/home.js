@@ -11,7 +11,7 @@ const Home = () => {
         (state) => state.data
     );
     useDataFetch(data_hash);
-
+    
     // 데이터 로딩 중인 경우
     if (status === "loading") {
         return <div>Loading...</div>;
