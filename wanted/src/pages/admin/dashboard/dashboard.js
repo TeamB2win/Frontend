@@ -8,10 +8,6 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
-  // const clicked = (id) => {
-  //   navigate(`/admin/update/${id}`);
-  // };
-
   const clicked = async (id) => {
     try {
       // 해당 레코드의 ID에 맞는 API를 호출하여 데이터를 받아옴
