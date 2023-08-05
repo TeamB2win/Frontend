@@ -172,17 +172,21 @@ function CardList({ item }) {
 
     const styles = {
         col: {
-            margin: "0 auto",
-            width: "15rem",
             border: "0",
-            margin: "0.3em 0.3em",
-            // backgroundColor: wantedType? "red": "yellow",
-            // borderRadius: "10px"
+            margin: "1em",
+        },
+        cardWrapper: {
+            width: "16rem",
+            margin: "0 auto",
+            padding: "0.5rem",
+            borderRadius: "10px",
+            backgroundColor: wantedType? "red": "yellow",
+            borderRadius: "10px"
         },
         card: {
             width: "15rem",
             border: "0",
-            margin: "0.5em auto",
+            margin: "0 auto",
         },
         cardBody: {
             padding: "0",
@@ -205,20 +209,22 @@ function CardList({ item }) {
 
     return (
         <Col key={id} style={styles.col}>
-            <Card style={styles.card}>
-                {videoError ?
-                <img src="/logo.png" alt={"image_1"} /> :
-                <video controls autoPlay loop onError={() => {setVideoError(true)}}>                   
-                    <source src="images/test/video.mp4" type="video/mp4" /> 
-                </video>
-                }
-                <Card.Body style={styles.cardBody}>
-                    <Card.Title style={styles.cardTitle}>{criminal}</Card.Title>
-                    <Card.Title style={styles.cardSubTitle}>
-                        {name}({age}세, {sex ? "여" : "남"})
-                    </Card.Title>
-                </Card.Body>
-            </Card>
+            <div style={styles.cardWrapper}>
+                <Card style={styles.card}>
+                    {videoError ?
+                    <img src="/logo.png" alt={"image_1"} /> :
+                    <video controls autoPlay loop onError={() => {setVideoError(true)}}>                   
+                        <source src="images/test/video.mp4" type="video/mp4" /> 
+                    </video>
+                    }
+                    <Card.Body style={styles.cardBody}>
+                        <Card.Title style={styles.cardTitle}>{criminal}</Card.Title>
+                        <Card.Title style={styles.cardSubTitle}>
+                            {name}({age}세, {sex ? "여" : "남"})
+                        </Card.Title>
+                    </Card.Body>
+                </Card>
+            </div>
         </Col>
     );
 }

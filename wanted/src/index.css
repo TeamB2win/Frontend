@@ -167,3 +167,7 @@ body {
   width: 80%;
   margin: 0 auto;
 }
+
+.slick-dots {
+  display: None !important;
+}
