@@ -45,7 +45,7 @@ function Update() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/wanted/${id}`);
+                const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
                 let data = {
                     ...res.data.data[0].datasource[0],
                     ...res.data.data[0].detail[0],
@@ -85,7 +85,7 @@ function Update() {
 
     const handleVideoInferenceButton = (event) => {
         const { checked } = event.target;
-        setVideoInferenceButton(!checked);
+        setVideoInferenceButton(checked);
         console.log(videoInferenceButton);
     }
 
@@ -244,7 +244,7 @@ function Update() {
         }
 
         await axios.put(
-            "http://localhost:8000/admin/image",
+            "http://63.35.31.27:8000/admin/image",
             formData,
             {
                 headers : headers,
@@ -281,7 +281,7 @@ function Update() {
         }
 
         await axios.put(
-            "http://localhost:8000/admin/data",
+            "http://63.35.31.27:8000/admin/video",
             { "id" : id },
             { headers : headers }
         ).then(function (response) {
@@ -337,7 +337,7 @@ function Update() {
         }
 
         await axios.put(
-            "http://localhost:8000/admin/data",
+            "http://63.35.31.27:8000/admin/data",
             finalData,
             { headers : headers }
         ).then(function (response) {
