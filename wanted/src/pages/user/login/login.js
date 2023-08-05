@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 // bootstrap
 import { Stack, Image, Button } from "react-bootstrap";
 // css
 import './login.css';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
+  const navigate = useNavigate();
+
   function handleSubmit(event) {
     event.preventDefault();
     console.log(event.target[0].value);
     console.log(event.target[1].value);
-    alert("submit event");
+    navigate(`/admin`);
   }
 
   const styles = {
@@ -65,7 +68,6 @@ export default function Login() {
       "border": "2px solid #FD6F22",
       "borderRadius": "0",
       "verticalAlign": "middle",
-      "lineHeight": "2em",
     }
   }
 

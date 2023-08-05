@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // useDispatch와 useSelector를 import
-import { Col, Container, Row, Stack, Card, Button } from "react-bootstrap";
+import { Col, Container, Row, Card } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import useDataFetch from "../../../hooks/useDataFetch";
 
@@ -49,6 +49,10 @@ export default function Grid() {
         }
     }, [filter])
       
+    useEffect(() => {
+        setFilteredData(data);
+    }, [data])
+
     const styles = {
         div: {
             width: "80%",
@@ -176,12 +180,11 @@ function CardList({ item }) {
             margin: "1em",
         },
         cardWrapper: {
-            width: "16rem",
+            width: "fit-content",
             margin: "0 auto",
-            padding: "0.5rem",
+            padding: "0.3rem",
             borderRadius: "10px",
             backgroundColor: wantedType? "red": "yellow",
-            borderRadius: "10px"
         },
         card: {
             width: "15rem",
