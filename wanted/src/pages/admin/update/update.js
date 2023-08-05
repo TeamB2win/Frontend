@@ -375,11 +375,10 @@ function Update() {
                             <img
                                 src={imageFile.image}
                                 alt="User"
-                                style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
-                                
+                                className='photo-image'
                             />
                             <div className="delete-button">
-                                <button onClick={() => handleDeletePhoto()} >삭제</button>
+                                <button onClick={() => handleDeletePhoto()}>삭제</button>
                             </div>
                         </>
                     ) : (
@@ -388,15 +387,15 @@ function Update() {
                             <img
                                 src={recordData.image}
                                 alt="User"
-                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                className='photo-image'
                             />
                         </>
                     ) : (
                         <>
                             <img
-                                src={"/images/admin/default-image.png"}
+                                src={"images/admin/default-image.png"}
                                 alt="Default User"
-                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: '1rem' }}
+                                className='photo-image'
                             />
                         </>
                     ))}
@@ -417,7 +416,7 @@ function Update() {
                                 autoPlay
                                 muted
                                 src={recordData.video}
-                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                className='photo-video'
                             />
                             <div>
                                 <input 
@@ -433,7 +432,7 @@ function Update() {
                             <img
                                 src={"/images/admin/default-image.png"}
                                 alt="Default User"
-                                style={{ minWidth: '200px', minHeight: '200px', maxWidth: '200px', maxHeight: '200px', marginBottom: "1rem" }}
+                                className='photo-image'
                             />
                             <div>
                                 <input type="checkbox" name="inference" disabled checked />  영상 생성

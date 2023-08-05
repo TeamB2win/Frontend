@@ -154,17 +154,12 @@ body {
   margin: 0;
 }
 
-.photo-image {
+.photo-image, .photo-video {
   width: 256px !important;
   min-height: 256px !important;
   max-height: 256px !important;
   object-fit: fill;
-}
-.photo-video {
-  width: 256px !important;
-  min-height: 256px !important;
-  max-height: 256px !important;
-  object-fit: fill;
+  margin-bottom: 1rem;
 }
 
 .handleButton {

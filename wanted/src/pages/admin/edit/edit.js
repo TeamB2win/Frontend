@@ -62,7 +62,7 @@ function Edit() {
                         required
                     />
                 </div>
-                <button type="submit">관리자 정보 수정</button>
+                <button type="submit" style={{"marginTop": "1rem"}}>관리자 정보 수정</button>
             </form>
         </div>
     );
