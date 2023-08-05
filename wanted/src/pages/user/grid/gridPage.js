@@ -15,7 +15,7 @@ export default function Grid() {
         type: "",
         criminal: "",
     });
-    console.log(filteredData);
+
     const uniqueData = data.reduce((acc, val) => {
         var criminal = val.detail[0].criminal;
 
@@ -167,7 +167,7 @@ function GridWanted({ data }) {
 
 function CardList({ item }) {
     const [videoError, setVideoError] = useState(false);
-    const { id, name, age, sex, detail } = item;
+    const { id, name, age, sex, detail, wantedType } = item;
     const { criminal } = detail[0];
 
     const styles = {
@@ -175,12 +175,14 @@ function CardList({ item }) {
             margin: "0 auto",
             width: "15rem",
             border: "0",
-            marginBottom: "0.5em",
+            margin: "0.3em 0.3em",
+            backgroundColor: wantedType? "red": "yellow",
+            borderRadius: "10px"
         },
         card: {
             width: "15rem",
             border: "0",
-            margin: "1em auto ",
+            margin: "0.5em auto",
         },
         cardBody: {
             padding: "0",
