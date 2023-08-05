@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 // 비동기 액션으로 데이터를 가져오는 함수
 export const fetchData = createAsyncThunk("data/fetchData", async () => {
     try {
@@ -30,7 +31,6 @@ export const dataSlice = createSlice({
             if (action.payload.criminal === "" && action.payload.type === "") {
                 state.data = state.cashedData;
             } else {
-                console.log(state.data)
                 state.data = state.data.filter(
                     (el) => {
                         let a = true
@@ -63,7 +63,6 @@ export const dataSlice = createSlice({
             .addCase(fetchData.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.data = action.payload.data;
-                state.cashedData = action.payload.data;
                 state.data_hash = action.payload.dataHash; 
             })
             .addCase(fetchData.rejected, (state, action) => {

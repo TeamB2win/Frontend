@@ -12,11 +12,10 @@ import {
 import storage from "redux-persist/lib/storage/session";
 
 // slice import
-import counterSlice from './counterSlice';
 import dataSlice from './dataSlice'; // 새로 추가한 dataSlice
 
+
 const rootReducer = combineReducers({
-  counter: counterSlice,
   data: dataSlice // 추가한 dataSlice의 리듀서를 연결
 })
 
