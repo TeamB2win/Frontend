@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import UserNav from "./components/userNav";
 //import MainCarousel from "./pages/user/home/home";
-import Home from "./pages/user/home/home_copy_3";
+import Home from "./pages/user/home/home_copy";
 import NoPage from "./pages/nopage";
-import Grid from "./pages/user/grid/gridPage_3";
+import Grid from "./pages/user/grid/gridPage";
 import ReportPage from "./pages/user/report/reportPage";
 import Docs from "./pages/user/docs/docsPage";
 import Login from "./pages/user/login/login";

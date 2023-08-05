@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchData } from "../redux/dataSlice_3";
+import { fetchData } from "../redux/dataSlice";
 import axios from "axios";
 
 export default function useDataFetch(data_hash) {

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Form, Row, Stack, Table } from "react-bootstrap";
-import { CiSearch } from "react-icons/ci";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Form, Row, Stack, Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import useDataFetch from "../../../hooks/useDataFetch";
 
 export default function Dashboard() {
-
+  const { data, data_hash, cashedData } = useSelector((state) => state.data);
+  useDataFetch(data_hash)
   const navigate = useNavigate();
-
-  // const clicked = (id) => {
-  //   navigate(`/admin/update/${id}`);
-  // };
-
   const clicked = async (id) => {
     try {
       // 해당 레코드의 ID에 맞는 API를 호출하여 데이터를 받아옴
@@ -27,27 +24,44 @@ export default function Dashboard() {
     }
   };
 
-  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState(data);
+    const [filter, setFilter] = useState({
+        type: "",
+        criminal: "",
+    });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get("http://63.35.31.27:8000/wanted");
-      return res.data;
+  const uniqueData = data.reduce((acc, val) => {
+    var criminal = val.detail[0].criminal;
+
+    if (!acc.includes(criminal)) {
+        acc.push(criminal);
     }
+    return acc;
+}, []);
 
-    fetchData().then(res => setData(res));
-  }, []);
+useEffect(() => {
+  if (filter.criminal === "" && filter.type === "") {
+      setFilteredData(data);
+  } else {
+      setFilteredData(
+          data.filter((el) => {
+              let a = true
+              if (filter.type === "긴급") {
+                  a = el.wantedType === true
+              } else if (filter.type === "종합") {
+                  a = el.wantedType === false
+              }
+              let b = true
+              if (el.detail[0].criminal !== filter.criminal && filter.criminal !== "") {
+                  b = false
+              } 
+              return a && b
+          })
+      )
+  }
+}, [filter])
 
-  const tableColumn = [
-    "ID", "이름", "유형", "죄명", "기간"
-  ]
-
-  const tableColumnEng = [
-    "id", "name", "wantedType", "detailC", "detailS"
-  ]
-
-  const datas = data['data']
-
+  const tableColumn = [ "ID", "이름", "유형", "죄명", "기간" ]
   const styles = {
     div: {
       "width": "80%",
@@ -87,41 +101,34 @@ export default function Dashboard() {
 
   return (
     <div style={styles.div}>
-      <ToolBar />
+      <ToolBar uniqueData={uniqueData} filter={filter} setFilter={setFilter} />
       <Table striped style={styles.table.tableContainer}>
         <thead className="table-header" style={{
           "textAlign": "center"
         }}>
           <tr>
-            {tableColumn && tableColumn.map(column => <th style={styles.table.th}>{column}</th>)}
+            {tableColumn 
+              && tableColumn.map((column, idx) => 
+                <th key={idx} style={styles.table.th}>{column}</th>
+            )}
             <th style={styles.table.th}>정보 변경</th>
           </tr>
         </thead>
+
         <tbody style={{
           "textAlign": "center"
         }}>
-          {datas && datas.map(data => {
-            return (
-              <tr>
-                {tableColumnEng && tableColumnEng.map(column => {
-                  let valueToDisplay;
-                  if (data[column] === true) {
-                    valueToDisplay = '긴급';
-                  } else if (data[column] === false) {
-                    valueToDisplay = '종합';
-                  } else if (column === 'detailC') {
-                    valueToDisplay = data['detail'][0]['criminal'];
-                  } else if (column === 'detailS') {
-                    valueToDisplay = data['detail'][0]['startedAt'].slice(0, 10) + " ~ " + data['detail'][0]['endedAt'].slice(0, 10);
-                  } else {
-                    valueToDisplay = data[column];
-                  }
-                  return <td style={styles.table.td}>{valueToDisplay}</td>;
-                })}
+            {filteredData && filteredData.map((el, idx) => (
+              <tr key={idx}>
+                <td style={styles.table.td}>{el.id}</td>
+                <td style={styles.table.td}>{el.name}</td>
+                <td style={styles.table.td}>{el.wantedType ? "긴급" : "종합"}</td>
+                <td style={styles.table.td}>{el.detail[0].criminal}</td>
+                <td style={styles.table.td}>{`${el.detail[0].startedAt.slice(0, 10)} ~ ${el.detail[0].endedAt.slice(0, 10)}`}</td>
                 <td>
                   <Row>
                     <Col style={styles.table.col}>
-                      <button onClick={() => clicked(data.id)} style={styles.table.btn}>
+                      <button onClick={() => clicked(el.id)} style={styles.table.btn}>
                         수정
                       </button>
                     </Col>
@@ -133,15 +140,21 @@ export default function Dashboard() {
                   </Row>
                 </td>
               </tr>
-            )
-          })}
+            ))}
         </tbody>
       </Table>
     </div>
   )
 }
 
-function ToolBar() {
+function ToolBar({ uniqueData, filter, setFilter }) {
+  const [resetSelected, setResetSelected] = useState(true);
+  const CRIMINAL_TYPES = ["긴급", "종합"];
+  const labels = [
+    { ariaLabel: "유형", label: "type" },
+    { ariaLabel: "죄명", label: "criminal" },
+];
+
   const styles = {
     toolBar: {
       div: {
@@ -185,42 +198,42 @@ function ToolBar() {
   return (
     <Stack direction="horizontal" gap={5}>
       <Row style={{ "width": "100%" }}>
-        <Col style={styles.toolBar.col}>
-          <Form.Select aria-label="select type" style={styles.toolBar.select}>
-            <option style={styles.toolBar.option}>유형</option>
-            <option value="1" style={styles.toolBar.option}>One</option>
-            <option value="2" style={styles.toolBar.option}>Two</option>
-            <option value="3" style={styles.toolBar.option}>Three</option>
-          </Form.Select>
-        </Col>
-        <Col style={styles.toolBar.col}>
-          <Form.Select aria-label="select aria" style={styles.toolBar.select}>
-            <option style={styles.toolBar.option}>지역</option>
-            <option value="1" style={styles.toolBar.option}>One</option>
-            <option value="2" style={styles.toolBar.option}>Two</option>
-            <option value="3" style={styles.toolBar.option}>Three</option>
-          </Form.Select>
-        </Col>
-        <Col style={styles.toolBar.col}>
-          <Form.Select aria-label="select criminal" style={styles.toolBar.select}>
-            <option>죄명</option>
-            <option value="1" style={styles.toolBar.option}>One</option>
-            <option value="2" style={styles.toolBar.option}>Two</option>
-            <option value="3" style={styles.toolBar.option}>Three</option>
-          </Form.Select>
-        </Col>
-        <Col style={styles.toolBar.col}>
-          <Stack direction="horizontal" gap={3} className="p-2" style={{ "flexGrow": "1" }}>
-            <input type="text" style={styles.toolBar.input} />
-            <i style={{ "color": "#1C1C1C" }}>
-              <CiSearch size={30} />
-            </i>
-          </Stack>
-        </Col>
+        {labels.map(({ ariaLabel, label }, idx) => (
+          <Col key={idx} style={styles.toolBar.col}>
+            <Form.Select
+              aria-label={`select ${label}`}
+              style={styles.toolBar.select}
+              onChange={(e) => {
+                setFilter({
+                  ...filter,
+                  [label]: e.target.value,
+                });
+                setResetSelected(false);
+              }}
+            >
+              <option selected={resetSelected} style={styles.toolBar.option} value={""} >
+                {ariaLabel}
+              </option>
+              {(ariaLabel === "유형" 
+                ? CRIMINAL_TYPES 
+                : uniqueData
+              ).map((el) => (
+                <>
+                  <option
+                      value={el}
+                      style={styles.toolBar.option}
+                  >
+                      {el}
+                  </option>
+              </>
+              ))}
+            </Form.Select>
+          </Col>
+        ))}
       </Row>
       <Button href="/admin/create" style={styles.toolBar.btn}>
         공개수배자 등록
       </Button>
     </Stack>
-  )
+  );
 }
