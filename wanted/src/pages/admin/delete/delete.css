@@ -1,4 +1,4 @@
-.Delete {
+/* .Delete {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,11 +8,6 @@
 
 .header {
     margin-top: 5rem;
-}
-
-
-label {
-    min-width: 10rem;
 }
 
 form {
@@ -33,4 +28,4 @@ form {
 
 .form-group input {
     min-width: 16rem;
-}
+} */

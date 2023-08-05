@@ -1,0 +1,121 @@
+.form-wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.header {
+  width: fit-content;
+  margin: 2rem auto;
+}
+
+.photo-container img {
+  max-width: 100%; /* 이미지가 부모 요소의 너비에 맞게 조절 */
+  max-height: 100%; /* 이미지가 부모 요소의 높이에 맞게 조절 */
+}
+
+.photo-containers {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem !important; 
+  margin-bottom: 2rem !important;
+  margin: 0;
+}
+
+.photo-container {
+  width: 20em;
+  height: 20em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.photo-image, .photo-video {
+  width: 256px !important;
+  min-height: 256px !important;
+  max-height: 256px !important;
+  object-fit: fill;
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    min-width: 16rem;
+    min-height: 2rem;
+    margin-bottom: 0.5rem;
+    /* 여백을 주기 위해 추가 */
+}
+/* .form-group input [type='radio'] {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+} */
+
+.form-group-radio {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-group label,
+.form-group-radio label {
+  min-width: 10rem;
+  min-height: 2rem;
+  line-height: 2rem;
+}
+
+.form-group-radio div {
+  min-width: 16rem;
+  min-height: 2rem;
+}
+
+.form-group-radio div input,
+.form-group-radio div label {
+  min-width: 4rem;
+  height: 1.2rem;
+  vertical-align: middle;
+}
+
+.input-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* 첫 번째 input과 '추가' 버튼을 왼쪽으로 정렬합니다. */
+    justify-content: center;
+}
+
+.input-button button {
+    margin-bottom: 0.5rem;
+    /* 버튼과 input 사이의 여백을 주기 위해 추가 */
+    margin-left: 0.5rem;
+    /* '추가' 버튼과 다음 input 사이의 여백을 주기 위해 추가 */
+}
+
+.input-button .input-create-button {
+  min-width: 16rem;
+  margin: 0 0 0.5rem 0;
+}

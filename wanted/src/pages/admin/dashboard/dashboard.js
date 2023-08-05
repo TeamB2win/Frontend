@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Row, Stack, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useSelector } from "react-redux";
+
+import axios from "axios";
+import { Button, Col, Form, Row, Stack, Table } from "react-bootstrap";
+
 import useDataFetch from "../../../hooks/useDataFetch";
+
 
 export default function Dashboard() {
   const { data, data_hash, status } = useSelector((state) => state.data);
@@ -19,7 +22,8 @@ export default function Dashboard() {
     type: "",
     criminal: "",
   });
-
+  
+  const tableColumn = ["ID", "이름", "유형", "죄명", "기간"];
   const uniqueData = data.reduce((acc, val) => {
     var criminal = val.detail[0].criminal;
 
@@ -56,7 +60,6 @@ export default function Dashboard() {
     setFilteredData(data);
   }, [data])
   
-  const tableColumn = ["ID", "이름", "유형", "죄명", "기간"]
   const styles = {
     div: {
       "width": "80%",

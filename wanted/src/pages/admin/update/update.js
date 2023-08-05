@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import axios from "axios";
-import "./update.css";
+
+import "../css/crud.css";
+
 
 function isoDateStringToDate(isoDateString) {
     // ISO 8601 형식의 문자열을 Date 객체로 변환
@@ -9,8 +12,8 @@ function isoDateStringToDate(isoDateString) {
     return dateValue;
 }
 
-function isEmpty( node ) {
-    if ( typeof node === 'undefined' || node === null || node === "" )
+function isEmpty(node) {
+    if (typeof node === 'undefined' || node === null || node === "")
         return true;
     else
         return false;
@@ -45,7 +48,7 @@ function Update() {
                     'wantedType': res.data.data[0].wantedType,
                     'imagePath': res.data.data[0].datasource[0].image,
                     'videoPath': res.data.data[0].datasource[0].video,
-                    'wantedId' : res.data.data[0].wantedId
+                    'wantedId': res.data.data[0].wantedId
                 }
                 setRecordData(data);
             } catch (error) {
@@ -78,7 +81,7 @@ function Update() {
 
     const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
         const { name, value } = e.target;
-        if (name === "sex" | name === "wantedType") {
+        if (name === "sex" || name === "wantedType") {
             setRecordData((prevData) => ({
                 ...prevData,
                 [name]: value === "true", // "true"인 경우 true, 그렇지 않으면 false로 설정됨
@@ -185,7 +188,7 @@ function Update() {
         event.preventDefault();
         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
         console.log(recordData.name, recordData.age, recordData.sex, recordData.wanted_type)
-        if ( isEmpty(recordData.name) || isEmpty(recordData.age) || isEmpty(recordData.sex) || isEmpty(recordData.wantedType)) {
+        if (isEmpty(recordData.name) || isEmpty(recordData.age) || isEmpty(recordData.sex) || isEmpty(recordData.wantedType)) {
             alert("빈 칸을 모두 입력해주세요.");
             return;
         }
@@ -206,7 +209,7 @@ function Update() {
             else if (videoInferenceButton) {
                 handleReInferenceVideoRequest();
             };
-            
+
         } else {
             // 사용자가 취소를 누른 경우 아무 작업 없음
         }
@@ -219,14 +222,14 @@ function Update() {
             imageFile.file
         )
         const headers = { "Content-Type": "multipart/form-data" }
-        const params = { "id" : id }
+        const params = { "id": id }
 
-        await axios.put(
+        axios.put(
             "http://63.35.31.27:8000/admin/image",
             formData,
             {
-                headers : headers,
-                params : params
+                headers: headers,
+                params: params
             }
         ).then(function (response) {
             console.log(response.data);
@@ -257,10 +260,10 @@ function Update() {
     const handleReInferenceVideoRequest = async () => {
         const headers = { "Content-Type": "application/json" }
 
-        await axios.put(
+        axios.put(
             "http://63.35.31.27:8000/admin/video",
-            { "id" : id },
-            { headers : headers }
+            { "id": id },
+            { headers: headers }
         ).then(function (response) {
             console.log(response.data);
             // TODO data hash 값 redux에 저장
@@ -287,18 +290,15 @@ function Update() {
     }
 
     const handleUpdateDataRequest = async () => {
-        const wantedIdAsInteger = parseInt(recordData.wantedId, 10);
-        const wantedTypeAsBool = JSON.parse(recordData.wantedType);
-        const sexAsBool = JSON.parse(recordData.sex);
         const startedAtAsDatetime = new Date(recordData.startedAt);
         const endedAtAsDatetime = new Date(recordData.endedAt);
         const finalData = {
             "id": id,
+            "wantedType": recordData.wantedType,
+            "wantedId": recordData.wantedId? null: parseInt(recordData.wantedId, 10),
             "name": recordData.name,
-            "sex": sexAsBool,
+            "sex": recordData.sex,
             "age": recordData.age,
-            "wantedType": wantedTypeAsBool,
-            "wantedId": wantedIdAsInteger,
             "criminal": recordData.criminal,
             "registeredAddress": recordData.registeredAddress,
             "residence": recordData.residence,
@@ -311,10 +311,10 @@ function Update() {
         }
         const headers = { "Content-Type": "application/json" }
 
-        await axios.put(
+        axios.put(
             "http://63.35.31.27:8000/admin/data",
             finalData,
-            { headers : headers }
+            { headers: headers }
         ).then(function (response) {
             console.log(response.data);
             // TODO data hash 값 redux에 저장
@@ -345,11 +345,11 @@ function Update() {
     }
 
     return (
-        <div className="Update">
+        <div className="form-wrapper">
             <h1 className="header">공개수배자 정보 수정</h1>
             <div className='photo-containers'>
-            <div className="photo-container">
-                    { imageFile.image ? (
+                <div className="photo-container">
+                    {imageFile.image ? (
                         <>
                             <img
                                 src={imageFile.image}
@@ -361,29 +361,29 @@ function Update() {
                             </div>
                         </>
                     ) : (
-                    recordData.image ? (
-                        <>
-                            <img
-                                src={recordData.image}
-                                alt="User"
-                                className='photo-image'
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <img
-                                src={"images/admin/default-image.png"}
-                                alt="Default User"
-                                className='photo-image'
-                            />
-                        </>
-                    ))}
+                        recordData.image ? (
+                            <>
+                                <img
+                                    src={recordData.image}
+                                    alt="User"
+                                    className='photo-image'
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <img
+                                    src={"images/admin/default-image.png"}
+                                    alt="Default User"
+                                    className='photo-image'
+                                />
+                            </>
+                        ))}
                     <input style={{ maxWidth: '214px' }}
-                            type="file"
-                            accept="image/*"
-                            name="image"
-                            ref={photoInputRef}
-                            onChange={handleImageChange}
+                        type="file"
+                        accept="image/*"
+                        name="image"
+                        ref={photoInputRef}
+                        onChange={handleImageChange}
                     />
                 </div>
                 <div className="photo-container">
@@ -398,8 +398,8 @@ function Update() {
                                 className='photo-video'
                             />
                             <div>
-                                <input 
-                                    type="checkbox" 
+                                <input
+                                    type="checkbox"
                                     name="inference"
                                     onClick={handleVideoInferenceButton}
                                     disabled={isButtonDisabled}
@@ -421,13 +421,45 @@ function Update() {
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
+                <div className="form-group-radio">
+                    <label>유형</label>
+                    <div>
+                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
+                            type="radio"
+                            name="wantedType"
+                            value="true"
+                            checked={recordData.wantedType} // "true"인 경우에만 체크되도록 설정
+                            onChange={handleInputChange}
+                            required
+                        /> 긴급
+                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
+                            type="radio"
+                            name="wantedType"
+                            value="false"
+                            checked={!recordData.wantedType} // "false"인 경우에만 체크되도록 설정
+                            onChange={handleInputChange}
+                            required
+                        /> 종합
+                    </div>
+                </div>
                 <div className="form-group">
-                    <label>수배번호</label>
+                    <label>공개수배번호</label>
                     <input
                         type="number"
                         name="wantedId"
                         value={recordData.wantedId}
                         onChange={handleInputChange}
+                        disabled={recordData.wantedType}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>죄명</label>
+                    <input
+                        type="text"
+                        name="criminal"
+                        value={recordData.criminal}
+                        onChange={handleInputChange}
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -471,37 +503,8 @@ function Update() {
                         required
                     />
                 </div>
-                <div className="form-group-radio">
-                    <label>유형</label>
-                    <div>
-                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
-                            type="radio"
-                            name="wantedType"
-                            value="true"
-                            checked={recordData.wantedType} // "true"인 경우에만 체크되도록 설정
-                            onChange={handleInputChange}
-                            required
-                        /> 긴급
-                        <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
-                            type="radio"
-                            name="wantedType"
-                            value="false"
-                            checked={!recordData.wantedType} // "false"인 경우에만 체크되도록 설정
-                            onChange={handleInputChange}
-                            required
-                        /> 종합
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label>죄명</label>
-                    <input
-                        type="text"
-                        name="criminal"
-                        value={recordData.criminal}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+
+
                 <div className="form-group">
                     <label>주민등록상 주소지</label>
                     <input
@@ -556,7 +559,7 @@ function Update() {
                                 </button>
                             </div>
                         ))}
-                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddRelationalLink}>추가</button>
+                        <button type="button" className='input-create-button' onClick={handleAddRelationalLink}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -575,7 +578,7 @@ function Update() {
                                 </button>
                             </div>
                         ))}
-                        <button type="button" style={{ minWidth: "16rem", margin: "0" }} onClick={handleAddCharacteristic}>추가</button>
+                        <button type="button" className='input-create-button' onClick={handleAddCharacteristic}>추가</button>
                     </div>
                 </div>
                 <div className="form-group">
