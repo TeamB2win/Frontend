@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import UserNav from "./components/userNav";
-//import MainCarousel from "./pages/user/home/home";
 import Home from "./pages/user/home/home";
 import NoPage from "./pages/nopage";
 import Grid from "./pages/user/grid/gridPage";
@@ -13,7 +12,6 @@ import Create from "./pages/admin/create/create";
 import Update from "./pages/admin/update/update";
 import Delete from "./pages/admin/delete/delete";
 import Edit from "./pages/admin/edit/edit";
-
 
 
 export default function Routers() {
