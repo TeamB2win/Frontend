@@ -13,8 +13,6 @@ export default function useDataFetch(data_hash) {
                 const isHashOK = await axios.get(
                     `http://63.35.31.27:8000/wanted/check/${data_hash}`
                 );
-                console.log(data_hash);
-                console.log(isHashOK.data.status);
                 if (isHashOK.data.status === "OK") return;
             
                 dispatch(fetchData()).unwrap();
