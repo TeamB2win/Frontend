@@ -15,7 +15,7 @@ export default function Grid() {
         type: "",
         criminal: "",
     });
-
+    console.log(filteredData);
     const uniqueData = data.reduce((acc, val) => {
         var criminal = val.detail[0].criminal;
 
@@ -159,20 +159,17 @@ function ToolBar({uniqueData, filter, setFilter}) {
 
 function GridWanted({ data }) {
     return (
-        <Container
-            style={{
-                width: "100%",
-            }}
-        >
-            <Row>{data.map((item) => CardList(item))}</Row>
+        <Container style={{width: "100%"}}>
+            <Row>{data.map((item) => <CardList item={item}/>)}</Row>
         </Container>
     );
 }
 
-function CardList(props) {
+function CardList({ item }) {
     const [videoError, setVideoError] = useState(false);
-    const { id, name, age, sex, detail } = props;
-    const [{ criminal }] = detail;
+    const { id, name, age, sex, detail } = item;
+    const { criminal } = detail[0];
+
     const styles = {
         col: {
             margin: "0 auto",
