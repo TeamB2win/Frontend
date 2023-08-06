@@ -23,7 +23,7 @@ export default function Grid() {
             acc.push(criminal);
         }
         return acc;
-    }, []);
+    }, []).sort();
 
     useEffect(() => {
         if (filter.criminal === "" && filter.type === "") {

@@ -147,7 +147,7 @@ function Create() {
                 "criminal": userInfo.criminal,
                 "name": userInfo.name,
                 "sex": userInfo.sex,
-                "age": userInfo.age? null : parseInt(userInfo.age, 10),
+                "age": userInfo.age? parseInt(userInfo.age, 10): null,
                 "registeredAddress": userInfo.registered_address,
                 "residence": userInfo.residence,
                 "height": userInfo.height,

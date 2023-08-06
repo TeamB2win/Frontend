@@ -24,15 +24,14 @@ export default function Dashboard() {
   });
   
   const tableColumn = ["ID", "이름", "유형", "죄명", "기간"];
-  const uniqueData = data.reduce((acc, val) => {
+  let uniqueData = data.reduce((acc, val) => {
     var criminal = val.detail[0].criminal;
 
     if (!acc.includes(criminal)) {
       acc.push(criminal);
     }
     return acc;
-  }, []);
-
+  }, []).sort();
 
   useEffect(() => {
     if (filter.criminal === "" && filter.type === "") {
