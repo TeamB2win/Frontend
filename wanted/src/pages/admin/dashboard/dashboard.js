@@ -114,7 +114,7 @@ export default function Dashboard() {
       };
       console.log(dataToDelete);
       await axios.delete(
-        process.env.BACK_BASE_URL + `/admin`,
+        process.env.REACT_APP_BACK_BASE_URL + `/admin`,
         {data: dataToDelete}
       );
 

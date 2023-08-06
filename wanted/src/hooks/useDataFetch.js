@@ -14,7 +14,7 @@ export default function useDataFetch(data_hash) {
         if (data_hash) {
             const data = async () => {
                 const isHashOK = await axios.get(
-                    process.env.BACK_BASE_URL + `/wanted/check/${data_hash}`
+                    process.env.REACT_APP_BACK_BASE_URL + `/wanted/check/${data_hash}`
                 );
                 if (isHashOK.data.status === "OK") return;
             

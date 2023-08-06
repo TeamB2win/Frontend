@@ -38,7 +38,7 @@ function Update() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(process.env.BACK_BASE_URL + `/wanted/${id}`);
+                const res = await axios.get(process.env.REACT_APP_BACK_BASE_URL + `/wanted/${id}`);
                 let data = {
                     ...res.data.data[0].datasource[0],
                     ...res.data.data[0].detail[0],
@@ -225,7 +225,7 @@ function Update() {
         const params = { "id": id }
 
         axios.put(
-            process.env.BACK_BASE_URL + "/admin/image",
+            process.env.REACT_APP_BACK_BASE_URL + "/admin/image",
             formData,
             {
                 headers: headers,
@@ -261,7 +261,7 @@ function Update() {
         const headers = { "Content-Type": "application/json" }
 
         axios.put(
-            process.env.BACK_BASE_URL + "/admin/video",
+            process.env.REACT_APP_BACK_BASE_URL + "/admin/video",
             { "id": id },
             { headers: headers }
         ).then(function (response) {
@@ -312,7 +312,7 @@ function Update() {
         const headers = { "Content-Type": "application/json" }
 
         axios.put(
-            process.env.BACK_BASE_URL + "/admin/data",
+            process.env.REACT_APP_BACK_BASE_URL + "/admin/data",
             finalData,
             { headers: headers }
         ).then(function (response) {

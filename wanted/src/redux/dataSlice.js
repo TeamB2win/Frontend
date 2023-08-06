@@ -5,7 +5,7 @@ import axios from "axios";
 // 비동기 액션으로 데이터를 가져오는 함수
 export const fetchData = createAsyncThunk("data/fetchData", async () => {
     try {
-        const response = await axios.get(process.env.BACK_BASE_URL + "/wanted");
+        const response = await axios.get(process.env.REACT_APP_BACK_BASE_URL + "/wanted");
         return response.data;
     } catch (error) {
         throw error;
