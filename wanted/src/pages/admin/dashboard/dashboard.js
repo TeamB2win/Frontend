@@ -23,7 +23,7 @@ export default function Dashboard() {
     criminal: "",
   });
   
-  const tableColumn = ["ID", "이름", "유형", "죄명", "기간"];
+  const tableColumn = ["고유번호", "이름", "유형", "죄명", "기간"];
   let uniqueData = data.reduce((acc, val) => {
     var criminal = val.detail[0].criminal;
 
@@ -145,7 +145,7 @@ export default function Dashboard() {
             <>
               {filteredData && filteredData.map((el, idx) => (
                 <tr key={idx}>
-                  <td style={styles.table.td}>{el.id}</td>
+                  <td style={styles.table.td}>{el.wantedId}</td>
                   <td style={styles.table.td}>{el.name}</td>
                   <td style={styles.table.td}>{el.wantedType ? "긴급" : "종합"}</td>
                   <td style={styles.table.td}>{el.detail[0].criminal}</td>

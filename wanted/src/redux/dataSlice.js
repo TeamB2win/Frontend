@@ -44,7 +44,7 @@ export const dataSlice = createSlice({
                     if (!a.wantedType && b.wantedType) return 1;
                     
                     // wantedType이 같은 경우 id를 오름차순으로 정렬
-                    return a.id - b.id;
+                    return a.wantedId - b.wantedId;
                 });
             })
             .addCase(fetchData.rejected, (state, action) => {
