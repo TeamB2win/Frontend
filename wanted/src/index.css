@@ -39,13 +39,10 @@ body {
 }
 
 .text-container {
-  width: 50%;
-  /* 텍스트를 가로로 반만 차지하도록 설정 (필요에 따라 조절 가능) */
-  display: flex;
-  /* flexbox를 사용하여 내부 요소를 가로 방향으로 정렬 */
-  flex-direction: column;
-  /* 내부 요소들을 세로 방향으로 배치 */
-  align-items: center;
+  position: relative;
+  width: 50%; /* 원하는 너비로 조정 */
+  height: 100%; /* 부모 컨테이너의 높이에 맞게 설정 */
+  padding-top: 60px; /* .title의 높이와 동일한 값으로 설정 (예시) */
 }
 
 .title {
@@ -60,12 +57,32 @@ body {
   display: inline-block;
   padding-left: 24px;
   padding-right: 24px;
+  margin-bottom: 20px; /* 원하는 간격을 설정하세요 */
+}
+.wanted-type {
+  color: black;
+  font-size: 42px;
+  font-style: italic;
+  font-weight: bold;
+  font-family: 'Pretendard-Regular';
+  text-align: center;
+  padding: 12px;
+  background-color: #fd6f22;
+  display: inline-block;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.title-container {
+  margin-bottom: 20px; /* 원하는 간격을 설정하세요 */
 }
 
 .tagI-container {
   display: flex;
   /* tagI와 name을 가로로 배치 */
   align-self: flex-start;
+
+  /* 수정한 부분 */
+  margin-top: 20px; /* 일정한 공간 추가 (예시) */
 }
 
 .tagI {
@@ -101,7 +118,6 @@ body {
   font-weight: bold;
   text-align: center;
   display: inline-block;
-  /* name을 인라인 블록으로 설정하여 옆으로 배치 */
   margin-top: 22px;
   margin-left: 10px;
 }
