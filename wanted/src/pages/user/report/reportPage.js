@@ -121,7 +121,7 @@ export default function ReportPage() {
         </Stack>
         <Row style={styles.row}>
           <Col xs={6} md={4}>
-            <Image src="/images/report/report_tutorial_01.png" rounded style={{ "width": "100%" }} />
+            <Image src="/images/report/report_tutorial_02.png" rounded style={{ "width": "100%" }} />
           </Col>
           <Col style={{ "flexGrow": "1" }}>
             <p>1. 익명여부를 선택합니다. (익명제보 시 제보 내용은 참고로만 활용되며 보상에서 제외됩니다.)</p>
@@ -146,7 +146,7 @@ export default function ReportPage() {
         </Stack>
         <Row style={styles.row}>
           <Col xs={6} md={4}>
-            <Image src="/images/report/report_tutorial_01.png" rounded style={{ "width": "100%" }} />
+            <Image src="/images/report/report_tutorial_03.png" rounded style={{ "width": "100%" }} />
           </Col>
           <Col style={{ "flexGrow": "1" }}>
             <p>제보등록 버튼을 클릭하면 제보가 등록됩니다.</p>
