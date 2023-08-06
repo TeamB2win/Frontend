@@ -9,6 +9,7 @@ import { useState } from 'react';
 const Home = () => {
     const { data, data_hash, status, error } = useSelector((state) => state.data);
     useDataFetch(data_hash);
+    console.log(data)
     
     // 데이터 로딩 중인 경우
     if (status === "loading") {
@@ -30,7 +31,7 @@ const Home = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 7000,
+        autoplaySpeed: 1000000,
         prevArrow: null,
         nextArrow: null,
     };
@@ -62,9 +63,19 @@ const SlidingCard = ({ item }) => {
                 </Col>
                 <Col className="text-container">
                     {/* 이미지 오른쪽에 텍스트를 추가합니다 */}
-                    <h1 className="title">
-                        {item.detail[0].criminal}
-                    </h1>
+                    <div className="title-container">
+                        <h1 className="wanted-type">
+                            {item.wantedType ? (
+                                <span style={{ color: 'red' }}>긴급</span>
+                            ) : (
+                                <span style={{ color: 'yellow' }}>종합</span>
+                            )}
+                        </h1>
+                        <h1 className="title">
+                            {item.detail[0].criminal}
+                        </h1>
+                    </div>
+                                    
                     <div className="tagI-container">
                         <h2 className="tagI">{"수배정보"}</h2>
                         <p className="name">
