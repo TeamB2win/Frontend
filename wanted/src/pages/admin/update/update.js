@@ -38,7 +38,7 @@ function Update() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://63.35.31.27:8000/wanted/${id}`);
+                const res = await axios.get(process.env.BACK_BASE_URL + `/wanted/${id}`);
                 let data = {
                     ...res.data.data[0].datasource[0],
                     ...res.data.data[0].detail[0],
@@ -225,7 +225,7 @@ function Update() {
         const params = { "id": id }
 
         axios.put(
-            "http://63.35.31.27:8000/admin/image",
+            process.env.BACK_BASE_URL + "/admin/image",
             formData,
             {
                 headers: headers,
@@ -261,7 +261,7 @@ function Update() {
         const headers = { "Content-Type": "application/json" }
 
         axios.put(
-            "http://63.35.31.27:8000/admin/video",
+            process.env.BACK_BASE_URL + "/admin/video",
             { "id": id },
             { headers: headers }
         ).then(function (response) {
@@ -295,7 +295,7 @@ function Update() {
         const finalData = {
             "id": id,
             "wantedType": recordData.wantedType,
-            "wantedId": recordData.wantedId? null: parseInt(recordData.wantedId, 10),
+            "wantedId": recordData.wantedType? null: parseInt(recordData.wantedId, 10),
             "name": recordData.name,
             "sex": recordData.sex,
             "age": recordData.age,
@@ -312,7 +312,7 @@ function Update() {
         const headers = { "Content-Type": "application/json" }
 
         axios.put(
-            "http://63.35.31.27:8000/admin/data",
+            process.env.BACK_BASE_URL + "/admin/data",
             finalData,
             { headers: headers }
         ).then(function (response) {

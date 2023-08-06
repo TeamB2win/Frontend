@@ -113,7 +113,8 @@ export default function Dashboard() {
         "id": id
       };
       console.log(dataToDelete);
-      await axios.delete(`http://63.35.31.27:8000/admin`,
+      await axios.delete(
+        process.env.BACK_BASE_URL + `/admin`,
         {data: dataToDelete}
       );
 
