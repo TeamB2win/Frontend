@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -34,6 +34,8 @@ function Update() {
 
     const photoInputRef = useRef();
     const additionalPhotoInputRef = useRef();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -319,6 +321,7 @@ function Update() {
             console.log(response.data);
             // TODO data hash 값 redux에 저장
             alert("데이터 수정 요청이 완료되었습니다.");
+            navigate(`/admin`);
         }).catch(function (error) {
             if (error.response) {
                 // The request was made and the server responded with a status code
