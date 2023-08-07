@@ -9,7 +9,6 @@ import { useState } from 'react';
 const Home = () => {
     const { data, data_hash, status, error } = useSelector((state) => state.data);
     useDataFetch(data_hash);
-    console.log(data)
 
     // 데이터 로딩 중인 경우
     if (status === "loading") {
@@ -54,10 +53,10 @@ const SlidingCard = ({ item }) => {
             <Row className="slide-content">
                 <Col className="img-container">
                     {videoError ? (
-                        <img src="/logo.png" alt={"image_1"} className="img" />
+                        <img src={item.datasource[0].image} alt={"image_1"} className="img" />
                     ) : (
-                        <video controls autoPlay loop className="img" onError={() => { setVideoError(true) }} style={{ objectFit: "fill" }}>
-                            <source src="images/test/video.mp4" type="video/mp4" />
+                        <video controls autoPlay loop className="img" onError={() => { setVideoError(true) }}>
+                            <source src={item.datasource[0].video} type="video/mp4" />
                         </video>
                     )}
                 </Col>

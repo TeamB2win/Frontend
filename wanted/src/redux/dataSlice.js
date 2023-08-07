@@ -5,7 +5,7 @@ import axios from "axios";
 // 비동기 액션으로 데이터를 가져오는 함수
 export const fetchData = createAsyncThunk("data/fetchData", async () => {
     try {
-        const response = await axios.get("http://63.35.31.27:8000/wanted");
+        const response = await axios.get(process.env.REACT_APP_BACK_BASE_URL + "/wanted");
         return response.data;
     } catch (error) {
         throw error;
@@ -44,7 +44,7 @@ export const dataSlice = createSlice({
                     if (!a.wantedType && b.wantedType) return 1;
                     
                     // wantedType이 같은 경우 id를 오름차순으로 정렬
-                    return a.id - b.id;
+                    return a.wantedId - b.wantedId;
                 });
             })
             .addCase(fetchData.rejected, (state, action) => {

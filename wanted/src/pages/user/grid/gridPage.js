@@ -171,7 +171,9 @@ function GridWanted({ data }) {
 
 function CardList({ item }) {
     const [videoError, setVideoError] = useState(false);
-    const { id, name, age, sex, detail, wantedType } = item;
+    const { id, name, age, sex, detail, wantedType, datasource, wantedId} = item;
+    console.log(item.datasource[0].video)
+    console.log(item)
     const { criminal } = detail[0];
 
     const styles = {
@@ -214,10 +216,10 @@ function CardList({ item }) {
         <Col key={id} style={styles.col}>
             <div style={styles.cardWrapper}>
                 <Card style={styles.card}>
-                    {videoError ?
-                    <img src="/logo.png" alt={"image_1"} /> :
+                    {videoError ? 
+                    <img src= {datasource[0].image} alt={`image_${wantedId}`} /> :
                     <video controls autoPlay loop onError={() => {setVideoError(true)}}>                   
-                        <source src="images/test/video.mp4" type="video/mp4" /> 
+                        <source src= {datasource[0].video} type="video/mp4" /> 
                     </video>
                     }
                     <Card.Body style={styles.cardBody}>

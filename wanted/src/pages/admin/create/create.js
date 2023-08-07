@@ -161,7 +161,7 @@ function Create() {
             try {
                 // 이미지 업로드 및 회원 정보 등록을 동시에 수행
                 await axios.post(
-                    "http://63.35.31.27:8000/admin",
+                    process.env.REACT_APP_BACK_BASE_URL + "/admin",
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" }, params: finalData }
                 );
