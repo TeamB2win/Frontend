@@ -188,7 +188,7 @@ function Update() {
         event.preventDefault();
         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
         console.log(recordData.name, recordData.age, recordData.sex, recordData.wanted_type)
-        if (isEmpty(recordData.name) || isEmpty(recordData.age) || isEmpty(recordData.sex) || isEmpty(recordData.wantedType)) {
+        if (isEmpty(recordData.name) || isEmpty(recordData.criminal)) {
             alert("빈 칸을 모두 입력해주세요.");
             return;
         }
@@ -295,7 +295,7 @@ function Update() {
         const finalData = {
             "id": id,
             "wantedType": recordData.wantedType,
-            "wantedId": recordData.wantedId? null: parseInt(recordData.wantedId, 10),
+            "wantedId": recordData.wantedId ? null : parseInt(recordData.wantedId, 10),
             "name": recordData.name,
             "sex": recordData.sex,
             "age": recordData.age,
@@ -430,7 +430,6 @@ function Update() {
                             value="true"
                             checked={recordData.wantedType} // "true"인 경우에만 체크되도록 설정
                             onChange={handleInputChange}
-                            required
                         /> 긴급
                         <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
                             type="radio"
@@ -438,7 +437,6 @@ function Update() {
                             value="false"
                             checked={!recordData.wantedType} // "false"인 경우에만 체크되도록 설정
                             onChange={handleInputChange}
-                            required
                         /> 종합
                     </div>
                 </div>
@@ -481,7 +479,6 @@ function Update() {
                             value="false"
                             checked={!recordData.sex} // "false"인 경우에만 체크되도록 설정
                             onChange={handleInputChange}
-                            required
                         /> 남성
                         <input style={{ minWidth: "4rem", minHeight: "1.2rem" }}
                             type="radio"
@@ -489,7 +486,6 @@ function Update() {
                             value="true"
                             checked={recordData.sex} // "true"인 경우에만 체크되도록 설정
                             onChange={handleInputChange}
-                            required
                         /> 여성
                     </div>
                 </div>
@@ -500,11 +496,8 @@ function Update() {
                         name="age"
                         value={recordData.age}
                         onChange={handleInputChange}
-                        required
                     />
                 </div>
-
-
                 <div className="form-group">
                     <label>주민등록상 주소지</label>
                     <input
@@ -512,7 +505,6 @@ function Update() {
                         name="registeredAddress"
                         value={recordData.registeredAddress}
                         onChange={handleInputChange}
-                        required
                     />
                 </div>
                 <div className="form-group">
@@ -522,7 +514,6 @@ function Update() {
                         name="residence"
                         value={recordData.residence}
                         onChange={handleInputChange}
-                        required
                     />
                 </div>
                 <div className="form-group">
