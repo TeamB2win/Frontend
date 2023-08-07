@@ -295,7 +295,7 @@ function Update() {
         const finalData = {
             "id": id,
             "wantedType": recordData.wantedType,
-            "wantedId": recordData.wantedId ? null : parseInt(recordData.wantedId, 10),
+            "wantedId": recordData.wantedType ? null : parseInt(recordData.wantedId, 10),
             "name": recordData.name,
             "sex": recordData.sex,
             "age": recordData.age,
