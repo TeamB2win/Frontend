@@ -12,11 +12,11 @@ export default function Docs() {
       "color": "white"
     },
     serviceDiv: {
-      "fontSize": "1.5em",
+      "fontSize": "1.6em",
       "fontWeight": "600",
       "backgroundColor": "#2D55C9",
       "width": "fit-content",
-      "padding": "0.5em 1em"
+      "padding": "0.3em 0.6em"
     },
     serviceContent: {
       "marginTop": "2em",
@@ -29,7 +29,7 @@ export default function Docs() {
     logo: {
       "minWidth": "20em",
       "maxWidth": "20em",
-      "padding": "2em 1em 0 1em"
+      "padding": "7em 1em 0 1em"
     },
     mainLogo: {
       "width": "100%",
@@ -40,6 +40,7 @@ export default function Docs() {
       "fontSize": "1.8em",
       "fontWeight": "600",
       "color": "#FD6F22",
+      "padding": "0.8em 0 0.4em 0",
     },
     smallLogo: {
       "maxWidth": "2em"
@@ -55,8 +56,8 @@ export default function Docs() {
               서비스 소개
             </div>
             <div style={styles.serviceContent}>
-              <p style={styles.p}>본 웹은 몽타주 / 실사 사진을 비디오로 변환하여, 일반 시민들에게 더 효율적으로 공개수배 정보를 제공하는 서비스입니다.</p>
-              <p style={styles.p}>공개수배자들의 인식률을 높여, 결과적으로 시민들의 제보율 및 검거율을 높이는 효과를 기대합니다.</p>
+              <p style={styles.p}>본 웹은 몽타주 및 실사 사진을 비디오로 변환하여, 일반 시민들에게 더 효율적으로 공개수배 정보를 제공하는 서비스입니다.</p>
+              <p style={styles.p}>공개수배자들에 대한 인식률을 높여, 결과적으로 시민들의 제보율 및 검거율을 높이는 효과를 기대합니다.</p>
             </div>
           </Col>
           <Col style={styles.logo}>

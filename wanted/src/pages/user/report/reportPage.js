@@ -49,10 +49,10 @@ export default function ReportPage() {
     },
     row: { "margin": "1em 0 0 0" },
     title: {
-      "fontSize": "1.5em",
+      "fontSize": "1.6em",
       "fontWeight": "600",
       "backgroundColor": "#2D55C9",
-      "padding": "0.5em 1em"
+      "padding": "0.3em 0.6em"
     },
     titleContent: {
       "fontSize": "1.5em",
@@ -80,7 +80,7 @@ export default function ReportPage() {
     <div style={styles.div}>
       <Container>
         <Row className="justify-content-md-center">
-          {reportList.map(info => ReportCard(Object.assign({}, info, {"mobile": mobile})))}
+          {reportList.map(info => ReportCard(Object.assign({}, info, { "mobile": mobile })))}
         </Row>
       </Container>
       <Container>
@@ -105,8 +105,8 @@ export default function ReportPage() {
             <Image src="/images/report/report_tutorial_01.png" rounded style={{ "width": "100%" }} />
           </Col>
           <Col style={{ "flexGrow": "1" }}>
-            사건제보, 공개수배 메뉴에서 사건을 선택하면 이동하는 조회화면에서 아래의 제보하기
-            버튼을 클릭하여 제보 등록화면으로 이동합니다.
+            <p>사건제보, 공개수배 메뉴에서 사건을 선택하면 이동하는 조회화면에서 아래의 제보하기 버튼을 클릭하여</p>
+            <p>제보 등록화면으로 이동합니다.</p>
           </Col>
         </Row>
         <hr style={styles.hr}
@@ -130,12 +130,12 @@ export default function ReportPage() {
             <p>4. 사건발생장소 설정 버튼을 클릭하여 팝업창에서 사건이 발생한 장소를 선택합니다.</p>
             <p>5. 목격한 사건에 대한 제보내용을 입력합니다.</p>
             <p>6. 첨부파일로 등록할 동영상 또는 이미지를 선택합니다.</p>
-            <p>7. (사건제보 사건 또는 공개수배에 대한 제보하는 경우) 사건 조회 시 하단에 보여지는 제보 목록에서
-              제보내용을 보여줄 것인지 선택합니다.</p>
+            <p>7. (사건제보 사건 또는 공개수배에 대한 제보하는 경우) 사건 조회 시 하단에 보여지는 제보 목록에서</p>
+            <p>&nbsp;&nbsp;&nbsp;제보내용을 보여줄 것인지 선택합니다.</p>
             <p>8. 개인정보 수집 및 이용동의, 제보정보 공유 동의 내용을 읽어보시고 동의에 체크해주세요.</p>
           </Col>
         </Row>
-        <hr style={styles.hr}/>
+        <hr style={styles.hr} />
         <Stack direction="horizontal" gap={3} style={styles.row}>
           <div style={styles.subTitleNum}>
             03
@@ -150,10 +150,10 @@ export default function ReportPage() {
           </Col>
           <Col style={{ "flexGrow": "1" }}>
             <p>제보등록 버튼을 클릭하면 제보가 등록됩니다.</p>
-            <p>익명제보 시 팝업창으로 제보번호와 입력한 비밀번호를 한번 더 알려줍니다.
-            (익명제보조회 시 필요하니 꼭 기억하시기 바랍니다.)</p>
-            <p>제보한 내용은 실명제보인 경우 마이페이지 > 나의 제보조회 메뉴에서
-            익명제보인 경우 익명제보조회 메뉴에서 제보번호와 비밀번호를 입력하면 조회할 수 있습니다.</p>
+            <p>익명제보 시 팝업창으로 제보번호와 입력한 비밀번호를 한번 더 알려줍니다.</p>
+            <p>(익명제보조회 시 필요하니 꼭 기억하시기 바랍니다.)</p>
+            <p>제보한 내용은 실명제보인 경우 마이페이지 > 나의 제보조회 메뉴에서,</p>
+            <p>익명제보인 경우 익명제보조회 메뉴에서 제보번호와 비밀번호를 입력하면 조회할 수 있습니다.</p>
           </Col>
         </Row>
       </Container>
