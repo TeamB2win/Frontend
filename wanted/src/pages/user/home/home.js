@@ -81,19 +81,19 @@ const SlidingCard = ({ item }) => {
                             {item.name}
                             {"("}
                             {item.age}
-                            {","}
+                            {", "}
                             {item.sex ? "여자" : "남자"}
                             {")"}
                         </p>
                     </div>
                     <div className="info-container">
                         <p className="infoText">
-                            {"신장: 약 "}
-                            {item.detail[0].height}
+                            {"신장: "}
+                            {item.detail[0].height ? `약 ${item.detail[0].height}(cm)` : "미상"}
                         </p>
                         <p className="infoText">
                             {"체중: "}
-                            {item.detail[0].weight}
+                            {item.detail[0].weight ? `${item.detail[0].weight}` : "미상"}
                         </p>
                         {item.hasOwnProperty("address") ? (
                             <p className="infoText">
@@ -102,20 +102,20 @@ const SlidingCard = ({ item }) => {
                             </p>
                         ) : (
                             <p className="infoText">
-                                {"주소 정보가 없습니다."}
+                                {"주소: 미상"}
                             </p>
                         )}
                     </div>
                     <h2 className="tagC">{"특이사항"}</h2>
                     <div className="char-container">
-                        {item.detail[0].characteristic !== null && (
-                            <>
-                                {item.detail[0].characteristic.split(/\n|\\n/).map((el, idx) => (
-                                    <p className="infoText" key={idx}>
-                                        {`${idx + 1}. ${el}`}
-                                    </p>
-                                ))}
-                            </>
+                        {(item.detail[0].characteristic !== null && item.detail[0].characteristic !== "") ? (
+                            item.detail[0].characteristic.split(/\n|\\n/).map((el, idx) => (
+                                <p className="infoText" key={idx}>
+                                    {`${idx + 1}. ${el}`}
+                                </p>
+                            ))
+                        ) : (
+                            <p className="infoText">특이사항이 없습니다.</p>
                         )}
                     </div>
                 </Col>

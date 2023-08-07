@@ -41,14 +41,14 @@ export default function Grid() {
                     let b = true
                     if (el.detail[0].criminal !== filter.criminal && filter.criminal !== "") {
                         b = false
-                    } 
+                    }
 
                     return a && b
                 })
             )
         }
     }, [filter])
-      
+
     useEffect(() => {
         setFilteredData(data);
     }, [data])
@@ -72,7 +72,7 @@ export default function Grid() {
 }
 
 //
-function ToolBar({uniqueData, filter, setFilter}) {
+function ToolBar({ uniqueData, filter, setFilter }) {
     const [resetSelected, setResetSelected] = useState(true);
     const CRIMINAL_TYPES = ["긴급", "종합"];
     const labels = [
@@ -82,80 +82,81 @@ function ToolBar({uniqueData, filter, setFilter}) {
 
     const styles = {
         toolBarContainer: {
-          display: 'flex',
-          justifyContent: 'space-between', // 중앙 정렬
-          width: '100%',
-          marginBottom: '1em', // 아래에 여백 추가
+            display: 'flex',
+            justifyContent: 'space-between', // 중앙 정렬
+            width: '100%',
+            marginLeft: '1px',
+            marginBottom: '1em', // 아래에 여백 추가
         },
         toolBar: {
-          flex: 1,
-          padding: "2em",
+            flex: 1,
+            padding: "2em",
         },
         select: {
-          backgroundColor: 'transparent',
-          borderRadius: '0',
-          color: 'white',
-          width: '100%', 
-          height: '3em',
-          margin: "0 auto"
+            backgroundColor: 'transparent',
+            borderRadius: '0',
+            color: 'white',
+            width: '100%',
+            height: '3em',
+            margin: "0 auto"
         },
         option: {
-          backgroundColor: '#1C1C1C',
-          color: 'white',
+            backgroundColor: '#1C1C1C',
+            color: 'white',
         },
         input: {
-          border: '2px solid',
-          borderColor: 'transparent transparent #FD6F22 transparent',
-          backgroundColor: 'transparent',
-          color: '#FD6F22',
-          height: '2em',
-          width: '100%',
+            border: '2px solid',
+            borderColor: 'transparent transparent #FD6F22 transparent',
+            backgroundColor: 'transparent',
+            color: '#FD6F22',
+            height: '2em',
+            width: '100%',
         },
-      };
+    };
 
     return (
         <Container>
             <Row style={styles.toolBarContainer}>
-                    {labels.map(({ ariaLabel, label }, idx) => (
-                        <Col style={{"minWidth": "15em"}}>
-                            <Fragment key={idx}>
-                                <div style={styles.toolBar}>
-                                    <Form.Select
-                                        aria-label={`select ${label}`}
-                                        style={styles.toolBar.select}
-                                        onChange={(e) => {
-                                            setFilter({
-                                                ...filter,
-                                                [label]: e.target.value,
-                                            });
-                                            setResetSelected(false);
-                                        }}
+                {labels.map(({ ariaLabel, label }, idx) => (
+                    <Col style={{ "minWidth": "15em" }}>
+                        <Fragment key={idx}>
+                            <div style={styles.toolBar}>
+                                <Form.Select
+                                    aria-label={`select ${label}`}
+                                    style={styles.toolBar.select}
+                                    onChange={(e) => {
+                                        setFilter({
+                                            ...filter,
+                                            [label]: e.target.value,
+                                        });
+                                        setResetSelected(false);
+                                    }}
+                                >
+                                    <option
+                                        selected={resetSelected}
+                                        style={styles.toolBar.option}
+                                        value={""}
                                     >
-                                        <option
-                                            selected={resetSelected}
-                                            style={styles.toolBar.option}
-                                            value={""}
-                                        >
-                                            {ariaLabel}
-                                        </option>
-                                        {(ariaLabel === "유형"
-                                            ? CRIMINAL_TYPES
-                                            : uniqueData
-                                        ).map((el) => (
-                                            <>
-                                                <option
-                                                    value={el}
-                                                    style={styles.toolBar.option}
-                                                >
-                                                    {el}
-                                                </option>
-                                            </>
-                                        ))}
-                                    </Form.Select>
-                                </div>
-                            </Fragment>
-                        </Col>
-                    ))}
+                                        {ariaLabel}
+                                    </option>
+                                    {(ariaLabel === "유형"
+                                        ? CRIMINAL_TYPES
+                                        : uniqueData
+                                    ).map((el) => (
+                                        <>
+                                            <option
+                                                value={el}
+                                                style={styles.toolBar.option}
+                                            >
+                                                {el}
+                                            </option>
+                                        </>
+                                    ))}
+                                </Form.Select>
+                            </div>
+                        </Fragment>
+                    </Col>
+                ))}
             </Row>
         </Container>
     );
@@ -163,15 +164,15 @@ function ToolBar({uniqueData, filter, setFilter}) {
 
 function GridWanted({ data }) {
     return (
-        <Container style={{width: "100%"}}>
-            <Row>{data.map((item) => <CardList item={item}/>)}</Row>
+        <Container style={{ width: "100%" }}>
+            <Row>{data.map((item) => <CardList item={item} />)}</Row>
         </Container>
     );
 }
 
 function CardList({ item }) {
     const [videoError, setVideoError] = useState(false);
-    const { id, name, age, sex, detail, wantedType, datasource, wantedId} = item;
+    const { id, name, age, sex, detail, wantedType, datasource, wantedId } = item;
     console.log(item.datasource[0].video)
     console.log(item)
     const { criminal } = detail[0];
@@ -186,7 +187,7 @@ function CardList({ item }) {
             margin: "0 auto",
             padding: "0.3rem",
             borderRadius: "10px",
-            backgroundColor: wantedType? "red": "yellow",
+            backgroundColor: wantedType ? "red" : "yellow",
         },
         card: {
             width: "15rem",
@@ -216,11 +217,11 @@ function CardList({ item }) {
         <Col key={id} style={styles.col}>
             <div style={styles.cardWrapper}>
                 <Card style={styles.card}>
-                    {videoError ? 
-                    <img src= {datasource[0].image} alt={`image_${wantedId}`} /> :
-                    <video controls autoPlay loop onError={() => {setVideoError(true)}}>                   
-                        <source src= {datasource[0].video} type="video/mp4" /> 
-                    </video>
+                    {videoError ?
+                        <img src={datasource[0].image} alt={`image_${wantedId}`} /> :
+                        <video controls autoPlay loop onError={() => { setVideoError(true) }}>
+                            <source src={datasource[0].video} type="video/mp4" />
+                        </video>
                     }
                     <Card.Body style={styles.cardBody}>
                         <Card.Title style={styles.cardTitle}>{criminal}</Card.Title>

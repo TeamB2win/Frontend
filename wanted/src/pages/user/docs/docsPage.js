@@ -12,11 +12,11 @@ export default function Docs() {
       "color": "white"
     },
     serviceDiv: {
-      "fontSize": "1.5em",
+      "fontSize": "1.6em",
       "fontWeight": "600",
       "backgroundColor": "#2D55C9",
       "width": "fit-content",
-      "padding": "0.5em 1em"
+      "padding": "0.3em 0.6em"
     },
     serviceContent: {
       "marginTop": "2em",
@@ -29,7 +29,7 @@ export default function Docs() {
     logo: {
       "minWidth": "20em",
       "maxWidth": "20em",
-      "padding": "2em 1em 0 1em"
+      "padding": "7em 1em 0 1em"
     },
     mainLogo: {
       "width": "100%",
@@ -40,6 +40,7 @@ export default function Docs() {
       "fontSize": "1.8em",
       "fontWeight": "600",
       "color": "#FD6F22",
+      "padding": "0.8em 0 0.4em 0",
     },
     smallLogo: {
       "maxWidth": "2em"
