@@ -10,7 +10,7 @@ const Home = () => {
     const { data, data_hash, status, error } = useSelector((state) => state.data);
     useDataFetch(data_hash);
     console.log(data)
-    
+
     // 데이터 로딩 중인 경우
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -39,7 +39,7 @@ const Home = () => {
         <div className="content">
             <div className="slide-container">
                 <Slider {...settings}>
-                    {data.map((item) => <SlidingCard item={item}/>)}
+                    {data.map((item) => <SlidingCard item={item} />)}
                 </Slider>
             </div>
         </div>
@@ -56,26 +56,26 @@ const SlidingCard = ({ item }) => {
                     {videoError ? (
                         <img src="/logo.png" alt={"image_1"} className="img" />
                     ) : (
-                        <video controls autoPlay loop className="img" onError={() => {setVideoError(true)}}>
+                        <video controls autoPlay loop className="img" onError={() => { setVideoError(true) }} style={{ objectFit: "fill" }}>
                             <source src="images/test/video.mp4" type="video/mp4" />
                         </video>
                     )}
                 </Col>
                 <Col className="text-container">
                     {/* 이미지 오른쪽에 텍스트를 추가합니다 */}
-                    <div className="title-container">
+                    <div style={{ display: "flex", justifyContent: "center", paddingBottom: "28px" }}>
                         <h1 className="wanted-type">
                             {item.wantedType ? (
-                                <span style={{ color: 'red' }}>긴급</span>
+                                <span style={{ color: "red" }}>긴급</span>
                             ) : (
-                                <span style={{ color: 'yellow' }}>종합</span>
+                                <span style={{ color: "yellow" }}>종합</span>
                             )}
                         </h1>
                         <h1 className="title">
                             {item.detail[0].criminal}
                         </h1>
                     </div>
-                                    
+
                     <div className="tagI-container">
                         <h2 className="tagI">{"수배정보"}</h2>
                         <p className="name">
@@ -87,38 +87,41 @@ const SlidingCard = ({ item }) => {
                             {")"}
                         </p>
                     </div>
-                    <p className="infoText">
-                        {"신장: 약 "}
-                        {item.detail[0].height}
-                    </p>
-                    <p className="infoText">
-                        {"체중: "}
-                        {item.detail[0].weight}
-                    </p>
-                    {item.hasOwnProperty("address") ? (
+                    <div className="info-container">
                         <p className="infoText">
-                            {"주소: "}
-                            {item.address}
+                            {"신장: 약 "}
+                            {item.detail[0].height}
                         </p>
-                    ) : (
                         <p className="infoText">
-                            {"주소 정보가 없습니다."}
+                            {"체중: "}
+                            {item.detail[0].weight}
                         </p>
-                    )}
+                        {item.hasOwnProperty("address") ? (
+                            <p className="infoText">
+                                {"주소: "}
+                                {item.address}
+                            </p>
+                        ) : (
+                            <p className="infoText">
+                                {"주소 정보가 없습니다."}
+                            </p>
+                        )}
+                    </div>
                     <h2 className="tagC">{"특이사항"}</h2>
-                    {item.detail[0].characteristic !== null && (
-                        <>
-                            {item.detail[0].characteristic.split(/\n|\\n/).map((el, idx) => (
-                                <p className="infoText" key={idx}>
-                                    {`${idx + 1}. ${el}`}
-                                </p>
-                            ))}
-                        </>
-                    )}
-
+                    <div className="char-container">
+                        {item.detail[0].characteristic !== null && (
+                            <>
+                                {item.detail[0].characteristic.split(/\n|\\n/).map((el, idx) => (
+                                    <p className="infoText" key={idx}>
+                                        {`${idx + 1}. ${el}`}
+                                    </p>
+                                ))}
+                            </>
+                        )}
+                    </div>
                 </Col>
             </Row>
-        </div>
+        </div >
     )
 }
 export default Home;

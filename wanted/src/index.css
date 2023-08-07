@@ -5,7 +5,6 @@
   font-style: normal;
 }
 
-
 body {
   margin: 0;
   padding: 0;
@@ -13,13 +12,13 @@ body {
 
 .slide-content {
   display: flex;
-  /* 이 부분을 추가하여 이미지와 텍스트를 가로로 나란히 배치합니다. */
-  align-items: center;
+  /* 이 부분을 추가하여 이미지와 텍스트를 가로로 나란히 배치 */
+  /* align-items: center; */
   /* 세로 중앙 정렬 */
   justify-content: center;
   /* 가로 중앙 정렬 */
   flex-direction: row;
-  /* 요소들을 가로로 나란히 배치합니다. */
+  /* 요소들을 가로로 나란히 배치 */
 }
 
 .slick-arrow {
@@ -30,85 +29,76 @@ body {
 .img-container {
   height: 100%;
   width: 50%;
-  /* 이미지를 가로로 반만 차지하도록 설정 (필요에 따라 조절 가능) */
+  /* 이미지를 가로로 반만 차지하도록 설정 */
 }
 
 .img {
-  height: 86vh;
-  width: 48vw;
+  height: 92vh;
+  width: 50vw;
 }
 
 .text-container {
-  position: relative;
-  width: 50%; /* 원하는 너비로 조정 */
-  height: 100%; /* 부모 컨테이너의 높이에 맞게 설정 */
-  padding-top: 60px; /* .title의 높이와 동일한 값으로 설정 (예시) */
+  height: 100%;
+  width: 50%;
+  margin-left: 32px;
+  padding-top: 110px;
 }
 
 .title {
   color: black;
+  background-color: #fd6f22;
   font-size: 42px;
-  font-style: italic;
   font-weight: bold;
   font-family: 'Pretendard-Regular';
   text-align: center;
-  padding: 12px;
-  background-color: #fd6f22;
   display: inline-block;
+  padding: 12px;
   padding-left: 24px;
   padding-right: 24px;
-  margin-bottom: 20px; /* 원하는 간격을 설정하세요 */
 }
+
 .wanted-type {
   color: black;
+  background-color: #000000;
   font-size: 42px;
-  font-style: italic;
   font-weight: bold;
   font-family: 'Pretendard-Regular';
   text-align: center;
-  padding: 12px;
-  background-color: #fd6f22;
   display: inline-block;
+  padding: 14px;
   padding-left: 24px;
   padding-right: 24px;
-}
-.title-container {
-  margin-bottom: 20px; /* 원하는 간격을 설정하세요 */
 }
 
 .tagI-container {
   display: flex;
   /* tagI와 name을 가로로 배치 */
   align-self: flex-start;
-
-  /* 수정한 부분 */
-  margin-top: 20px; /* 일정한 공간 추가 (예시) */
+  margin-top: 20px;
 }
 
 .tagI {
   color: white;
   background-color: #2d55c9;
-  padding: 6px;
+  padding: 8px;
   font-size: 24px;
   font-style: italic;
   font-family: 'Pretendard-Regular';
   text-align: center;
   display: inline-block;
   align-self: flex-start;
-  margin-top: 20px;
 }
 
 .tagC {
   color: white;
   background-color: #2d55c9;
-  padding: 6px;
+  padding: 8px;
   font-size: 24px;
   font-style: italic;
   font-family: 'Pretendard-Regular';
   text-align: center;
   display: inline-block;
   align-self: flex-start;
-  margin-top: 20px;
 }
 
 .name {
@@ -118,26 +108,26 @@ body {
   font-weight: bold;
   text-align: center;
   display: inline-block;
-  margin-top: 22px;
-  margin-left: 10px;
+  margin-top: 4px;
+  margin-left: 16px;
 }
 
-.inform {
+.info-container {
   color: white;
   font-size: 20px;
   font-family: 'Pretendard-Regular';
   text-align: left;
   align-self: flex-start;
-  margin-left: 24px;
+  padding: 16px;
 }
 
-.char {
+.char-container {
   color: white;
   font-size: 20px;
   font-family: 'Pretendard-Regular';
   text-align: left;
   align-self: flex-start;
-  margin-left: 24px;
+  padding: 16px;
 }
 
 .infoText {
