@@ -393,7 +393,6 @@ function Update() {
                     {recordData.video && recordData.video.startsWith('/workspace/data/video/') ? (
                         <>
                             <video
-                                controls
                                 loop
                                 autoPlay
                                 muted

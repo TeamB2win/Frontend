@@ -219,7 +219,7 @@ function CardList({ item }) {
                 <Card style={styles.card}>
                     {videoError ?
                         <img src={datasource[0].image} alt={`image_${wantedId}`} /> :
-                        <video controls autoPlay loop onError={() => { setVideoError(true) }}>
+                        <video muted autoPlay loop onError={() => { setVideoError(true) }}>
                             <source src={datasource[0].video} type="video/mp4" />
                         </video>
                     }
