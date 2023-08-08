@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import "./edit.css";
+
 
 function Edit() {
     const [currentPassword, setCurrentPassword] = useState('');

@@ -1,3 +1,86 @@
-.table-header {
+.dashboard-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2em 0;
+}
+
+.dashboard-table {
+  margin: 1em 0;
+  border: 2px solid #1C1C1C;
+}
+
+.dashboard-table thead {
+  text-align: center;  
   background-color: #9E9E9E !important;
+}
+
+.dashboard-table th {
+  background-color: #9E9E9E;
+  border-right: 1px solid #1C1C1C
+}
+
+.dashboard-table tbody {
+  text-align: center;  
+}
+
+.dashboard-table td {
+  vertical-align: middle;
+  border-right: 1px solid #1C1C1C
+}
+
+.dashboard-table td .row {
+  max-width: 100%; 
+  margin: 0
+}
+
+.dashboard-table td .col {
+  margin: 2px;
+  padding: 0
+}
+
+.dashboard-table td button {
+  padding: 0.375em 0.75em;
+  text-decoration: none;
+  border-radius: 0;
+  border: none;
+  background-color: #1C1C1C;
+  white-space: nowrap;
+  word-break: break-word;
+  color: #FFCD4A;
+  margin: 0;
+  opacity: 1;
+}
+.dashboard-toolbar-btn:hover,
+.dashboard-table td button:hover {
+  background-color: #1C1C1C;
+  color: #FFCD4A;
+  opacity: 0.8;
+}
+
+.dashboard-toolbar-col {
+  height: fit-content;
+  margin: auto 0
+}
+
+.dashboard-toolbar-select {
+  background-color: transparent;
+  border: 2px solid #1C1C1C;
+  border-radius: 0;
+  color: #1C1C1C
+}
+
+.dashboard-toolbar-select option {
+  background-color: #C2C2C2;
+  color: #1C1C1C
+}
+
+.dashboard-toolbar-btn {
+  font-size: 1.2em;
+  border-radius: 0;
+  border: none;
+  background-color: #1C1C1C;
+  white-space: nowrap;
+  word-break: break-word;
+  color: #FFCD4A;
+  opacity: 1;
 }

@@ -1,4 +1,67 @@
-.loginInput:focus {
+.login-wrapper {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 2em 0;
+  color: white;
+}
+
+.login-content {
+  padding: 2em ;
+  text-align: center;
+}
+
+.login-title {
+  font-size: 1.5em;
+  font-weight: 700
+}
+
+.login-logo-wrapper {
+  margin: 3em
+}
+
+.login-logo-wrapper img {
+  min-width: 5em;
+  min-height: 5em;
+  max-width: 15em;
+  min-height: 15em;
+  margin: 0 auto;
+  object-fit: fill
+}
+
+.login-input-wrapper {
+  display: flex;
+  width: 20em;
+  height: 2.3em;
+  margin: 0 auto;
+  border: 2px solid #FD6F22;
+}
+.login-input-wrapper label {
+  min-width: 50px;
+  padding: 0;
+  margin: 0 5px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 2em;
+}
+.login-input {
+  background-color: transparent;
+  border: 0;
+  color: white;
+  flex-grow: 1;
+}
+
+.login-input:focus {
   border: 0;
   outline: none !important;
+}
+
+.login-btn {
+  width: 7em;
+  height: 2em;
+  margin: 0 auto;
+  padding: 0;
+  background-color: transparent;
+  border: 2px solid #FD6F22;
+  border-radius: 0;
+  vertical-align: middle;
 }

@@ -148,3 +148,10 @@ body {
 .slick-dots {
   display: None !important;
 }
+
+.content-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2em 0;
+  color: white;
+}

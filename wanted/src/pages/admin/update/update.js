@@ -6,12 +6,6 @@ import axios from "axios";
 import "../css/crud.css";
 
 
-function isoDateStringToDate(isoDateString) {
-    // ISO 8601 형식의 문자열을 Date 객체로 변환
-    const dateValue = new Date(isoDateString);
-    return dateValue;
-}
-
 function isEmpty(node) {
     if (typeof node === 'undefined' || node === null || node === "")
         return true;
@@ -21,21 +15,20 @@ function isEmpty(node) {
 
 function Update() {
     const { id } = useParams(); // URL에서 id 파라미터 추출
+
+    const navigate = useNavigate();
+
+    const photoInputRef = useRef();
+
     const [recordData, setRecordData] = useState(null);
     const [relationalLinks, setRelationalLinks] = useState([]);
     const [characteristics, setCharacteristics] = useState([]);
-    const [additionalPhoto, setAdditionalPhoto] = useState(null);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [videoInferenceButton, setVideoInferenceButton] = useState(false);
     const [imageFile, setImageFile] = useState({
         file: null,
         image: null
     })
-
-    const photoInputRef = useRef();
-    const additionalPhotoInputRef = useRef();
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,7 +71,6 @@ function Update() {
     const handleVideoInferenceButton = (event) => {
         const { checked } = event.target;
         setVideoInferenceButton(checked);
-        console.log(videoInferenceButton);
     }
 
     const handleInputChange = (e, isoDate) => { // isoDate 인자 추가
@@ -120,7 +112,6 @@ function Update() {
                     return;
                 } else {
                     setImageFile({ file: file, image: reader.result })
-                    console.log("이미지 등록")
                 }
             };
             img.src = reader.result;
@@ -132,30 +123,11 @@ function Update() {
         setIsButtonDisabled(true);
     }
 
-    const handleAdditionalPhotoChange = (event) => {
-        const { name } = event.target;
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setAdditionalPhoto(reader.result);
-        };
-        reader.readAsDataURL(file);
-
-        event.target.style.display = 'none';
-    };
-
     const handleDeletePhoto = (image) => {
-        console.log('Delete');
         setImageFile({ file: null, image: image || null });
         photoInputRef.current.value = '';
         photoInputRef.current.style.display = 'inline';
         setIsButtonDisabled(false);
-    };
-
-    const handleDeleteAdditionalPhoto = () => {
-        setAdditionalPhoto(null);
-        additionalPhotoInputRef.current.value = '';
-        additionalPhotoInputRef.current.style.display = 'inline';
     };
 
     const handleRelationalLinkChange = (index, event) => {
@@ -189,7 +161,6 @@ function Update() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // 여기서 정보를 API로 전송하거나 다른 처리를 수행할 수 있습니다.
-        console.log(recordData.name, recordData.age, recordData.sex, recordData.wanted_type)
         if (isEmpty(recordData.name) || isEmpty(recordData.criminal)) {
             alert("빈 칸을 모두 입력해주세요.");
             return;

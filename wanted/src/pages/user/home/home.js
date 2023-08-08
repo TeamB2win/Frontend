@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { useSelector } from "react-redux"; // useDispatch와 useSelector를 import
+
 import Slider from "react-slick";
 import { Col, Row } from "react-bootstrap";
+
+import useDataFetch from "../../../hooks/useDataFetch";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import useDataFetch from "../../../hooks/useDataFetch";
-import { useState } from 'react';
+
 
 const Home = () => {
     const { data, data_hash, status, error } = useSelector((state) => state.data);

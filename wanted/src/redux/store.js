@@ -23,7 +23,6 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage: storage,
-  //sotrage: storage("ML_DB")
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -32,8 +31,6 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      
-      // }).concat(logger),
     }),
 });
 

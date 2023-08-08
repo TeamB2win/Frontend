@@ -1,0 +1,58 @@
+.docs-wrapper {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 2em 0;
+  color: white
+}
+
+.docs-wrapper .col {
+  min-width: 20em; 
+  padding: 1em
+}
+
+.service-intro {
+  font-size: 1.6em;
+  font-weight: 600;
+  background-color: #2D55C9;
+  width: fit-content;
+  padding: 0.3em 0.6em
+}
+
+.service-content {
+  margin-top: 2em;
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 0.5em 1em;
+  word-break: break-word;
+}
+
+.service-content p {
+  word-break: break-word 
+}
+
+.logo-wraper {
+  min-width: 15em;
+  max-width: 40%;
+  padding: 7em 1em 0 1em
+}
+
+.logo-wraper img {
+  width: 100%;
+  object-fit: fill;
+  background-color: white
+}
+
+#github-logo {
+  background-color: #1c1c1c;
+}
+
+.logo-content {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #FD6F22;
+  padding: 0.8em 0 0.4em 0;
+}
+
+.logo-wraper .small-logo {
+  max-width: 2em
+}

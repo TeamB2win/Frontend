@@ -1,0 +1,72 @@
+.grid-toolbar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 1px;
+  margin-bottom: 1em;
+}
+
+.grid-toolbar-wrapper .col {
+  min-width: 15em 
+}
+
+.grid-toolbar-content {
+  flex: 1;
+  padding: 0.8em 1.5em;
+}
+
+.grid-toolbar-content select {
+  background-color: transparent;
+  border-radius: 0;
+  color: white;
+  width: 100%;
+  height: 3em;
+  margin: 0 auto
+}
+
+.grid-toolbar-content option {
+  background-color: #1C1C1C;
+  color: white;
+}
+
+.grid-wrapper {
+  width: 100%;
+}
+
+.grid-wrapper .col {
+  border: 0;
+  margin: 1em;
+}
+
+.card-wrapper {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0.3rem;
+  border-radius: 10px;
+}
+
+.card-wrapper .card {
+  width: 15rem;
+  border: 0;
+  margin: 0 auto;
+}
+
+.card-wrapper .card-body {
+  padding: 0
+}
+
+.card-wrapper .card-title {
+  margin: 0;
+  padding: 0.5em;
+  background-color: #FD6F22;
+  color: black;
+  text-align: center;
+}
+
+.card-wrapper .card-subtitle {
+  margin: 0;
+  padding: 0.5em;
+  background-color: #2D55C9;
+  color: white;
+  text-align: center;
+}

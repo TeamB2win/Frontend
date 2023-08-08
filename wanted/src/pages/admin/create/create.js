@@ -5,9 +5,14 @@ import axios from "axios";
 
 import "../css/crud.css";
 
+
 function Create() {
     const navigate = useNavigate();
 
+    const photoInputRef = useRef();
+
+    const [relationalLinks, setRelationalLinks] = useState([]);
+    const [characteristics, setCharacteristics] = useState([]);
     const [userInfo, setUserInfo] = useState({
         wantedType: false,
         wantedId: null,
@@ -29,12 +34,6 @@ function Create() {
         file: null,
         image: null
     })
-
-    const photoInputRef = useRef();
-
-    const [relationalLinks, setRelationalLinks] = useState([]);
-
-    const [characteristics, setCharacteristics] = useState([]);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
