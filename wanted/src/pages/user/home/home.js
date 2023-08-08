@@ -55,7 +55,7 @@ const SlidingCard = ({ item }) => {
                     {videoError ? (
                         <img src={item.datasource[0].image} alt={"image_1"} className="img" />
                     ) : (
-                        <video controls autoPlay loop className="img" onError={() => { setVideoError(true) }}>
+                        <video controls autoPlay muted HOloop className="img" onError={() => { setVideoError(true) }}>
                             <source src={item.datasource[0].video} type="video/mp4" />
                         </video>
                     )}
