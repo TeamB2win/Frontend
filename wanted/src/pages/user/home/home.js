@@ -8,6 +8,7 @@ import useDataFetch from "../../../hooks/useDataFetch";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./home.css"
 
 
 const Home = () => {
