@@ -1,0 +1,52 @@
+.report-wrapper {
+  width: 80vw;
+  margin: 30px auto 0 auto;
+  padding: 2em 0;
+  color: white
+}
+
+.report-wrapper .row {
+  margin: 1em 0 0 0 
+}
+
+.report-wrapper .title {
+  font-size: 1.6em;
+  font-weight: 600;
+  background-color: #2D55C9;
+  padding: 0.3em 0.6em
+}
+
+.report-wrapper .row .content {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.report-wrapper hr {
+  background: '#2D55C9';
+  color: '#2D55C9';
+  border-color: '#2D55C9';
+  height: '3px';
+}
+
+.subtitle-num {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #FD6F22;
+  padding: 0.5em 1em
+}
+
+.subtitle-detail {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.report-image {
+  min-width: 150px;
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.report-detail {
+  min-width: 150px;
+  word-break: break-all;
+}

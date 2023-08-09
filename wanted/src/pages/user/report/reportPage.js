@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Col, Container, Row, Card, Nav, Stack, Image } from "react-bootstrap";
+import { Col, Container, Row, Card, Stack, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
+import "./reportPage.css";
 
 
 export default function ReportPage() {
@@ -40,90 +42,53 @@ export default function ReportPage() {
     }
   ]
 
-  const styles = {
-    div: {
-      "width": "80vw",
-      "margin": "30px auto 0 auto",
-      "padding": "2em 0",
-      "color": "white"
-    },
-    row: { "margin": "1em 0 0 0" },
-    title: {
-      "fontSize": "1.6em",
-      "fontWeight": "600",
-      "backgroundColor": "#2D55C9",
-      "padding": "0.3em 0.6em"
-    },
-    titleContent: {
-      "fontSize": "1.5em",
-      "fontWeight": "600",
-    },
-    subTitleNum: {
-      "fontSize": "1.5em",
-      "fontWeight": "600",
-      "color": "#FD6F22",
-      "padding": "0.5em 1em"
-    },
-    subTitleContent: {
-      "fontSize": "1.5em",
-      "fontWeight": "500",
-    },
-    hr: {
-      background: '#2D55C9',
-      color: '#2D55C9',
-      borderColor: '#2D55C9',
-      height: '3px',
-    }
-  }
-
   return (
-    <div style={styles.div}>
+    <div className="report-wrapper">
       <Container>
         <Row className="justify-content-md-center">
           {reportList.map(info => ReportCard(Object.assign({}, info, { "mobile": mobile })))}
         </Row>
       </Container>
       <Container>
-        <Stack direction="horizontal" gap={3} style={styles.row}>
-          <div style={styles.title}>
+        <Stack direction="horizontal" gap={3}>
+          <div className="title">
             신고안내
           </div>
-          <div style={styles.titleContent}>
+          <div className="content">
             스마트 국민제보 홈페이지
           </div>
         </Stack>
-        <Stack direction="horizontal" gap={3} style={styles.row}>
-          <div style={styles.subTitleNum}>
+        <Stack direction="horizontal" gap={3}>
+          <div className="subtitle-num">
             01
           </div>
-          <div style={styles.subTitleContent}>
+          <div className="subtitle-detail">
             사건제보-공개수배 제보 등록화면으로 이동하기
           </div>
         </Stack>
-        <Row style={styles.row}>
-          <Col xs={6} md={4}>
-            <Image src="/images/report/report_tutorial_01.png" rounded style={{ "width": "100%" }} />
+        <Row>
+          <Col>
+            <Image src="/images/report/report_tutorial_01.png" rounded className="report-image"/>
           </Col>
-          <Col style={{ "flexGrow": "1" }}>
+          <Col className="report-detail">
             <p>사건제보, 공개수배 메뉴에서 사건을 선택하면 이동하는 조회화면에서 아래의 제보하기 버튼을 클릭하여</p>
             <p>제보 등록화면으로 이동합니다.</p>
           </Col>
         </Row>
-        <hr style={styles.hr}
-        />
-        <Stack direction="horizontal" gap={3} style={styles.row}>
-          <div style={styles.subTitleNum}>
+        <hr/>
+        <Stack direction="horizontal" gap={3}>
+          <div className="subtitle-num">
             02
           </div>
-          <div style={styles.subTitleContent}>
+          <div className="subtitle-detail">
             제보내용 입력
           </div>
         </Stack>
-        <Row style={styles.row}>
-          <Col xs={6} md={4}>
-            <Image src="/images/report/report_tutorial_02.png" rounded style={{ "width": "100%" }} />
+        <Row>
+          <Col>
+            <Image src="/images/report/report_tutorial_02.png" rounded className="report-image"/>
           </Col>
-          <Col style={{ "flexGrow": "1" }}>
+          <Col className="report-detail">
             <p>1. 익명여부를 선택합니다. (익명제보 시 제보 내용은 참고로만 활용되며 보상에서 제외됩니다.)</p>
             <p>2. (익명인 경우) 비밀번호를 입력해주세요. 익명제보조회 시 필요합니다.</p>
             <p>3. 사건이 발생한 일자와 시간을 입력합니다.</p>
@@ -135,20 +100,20 @@ export default function ReportPage() {
             <p>8. 개인정보 수집 및 이용동의, 제보정보 공유 동의 내용을 읽어보시고 동의에 체크해주세요.</p>
           </Col>
         </Row>
-        <hr style={styles.hr} />
-        <Stack direction="horizontal" gap={3} style={styles.row}>
-          <div style={styles.subTitleNum}>
+        <hr/>
+        <Stack direction="horizontal" gap={3}>
+          <div className="subtitle-num">
             03
           </div>
-          <div style={styles.subTitleContent}>
+          <div className="subtitle-detail">
             제보 등록하기
           </div>
         </Stack>
-        <Row style={styles.row}>
-          <Col xs={6} md={4}>
-            <Image src="/images/report/report_tutorial_03.png" rounded style={{ "width": "100%" }} />
+        <Row>
+          <Col>
+            <Image src="/images/report/report_tutorial_03.png" rounded className="report-image"/>
           </Col>
-          <Col style={{ "flexGrow": "1" }}>
+          <Col className="report-detail">
             <p>제보등록 버튼을 클릭하면 제보가 등록됩니다.</p>
             <p>익명제보 시 팝업창으로 제보번호와 입력한 비밀번호를 한번 더 알려줍니다.</p>
             <p>(익명제보조회 시 필요하니 꼭 기억하시기 바랍니다.)</p>
