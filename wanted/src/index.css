@@ -28,20 +28,19 @@ body {
 
 .img-container {
   height: 100%;
-  width: 50%;
-  /* 이미지를 가로로 반만 차지하도록 설정 */
 }
 
 .img {
-  height: 92vh;
-  width: 50vw;
+  min-width: 350px;
+  width: 100%;
+  object-fit: fill;
 }
 
 .text-container {
+  min-width: 450px;
   height: 100%;
   width: 50%;
-  margin-left: 32px;
-  padding-top: 110px;
+  padding: 0 3rem !important;
 }
 
 .title {
@@ -74,22 +73,9 @@ body {
   display: flex;
   /* tagI와 name을 가로로 배치 */
   align-self: flex-start;
-  margin-top: 20px;
 }
 
-.tagI {
-  color: white;
-  background-color: #2d55c9;
-  padding: 8px;
-  font-size: 24px;
-  font-style: italic;
-  font-family: 'Pretendard-Regular';
-  text-align: center;
-  display: inline-block;
-  align-self: flex-start;
-}
-
-.tagC {
+.tagI, .tagC {
   color: white;
   background-color: #2d55c9;
   padding: 8px;

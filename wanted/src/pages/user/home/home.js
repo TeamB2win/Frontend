@@ -34,7 +34,7 @@ const Home = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 7000,
+        autoplaySpeed: 70000000,
         prevArrow: null,
         nextArrow: null,
     };
@@ -66,7 +66,7 @@ const SlidingCard = ({ item }) => {
                 </Col>
                 <Col className="text-container">
                     {/* 이미지 오른쪽에 텍스트를 추가합니다 */}
-                    <div style={{ display: "flex", justifyContent: "center", paddingBottom: "28px" }}>
+                    <div style={{ display: "flex", justifyContent: "center", padding: "2rem 0.5rem" }}>
                         <h1 className="wanted-type">
                             {item.wantedType ? (
                                 <span style={{ color: "red" }}>긴급</span>
