@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# 🕵🏻 Passerby-Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### <div align="center"><b><i> Passerby, 여러분의 안전을 책임집니다. </i></b></div>
 
-## Available Scripts
+&nbsp; 
 
-In the project directory, you can run:
+> Passerby project
+> 
+> launched at 2023.06
+> 
+> Programmers AI DEV-course 5th
 
-### `npm start`
+&nbsp; 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🎥 **Passerby**는 공개수배자들의 이미지를 **AI 기술**을 통하여 비디오로 생성하여 여러분께 제공합니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+🇰🇷 본 프로젝트를 통해 팀 B2Win은 **더 안전한 대한민국, 더 건강한 대한민국**을 꿈꿉니다.
 
-### `npm test`
+💾 본 리포지토리는 Passerby의 Frontend Server 저장소입니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+&nbsp;
 
-### `npm run build`
+# ⚙️ Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<div align="center">
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"><img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"><img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"><img src="https://img.shields.io/badge/React%20Router-CA4245?style=for-the-badge&logo=React%20Router&logoColor=white"><img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
+</div>
+&nbsp; 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# ❓ About B2win Team
+<div align="center">
+<a href = "https://github.com/TeamB2win"><img alt="GitHub" src ="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/></a>
+<a href = "https://www.notion.so/B2Win-Between-a9b09623b67243319d9bbce293bfa46b?pvs=4"><img alt="Notion" src ="https://img.shields.io/badge/Notion-eeeeee.svg?&style=for-the-badge&logo=Notion&logoColor=black"/></a>
+</div>
+&nbsp; 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 🗝️ Key Service
 
-### `npm run eject`
+💡 사용자는 passerby 웹 및 모바일 환경에 접속하여 **전체 공개수배자 신상정보**를 확인할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+💡 또한, 공개수배자 정보와 대조하여 바로 제보 및 신고할 수 있도록 **관련 안내 정보**를 제공합니다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+💡 관리자는 passerby db를 통하여 공개수배자 **생성, 조회**, 이미지 및 비디오, 신상정보의 **수정, 삭제**를 수행할 수 있습니다.
