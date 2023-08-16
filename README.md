@@ -1,3 +1,5 @@
+<img src="src/passerby_service.gif"/>
+
 # 🕵🏻 Passerby-Frontend
 
 ### <div align="center"><b><i> Passerby, 여러분의 안전을 책임집니다. </i></b></div>
@@ -28,6 +30,16 @@
 &nbsp; 
 
 # ❓ About B2win Team
+
+<div align="center">
+  
+| [@hwaxrang](https://github.com/hwaxrang) | [@Magenta195](https://github.com/Magenta195) | [@moongni](https://github.com/moongni) | [@heehaaaheeeee](https://github.com/heehaaaheeeee) | [@ShinEunChae](https://github.com/ShinEunChae) | [@joseokjun](https://github.com/joseokjun) |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| <img src="src/khr.png" width=200 /> | <img src="src/kth.jpeg" width=200 /> | <img src="src/mgh.png" width=200 /> | <img src="src/msh.jpg" width=200 /> | <img src="src/sec.jpeg" width=200 /> | <img src="src/jsj.jpg" width=200 /> |
+| `권화랑`   | `김태형` | `문건희` | `문숙희` | `신은채` | `조석준`  |
+
+</div>
+
 <div align="center">
 <a href = "https://github.com/TeamB2win"><img alt="GitHub" src ="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/></a>
 <a href = "https://www.notion.so/B2Win-Between-a9b09623b67243319d9bbce293bfa46b?pvs=4"><img alt="Notion" src ="https://img.shields.io/badge/Notion-eeeeee.svg?&style=for-the-badge&logo=Notion&logoColor=black"/></a>
